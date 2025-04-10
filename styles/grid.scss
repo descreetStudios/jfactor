@@ -1,4 +1,4 @@
-	.grid-wrapper {
+.grid-wrapper {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -11,6 +11,7 @@
 	grid-template-rows: repeat(8, 50px);
 	gap: 50px;
 	position: relative;
+	left: 11px;
 }
 
 .button {
@@ -19,7 +20,7 @@
 	justify-content: center;
 	background-color: lightgray;
 	border: 1px solid #000;
-	font-size: 20px;
+	font-size: 16px;
 	height: 50px;
 	width: 50px;
 	cursor: pointer;
@@ -96,4 +97,133 @@
 /* Extra Button styles */
 .button-1 {
 	background-color: rgb(115, 178, 255);
+}
+
+@media (max-width: 48em) {
+	.spiral-grid {
+		gap: 20px;
+	}
+
+	.button-padding-x {
+		padding: 0px 5px;
+		height: 70%;
+	}
+	.button-padding-y {
+		padding: 5px 0px;
+		width: 70%;
+	}
+
+	.button-left-adjust {
+		position: relative;
+		left: -25px;
+	}
+	.button-top-adjust {
+		position: relative;
+		top: -25px;
+	}
+
+	.button-null {
+		background-color: rgb(0, 255, 89);
+		cursor: default;
+		padding: 15px;
+		position: relative;
+		top: -23px;
+		left: -20px;
+	}
+
+	.button-63 {
+		width: 35px;
+		height: 35px;
+	}
+
+	.button-58 {
+		height: 50px;
+	}
+}
+
+@media (max-width: 35em) {
+	.spiral-grid {
+		gap: 10px;
+	}
+
+	.button-padding-x {
+		padding: 0px 1px;
+		height: 50%;
+	}
+	.button-padding-y {
+		padding: 1px 0px;
+		width: 50%;
+	}
+
+	.button-left-adjust {
+		position: relative;
+		left: -27px;
+	}
+	.button-top-adjust {
+		position: relative;
+		top: -27px;
+	}
+
+	.button-null {
+		background-color: rgb(0, 255, 89);
+		cursor: default;
+		padding: 8px;
+		position: relative;
+		top: -22px;
+		left: -20px;
+	}
+
+	.button-63 {
+		width: 25px;
+		height: 25px;
+	}
+
+	.button-58 {
+		height: 50px;
+	}
+}
+
+@media (max-width: 30em) {
+	.spiral-grid {
+		grid-template-columns: repeat(8, 40px);
+		grid-template-rows: repeat(8, 40px);
+		gap: 5px;
+	}
+
+	.button {
+		font-size: 13px;
+	}
+
+	.button-padding-x {
+		width: 37px;
+		height: 50%;
+	}
+	.button-padding-y {
+		height: 37px;
+		width: 50%;
+	}
+
+	.button-left-adjust {
+		position: relative;
+		left: -19px;
+	}
+	.button-top-adjust {
+		position: relative;
+		top: -19px;
+	}
+
+	.button-null {
+		background-color: rgb(0, 255, 89);
+		cursor: default;
+		width: 30px;
+		height: 30px;
+		position: relative;
+		top: -13px;
+		left: -13px;
+	}
+
+	.button-63 {
+		width: 20px;
+		height: 20px;
+	}
 }
