@@ -1,5 +1,17 @@
 @use 'sass:math';
 
+:root {
+	--shake-intensity: #{math.random() * 2}px;
+	--shake-rotation: #{math.random() * 2}deg;
+	--shake-scale: 1.005;
+	--neon-effect: 0 0 0 transparent,
+		0 0 20px rgb(187, 40, 158),
+		0 0 50px rgba(202, 8, 157, 0.5),
+		0 0 200px rgba(165, 14, 160, 0.5),
+		0 0 250px rgb(131, 17, 129),
+		0 0 300px rgb(160, 29, 145);
+}
+
 * {
 	image-rendering: pixelated;
     margin: 0;
@@ -102,7 +114,7 @@
 	background-color: transparent;
 
 	transition: all 0.3s ease;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .buttons button:hover {
@@ -111,17 +123,17 @@
 	color: rgb(152, 20, 91);
 }
 
+.buttons button:hover span {
+	text-shadow: var(--neon-effect);
+	overflow: visible;
+}
+
 .buttons button:active {
 	transform: scale(0.98);
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 	color: rgb(186, 27, 112);
 }
 
-:root {
-  --shake-intensity: #{math.random() * 2}px;
-  --shake-rotation: #{math.random() * 2}deg;
-  --shake-scale: 1.005;
-}
 @keyframes shakeScale {
 	0%, 100% {
 	  transform: translate(0, 0) rotate(0deg) scale(1);
