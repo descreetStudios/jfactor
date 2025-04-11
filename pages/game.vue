@@ -1,4 +1,9 @@
 <template>
+<!-- Collegamento al menu -->
+<NuxtLink to="./">
+  <button class="menuBtn">Torna al Menu</button>
+</NuxtLink>
+
 	<div class="grid-wrapper">
 		<div class="spiral-grid">
 			<div 
