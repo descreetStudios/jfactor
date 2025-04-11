@@ -1,6 +1,9 @@
 <template>
   <div>
-	<div class="navbar" ref="navbar" @mouseover="navbarOver" @mouseleave="navbarLeave">
+	<div class="header">
+		<h1 class="titleMenu">Untitle Plague Game</h1>
+	</div>
+	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
 		<div class="firstCell">
 			<img class="navbarImage" src="../assets/images/homeButton.png" alt="Home">
 			<transition name="fade">
@@ -19,7 +22,7 @@
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
 			</transition>
 			</div> 
-			<div class="cell">
+			<div class="lastCell">
 			<img class="navbarImage" src="../assets/images/newsButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
@@ -66,9 +69,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 	@import url('../styles/menu.css');
 	
-	//Debug
-	//@import url('../styles/debug.css');
+	/* Debug */
+	/* @import url('../styles/debug.css'); */
 </style>
