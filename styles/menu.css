@@ -1,3 +1,4 @@
+
 body{
     overflow-y: hidden;
     background-color: rgb(35, 36, 44);
@@ -14,36 +15,49 @@ body{
 }
 
 .navbar{
+    border-radius: 25px;
     float: left;
     width: 5vw;
-    height: 100vh;
+    height: 29vh;
     background-color: rgb(64, 62, 70);
-    animation-name: navbar;
-    animation-duration: 1s;
+}
+
+.cell, .firstCell{
+    pointer-events: none;
+    text-align: left;
+    display: flex;
+    justify-content: left;
+    padding: 1vh;
+    height: 5vh;
 }
 
 .cell{
-    pointer-events: none;
-    display: flex;
-    place-items: center;
-    padding: 1vh;
-    text-align: center;
-    height: fit-content;
-    border-bottom: solid 1px black;
+    border-top: solid 1px black;
 }
 
 .navbarImage{
     height: 5vh;
+    width: 5vh;
     margin-top: auto;
     margin-bottom: auto;
 }
 
 .navbarTitle{
-    margin: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 2vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+    color: white;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active{
     transition: opacity 0.5s ease-in-out;
+}
+
+.fade-leave-active {
+    transition: opacity 0.3s ease-in-out;
 }
 
 .fade-enter, .fade-leave-to{
