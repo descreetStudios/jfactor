@@ -16,9 +16,13 @@
 	<div class="title">
 		<img class="titleImage" src="../assets/images/title.png" alt="UPG">
 		<div class="buttons">
-			<button type="button" class="playButton">
-				<span>PLAY</span>
-			</button>
+      <!-- manda alla pagina di gioco -->
+      <<NuxtLink to="./game">
+  			<button type="button" class="playButton">
+  				<span>PLAY</span>
+  			</button>
+      </NuxtLink>
+
 			<button type="button">
 				<span>TUTORIAL</span>
 			</button>
