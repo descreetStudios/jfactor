@@ -14,8 +14,8 @@
 
 * {
 	image-rendering: pixelated;
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 @font-face {
@@ -135,24 +135,24 @@
 }
 
 @keyframes shakeScale {
-	0%, 100% {
-	  transform: translate(0, 0) rotate(0deg) scale(1);
+
+	0%,
+	100% {
+		transform: translate(0, 0) rotate(0deg) scale(1);
 	}
-  
+
 	25% {
-	  transform: translate(var(--shake-intensity), var(--shake-intensity)) 
-				rotate(var(--shake-rotation)) scale(var(--shake-scale));
+		transform: translate(var(--shake-intensity), var(--shake-intensity)) rotate(var(--shake-rotation)) scale(var(--shake-scale));
 	}
-  
+
 	50% {
-	  transform: translate(-1px, 0) rotate(-0.1deg) scale(1);
+		transform: translate(-1px, 0) rotate(-0.1deg) scale(1);
 	}
-  
+
 	75% {
-	  transform: translate(calc(-1 * var(--shake-intensity)), var(--shake-intensity)) 
-				rotate(calc(-1 * var(--shake-rotation))) scale(var(--shake-scale));
+		transform: translate(calc(-1 * var(--shake-intensity)), var(--shake-intensity)) rotate(calc(-1 * var(--shake-rotation))) scale(var(--shake-scale));
 	}
-  }
+}
 
 .buttons button span {
 	display: inline-block;
@@ -160,6 +160,7 @@
 	animation: shakeScale 0.8s ease-in-out infinite;
 	line-height: 3.5em;
 }
+
 .buttons .playButton span {
 	font-size: 3vw;
 	line-height: 2em;

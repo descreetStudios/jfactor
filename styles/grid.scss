@@ -1,6 +1,6 @@
 * {
-    padding:0;
-    margin:0;
+	padding: 0;
+	margin: 0;
 }
 
 .grid-wrapper {
@@ -8,7 +8,7 @@
 	justify-content: center;
 	align-items: center;
 	height: 95vh;
-}	
+}
 
 .spiral-grid {
 	display: grid;
@@ -49,6 +49,7 @@
 .button-padding-x {
 	padding: 0px 20px;
 }
+
 .button-padding-y {
 	padding: 20px 0px;
 }
@@ -58,44 +59,115 @@
 	position: relative;
 	left: -40px;
 }
+
 .button-top-adjust {
 	position: relative;
 	top: -40px;
 }
 
 /* Buttons with X padding */
-.button-1, .button-2, .button-3, .button-4, .button-5, .button-6,
-.button-7, .button-15, .button-16, .button-17, .button-18, .button-19,
-.button-20, .button-21, .button-28, .button-29, .button-30, .button-31,
-.button-32, .button-33, .button-39, .button-40, .button-41, .button-42, .button-43,
-.button-48, .button-49, .button-50, .button-51, .button-55, .button-56,
-.button-57, .button-58, .button-60, .button-61
-{
+.button-1,
+.button-2,
+.button-3,
+.button-4,
+.button-5,
+.button-6,
+.button-7,
+.button-15,
+.button-16,
+.button-17,
+.button-18,
+.button-19,
+.button-20,
+.button-21,
+.button-28,
+.button-29,
+.button-30,
+.button-31,
+.button-32,
+.button-33,
+.button-39,
+.button-40,
+.button-41,
+.button-42,
+.button-43,
+.button-48,
+.button-49,
+.button-50,
+.button-51,
+.button-55,
+.button-56,
+.button-57,
+.button-58,
+.button-60,
+.button-61 {
 	@extend .button-padding-x;
 }
 
 /* Buttons with Y padding */
-.button-8, .button-9, .button-10, .button-11, .button-12, .button-13, 
-.button-14, .button-22, .button-23, .button-24, .button-25,
-.button-26, .button-27, .button-34, .button-35, .button-36, .button-37,
-.button-38, .button-44, .button-45, .button-46, .button-47, .button-52,
-.button-53, .button-54, .button-58, .button-59, .button-62
-{
+.button-8,
+.button-9,
+.button-10,
+.button-11,
+.button-12,
+.button-13,
+.button-14,
+.button-22,
+.button-23,
+.button-24,
+.button-25,
+.button-26,
+.button-27,
+.button-34,
+.button-35,
+.button-36,
+.button-37,
+.button-38,
+.button-44,
+.button-45,
+.button-46,
+.button-47,
+.button-52,
+.button-53,
+.button-54,
+.button-58,
+.button-59,
+.button-62 {
 	@extend .button-padding-y;
 }
 
 /* Left adjustment */
-.button-15, .button-16, .button-17, .button-18, .button-19,
-.button-39, .button-40, .button-41, .button-42, .button-43,
-.button-20, .button-21, .button-55, .button-56, .button-57
-{
+.button-15,
+.button-16,
+.button-17,
+.button-18,
+.button-19,
+.button-39,
+.button-40,
+.button-41,
+.button-42,
+.button-43,
+.button-20,
+.button-21,
+.button-55,
+.button-56,
+.button-57 {
 	@extend .button-left-adjust;
 }
 
 /* Top adjustment */
-.button-22, .button-23, .button-24, .button-25, .button-26, .button-27,
-.button-44, .button-45, .button-46, .button-47, .button-58, .button-59
-{
+.button-22,
+.button-23,
+.button-24,
+.button-25,
+.button-26,
+.button-27,
+.button-44,
+.button-45,
+.button-46,
+.button-47,
+.button-58,
+.button-59 {
 	@extend .button-top-adjust;
 }
 
@@ -113,6 +185,7 @@
 		padding: 0px 5px;
 		height: 70%;
 	}
+
 	.button-padding-y {
 		padding: 5px 0px;
 		width: 70%;
@@ -122,6 +195,7 @@
 		position: relative;
 		left: -25px;
 	}
+
 	.button-top-adjust {
 		position: relative;
 		top: -25px;
@@ -155,6 +229,7 @@
 		padding: 0px 1px;
 		height: 50%;
 	}
+
 	.button-padding-y {
 		padding: 1px 0px;
 		width: 50%;
@@ -164,6 +239,7 @@
 		position: relative;
 		left: -27px;
 	}
+
 	.button-top-adjust {
 		position: relative;
 		top: -27px;
@@ -203,6 +279,7 @@
 		width: 37px;
 		height: 50%;
 	}
+
 	.button-padding-y {
 		height: 37px;
 		width: 50%;
@@ -212,6 +289,7 @@
 		position: relative;
 		left: -19px;
 	}
+
 	.button-top-adjust {
 		position: relative;
 		top: -19px;

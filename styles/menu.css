@@ -1,94 +1,110 @@
-body{
-    overflow-y: hidden;
-    background-color: rgb(35, 36, 44);
+body {
+	overflow-y: hidden;
+	background-color: rgb(35, 36, 44);
 }
 
 @keyframes navbarOver {
-    from{width: var(--target-width);}
-    to{width: 25vw;}
+	from {
+		width: var(--target-width);
+	}
+
+	to {
+		width: 25vw;
+	}
 }
 
 @keyframes navbarLeave {
-    from{width: var(--target-width);}
-    to{width: 5vw;}
+	from {
+		width: var(--target-width);
+	}
+
+	to {
+		width: 5vw;
+	}
 }
 
-.navbar{
-    border-radius: 25px;
-    float: left;
-    width: 5vw;
-    height: fit-content;
-    background-color: rgb(64, 62, 70);
+.navbar {
+	border-radius: 25px;
+	float: left;
+	width: 5vw;
+	height: fit-content;
+	background-color: rgb(64, 62, 70);
 }
 
-.cell, .firstCell, .lastCell{
-    text-align: left;
-    display: flex;
-    justify-content: left;
-    padding: 1vh;
-    height: 5vh;
+.cell,
+.firstCell,
+.lastCell {
+	text-align: left;
+	display: flex;
+	justify-content: left;
+	padding: 1vh;
+	height: 5vh;
 }
 
-.cell:hover, .firstCell:hover, .lastCell:hover{
-    background-color: blue;
+.cell:hover,
+.firstCell:hover,
+.lastCell:hover {
+	background-color: blue;
 }
 
-.firstCell:hover{
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
+.firstCell:hover {
+	border-top-right-radius: 25px;
+	border-top-left-radius: 25px;
 }
 
-.lastCell:hover{
-    border-bottom-right-radius: 25px;
-    border-bottom-left-radius: 25px;
+.lastCell:hover {
+	border-bottom-right-radius: 25px;
+	border-bottom-left-radius: 25px;
 }
 
-.cell, .lastCell{
-    border-top: solid 1px black;
+.cell,
+.lastCell {
+	border-top: solid 1px black;
 }
 
-.navbarImage{
-    pointer-events: none;
-    height: 5vh;
-    width: 5vh;
-    margin-top: auto;
-    margin-bottom: auto;
+.navbarImage {
+	pointer-events: none;
+	height: 5vh;
+	width: 5vh;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
-.navbarTitle{
-    pointer-events: none;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 2vw;
-    white-space: nowrap;
-    overflow: hidden;
-    text-align: left;
-    color: white;
+.navbarTitle {
+	pointer-events: none;
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 2vw;
+	white-space: nowrap;
+	overflow: hidden;
+	text-align: left;
+	color: white;
 }
 
-.fade-enter-active{
-    transition: opacity 0.5s ease-in-out;
+.fade-enter-active {
+	transition: opacity 0.5s ease-in-out;
 }
 
 .fade-leave-active {
-    transition: opacity 0.3s ease-in-out;
+	transition: opacity 0.3s ease-in-out;
 }
 
-.fade-enter, .fade-leave-to{
-    opacity: 0;
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
 }
 
-.header{
-    height: 5vh;
-    width: 100vw;
-    background-color: rgb(64, 62, 70);
-    padding: 3vh 0;
-    margin-bottom: 3vh;
-    text-align: center;
+.header {
+	height: 5vh;
+	width: 100vw;
+	background-color: rgb(64, 62, 70);
+	padding: 3vh 0;
+	margin-bottom: 3vh;
+	text-align: center;
 }
 
-.titleMenu{
-    font-size: 2.5rem;
-    font-family: "Hardpixel", sans-serif;
-    color: rgb(115, 15, 68);
+.titleMenu {
+	font-size: 2.5rem;
+	font-family: "Hardpixel", sans-serif;
+	color: rgb(115, 15, 68);
 }

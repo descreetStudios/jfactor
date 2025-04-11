@@ -1,17 +1,13 @@
 <template>
-<!-- Collegamento al menu -->
-<NuxtLink to="./">
-  <button class="menuBtn">Torna al Menu</button>
-</NuxtLink>
+	<!-- Collegamento al menu -->
+	<NuxtLink to="./">
+		<button class="menuBtn">Torna al Menu</button>
+	</NuxtLink>
 
 	<div class="grid-wrapper">
 		<div class="spiral-grid">
-			<div 
-				v-for="(button, index) in spiral"
-				:key="index"
-				:class="['button', button === null ? 'button-null' : 'button-' + button]"
-				@click="handleClick(button)"
-			>
+			<div v-for="(button, index) in spiral" :key="index"
+				:class="['button', button === null ? 'button-null' : 'button-' + button]" @click="handleClick(button)">
 				{{ button !== null ? button : '' }}
 			</div>
 		</div>
@@ -39,8 +35,7 @@ export default {
 </script>
 
 <style lang="scss">
-	@import url('../styles/grid.scss');
+@import url('../styles/grid.scss');
 
-	// DEBUG
-	//@import url('../styles/debug.css');
-</style>
+// DEBUG
+//@import url('../styles/debug.css');</style>
