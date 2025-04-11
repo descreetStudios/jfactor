@@ -1,41 +1,45 @@
 <template>
-	<div class="grid-wrapper">
-		<div class="spiral-grid">
-			<div 
-				v-for="(button, index) in spiral"
-				:key="index"
-				:class="['button', button === null ? 'button-null' : 'button-' + button]"
-				@click="handleClick(button)"
-			>
-				{{ button !== null ? button : '' }}
-			</div>
+	<div class="box">
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+
+	<div class="title">
+		<img class="titleImage" src="../assets/images/title.png" alt="UPG">
+		<div class="buttons">
+			<button type="button" class="playButton">
+				<span>PLAY</span>
+			</button>
+			<button type="button">
+				<span>TUTORIAL</span>
+			</button>
+			<button type="button">
+				<span>CREDITS</span>
+			</button>
 		</div>
 	</div>
+
+	<div class="bat"></div>
 </template>
 
 <script>
-import { generateSpiral } from "@/scripts/grid";
 
-export default {
-	name: "SpiralButtons",
-	data() {
-		return {
-			spiral: generateSpiral(63, 8), // 63 numeri in una griglia 8x8
-		};
-	},
-	methods: {
-		handleClick(buttonNumber) {
-			if (buttonNumber !== null) {
-				alert(`Hai cliccato sul numero ${buttonNumber}`);
-			}
-		}
-	},
-};
 </script>
 
-<style lang="scss" scoped>
-	@import url('../styles/grid.scss');
+<style lang="scss">
+@import url('../styles/title.scss');
+@import url('../styles/bg.scss');
+@import url('../styles/bat.scss');
 
-	// DEBUG
-	//@import url('../styles/debug.css');
+// DEBUG
+//@import url('../styles/debug.css');
 </style>

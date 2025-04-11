@@ -1,0 +1,162 @@
+@use 'sass:math';
+
+* {
+	image-rendering: pixelated;
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+	font-family: 'Hardpixel';
+	src: url('~/assets/fonts/Hardpixel.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'AlbercioPixel';
+	src: url('~/assets/fonts/AlbercioPixel.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'CeniosPixel';
+	src: url('~/assets/fonts/CeniosPixel.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArbanePixel';
+	src: url('~/assets/fonts/ArbanePixel.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Pixelmax';
+	src: url('~/assets/fonts/Pixelmax.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'HABESHAPIXELS';
+	src: url('~/assets/fonts/HABESHAPIXELS.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'LightPixel';
+	src: url('~/assets/fonts/LightPixel.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'SquarePixel';
+	src: url('~/assets/fonts/SquarePixel.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.title {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	text-align: center;
+}
+
+.titleImage {
+	z-index: 2;
+	max-width: 80%;
+	height: auto;
+	margin-bottom: 2rem;
+}
+
+.buttons {
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	margin-top: 4vh;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.buttons button {
+	font-size: 2.5rem;
+	font-family: 'Hardpixel', sans-serif;
+	width: 15vw;
+	padding: 1rem 2rem;
+
+	color: rgb(115, 15, 68);
+	border: none;
+	background-image: url('../assets/images/titleButton.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: transparent;
+
+	transition: all 0.3s ease;
+	overflow: hidden;
+}
+
+.buttons button:hover {
+	transform: scale(1.1);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	color: rgb(152, 20, 91);
+}
+
+.buttons button:active {
+	transform: scale(0.98);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	color: rgb(186, 27, 112);
+}
+
+:root {
+  --shake-intensity: #{math.random() * 2}px;
+  --shake-rotation: #{math.random() * 2}deg;
+  --shake-scale: 1.005;
+}
+@keyframes shakeScale {
+	0%, 100% {
+	  transform: translate(0, 0) rotate(0deg) scale(1);
+	}
+  
+	25% {
+	  transform: translate(var(--shake-intensity), var(--shake-intensity)) 
+				rotate(var(--shake-rotation)) scale(var(--shake-scale));
+	}
+  
+	50% {
+	  transform: translate(-1px, 0) rotate(-0.1deg) scale(1);
+	}
+  
+	75% {
+	  transform: translate(calc(-1 * var(--shake-intensity)), var(--shake-intensity)) 
+				rotate(calc(-1 * var(--shake-rotation))) scale(var(--shake-scale));
+	}
+  }
+
+.buttons button span {
+	display: inline-block;
+	font-size: 2vw;
+	animation: shakeScale 0.8s ease-in-out infinite;
+	line-height: 3.5em;
+}
+.buttons .playButton span {
+	font-size: 3vw;
+	line-height: 2em;
+}
+
+.content {
+	position: relative;
+	z-index: 2;
+	color: white;
+	text-align: center;
+	padding-top: 20vh;
+}
