@@ -109,9 +109,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('../styles/grid.scss');
-@import url('../styles/transition.scss');
-@import url('../styles/menuBar.scss');
+@import url('@/styles/grid.scss');
+@import url('@/styles/transition.scss');
+@import url('@/styles/menuBar.scss');
 
 /* DEBUG
 @import url('@/styles/debug.scss');
