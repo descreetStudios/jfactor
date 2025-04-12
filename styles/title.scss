@@ -1,5 +1,9 @@
 @use 'sass:math';
 
+body {
+	user-select: none;
+}
+
 :root {
 	--shake-intensity: #{math.random() * 2}px;
 	--shake-rotation: #{math.random() * 2}deg;
@@ -95,7 +99,7 @@
 	display: flex;
 	flex-direction: column;
 	margin-top: 4vh;
-	gap: 0.5rem;
+	gap: 2rem;
 	align-items: center;
 }
 
@@ -103,7 +107,8 @@
 	font-size: 2.5rem;
 	font-family: 'Hardpixel', sans-serif;
 	width: 15vw;
-	padding: 1rem 2rem;
+	height: fit-content;
+	//padding: 1rem 2rem;
 
 	color: rgb(115, 15, 68);
 	border: none;
@@ -115,6 +120,7 @@
 
 	transition: all 0.3s ease;
 	overflow: visible;
+	cursor: pointer;
 }
 
 .buttons button:hover {

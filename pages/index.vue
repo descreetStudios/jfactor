@@ -49,4 +49,5 @@
 //@import url('../styles/bat.scss');
 
 // DEBUG
-//@import url('../styles/debug.css');</style>
+//@import url('../styles/debug.scss');
+</style>

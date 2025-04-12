@@ -38,4 +38,5 @@ export default {
 @import url('../styles/grid.scss');
 
 // DEBUG
-//@import url('../styles/debug.css');</style>
+//@import url('../styles/debug.scss');
+</style>

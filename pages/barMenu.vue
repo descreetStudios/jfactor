@@ -1,8 +1,5 @@
 <template>
   <div>
-	<div class="header">
-		<h1 class="titleMenu">Untitle Plague Game</h1>
-	</div>
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
 		<div class="firstCell">
 			<img class="navbarImage" src="../assets/images/homeButton.png" alt="Home">
@@ -40,6 +37,10 @@ export default {
 			showTitle: false,
 		};
 	},
+	mounted(){
+		this.width=this.$refs.navbar.scrollWidth;
+		this.$refs.navbar.style.setProperty('--fitcontent-width', `${this.width}px`);
+	},
 	methods: {
 		navbarOver(){
 			this.width=this.$refs.navbar.scrollWidth;
@@ -69,9 +70,8 @@ export default {
 };
 </script>
 
-<style>
-	@import url('../styles/menu.css');
+<style lang="scss">
+	@import url('../styles/menu.scss');
 	
-	/* Debug */
-	/* @import url('../styles/debug.css'); */
+	@import url('../styles/debug.scss');
 </style>
