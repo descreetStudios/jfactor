@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<!-- Contenitore dei dadi con effetto 3D -->
-		<div class="dice-container">
+		<div class="dice-container clickable" @click="rollDice" :disabled="rolling">
 			<!-- Primo dado -->
 			<div class="scene">
 				<div class="cube" :style="{ transform: dice1Transform }">
@@ -91,10 +91,11 @@
 				</div>
 			</div>
 		</div>
-		<!-- Pulsante per lanciare i dadi -->
+		<!-- Pulsante per lanciare i dadi 
 		<button class="roll-button" @click="rollDice" :disabled="rolling">
 			Lancia i Dadi
 		</button>
+		-->
 		<!-- Visualizzazione del risultato -->
 		<div class="result" v-if="resultText">{{ resultText }}</div>
 	</div>
@@ -127,36 +128,55 @@ const diceMapping = {
   6: { x: 180, y: 0 }
 }
 
-
 function rollDice() {
 	if (rolling.value) return
 	rolling.value = true
 	resultText.value = ''
 
-	// Genera un numero casuale (da 1 a 6) per ciascun dado
+	const scenes = document.querySelectorAll('.scene');
+	scenes.forEach(scene => {
+		scene.classList.add('bounce');
+		// Remove the class after animation completes
+		setTimeout(() => scene.classList.remove('bounce'), 400);
+	});
+
 	const r1 = Math.floor(Math.random() * 6) + 1
 	const r2 = Math.floor(Math.random() * 6) + 1
 
-	// Rotazioni extra (multipli di 360°) per un effetto dinamico
-	const extra1 = (Math.floor(Math.random() * 4) + 3) * 360
-	const extra2 = (Math.floor(Math.random() * 4) + 3) * 360
+	// Extra full spins (still 3 to 6 rotations)
+	const spinX1 = Math.floor(Math.random() * 4 + 3) * 360
+	const spinY1 = Math.floor(Math.random() * 4 + 3) * 360
+	const spinX2 = Math.floor(Math.random() * 4 + 3) * 360
+	const spinY2 = Math.floor(Math.random() * 4 + 3) * 360
 
-	// Calcola gli angoli finali sommando la rotazione extra alla mappatura base
-	const finalX1 = extra1 + diceMapping[r1].x
-	const finalY1 = extra1 + diceMapping[r1].y
-	const finalX2 = extra2 + diceMapping[r2].x
-	const finalY2 = extra2 + diceMapping[r2].y
+	// Final angles: extra spin + mapped angle (must be clean 90° steps)
+	const finalX1 = spinX1 + diceMapping[r1].x
+	const finalY1 = spinY1 + diceMapping[r1].y
+	const finalX2 = spinX2 + diceMapping[r2].x
+	const finalY2 = spinY2 + diceMapping[r2].y
 
 	dice1Transform.value = `rotateX(${finalX1}deg) rotateY(${finalY1}deg)`
 	dice2Transform.value = `rotateX(${finalX2}deg) rotateY(${finalY2}deg)`
 
 	setTimeout(() => {
 		resultText.value = `Hai ottenuto ${r1} e ${r2} (Somma: ${r1 + r2})`
+
+		// Apply bounce effect
+		const scenes = document.querySelectorAll('.scene');
+		scenes.forEach(scene => {
+			scene.classList.add('bounce');
+			// Remove the class after animation completes
+			setTimeout(() => scene.classList.remove('bounce'), 400);
+		});
+
 		rolling.value = false
-	}, 2000)
+	}, 2000);
 }
 </script>
 
-<style>
+<style lang="scss">
 @import url('../styles/dice.scss');
+
+// Debug
+//@import url('../styles/debug.scss');
 </style>
