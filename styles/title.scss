@@ -9,15 +9,14 @@ body {
 	--shake-rotation: #{math.random() * 2}deg;
 	--shake-scale: 1.005;
 	--neon-effect: 0 0 0 transparent,
-		0 0 20px rgb(187, 40, 158),
-		0 0 50px rgba(202, 8, 157, 0.5),
-		0 0 200px rgba(165, 14, 160, 0.5),
-		0 0 250px rgb(131, 17, 129),
-		0 0 300px rgb(160, 29, 145);
+    	0 0 20px rgba(230, 230, 230, 0.8),
+    	0 0 50px rgba(230, 230, 230, 0.6),
+    	0 0 100px rgba(230, 230, 230, 0.4),
+    	0 0 200px rgba(230, 230, 230, 0.2),
+    	0 0 300px rgba(230, 230, 230, 0.1);
 }
 
 * {
-	image-rendering: pixelated;
 	margin: 0;
 	padding: 0;
 }
@@ -101,6 +100,7 @@ body {
 	margin-top: 4vh;
 	gap: 2rem;
 	align-items: center;
+	overflow: visible;
 }
 
 .buttons button {
@@ -108,11 +108,11 @@ body {
 	font-family: 'Hardpixel', sans-serif;
 	width: 15vw;
 	height: fit-content;
-	//padding: 1rem 2rem;
+	overflow: visible;
 
-	color: rgb(115, 15, 68);
+	color: rgb(159, 91, 48);
 	border: none;
-	background-image: url('../assets/images/titleButton.svg');
+	background-image: url('@/assets/images/titleButton.svg');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;

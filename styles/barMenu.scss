@@ -1,7 +1,6 @@
-body {
-	overflow-y: hidden;
-	background-color: rgb(35, 36, 44);
-}
+a {
+	text-decoration: none;
+ }
 
 @keyframes navbarOver {
 	from {
@@ -24,11 +23,14 @@ body {
 }
 
 .navbar {
+	position: absolute;
+	transform: translate(0, -50%);
+	top: 50%;
 	border-radius: 25px;
 	float: left;
 	width: fit-content;
 	height: fit-content;
-	background-color: rgb(64, 62, 70);
+	background-color: rgb(64, 62, 70);	
 }
 
 .cell,
@@ -39,6 +41,7 @@ body {
 	justify-content: left;
 	padding: 1vh;
 	height: 5vh;
+	border-right: 2px solid transparent;
 }
 
 .cell:hover,
@@ -65,7 +68,7 @@ body {
 .navbarImage {
 	pointer-events: none;
 	height: 5vh;
-	width: 5vh;
+	aspect-ratio: 1/1;
 	margin-top: auto;
 	margin-bottom: auto;
 }

@@ -11,6 +11,21 @@
 			<li></li>
 			<li></li>
 			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
 		</ul>
 	</div>
 
@@ -19,7 +34,7 @@
 
 	<!-- Buttons and Title -->
 	<div class="title">
-		<img class="titleImage" src="../assets/images/title.png" alt="UPG">
+		<img class="titleImage" src="@/assets/images/title.png" alt="UPG">
 		<div class="buttons">
 
 				<button type="button" class="playButton" ref="button" @click="transitionClose(1)">
@@ -73,11 +88,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('../styles/title.scss');
-@import url('../styles/bg.scss');
-@import url('../styles/transition.scss');
-// @import url('../styles/bat.scss');
+@import url('@/styles/title.scss');
+@import url('@/styles/bg.scss');
+@import url('@/styles/transition.scss');
+// @import url('@/styles/bat.scss');
 
-// DEBUG
-//@import url('../styles/debug.scss');
+/* DEBUG
+@import url('@/styles/debug.scss');
+*/
 </style>
