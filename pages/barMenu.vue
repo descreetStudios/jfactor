@@ -2,25 +2,25 @@
   <div>
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
 		<div class="firstCell">
-			<img class="navbarImage" src="../assets/images/homeButton.png" alt="Home">
+			<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
 			</transition>
 			</div>
 			<div class="cell">
-			<img class="navbarImage" src="../assets/images/playButton.png" alt="Home">
+			<img class="navbarImage" src="@/assets/images/playButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">PLAY</h2>
 			</transition>
 			</div>
 			<div class="cell">
-			<img class="navbarImage" src="../assets/images/teamButton.png" alt="Home">
+			<img class="navbarImage" src="@/assets/images/teamButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
 			</transition>
 			</div> 
 			<div class="lastCell">
-			<img class="navbarImage" src="../assets/images/newsButton.png" alt="Home">
+			<img class="navbarImage" src="@/assets/images/newsButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
 			</transition>
@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss">
-	@import url('../styles/menu.scss');
+	@import url('@/styles/menu.scss');
 	
-	@import url('../styles/debug.scss');
+	@import url('@/styles/debug.scss');
 </style>

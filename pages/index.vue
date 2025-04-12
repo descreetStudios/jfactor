@@ -16,7 +16,7 @@
 
 	<!-- Buttons and Title -->
 	<div class="title">
-		<img class="titleImage" src="../assets/images/title.png" alt="UPG">
+		<img class="titleImage" src="@/assets/images/title.png" alt="UPG">
 		<div class="buttons">
 			<!-- manda alla pagina di gioco -->
 			<NuxtLink to="./game">
@@ -44,10 +44,11 @@
 </script>
 
 <style lang="scss">
-@import url('../styles/title.scss');
-@import url('../styles/bg.scss');
-//@import url('../styles/bat.scss');
+@import url('@/styles/title.scss');
+@import url('@/styles/bg.scss');
+//@import url('@/styles/bat.scss');
 
-// DEBUG
-//@import url('../styles/debug.scss');
+/* DEBUG
+@import url('@/styles/debug.scss');
+*/
 </style>

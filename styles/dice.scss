@@ -50,7 +50,7 @@
 	width: 100px;
 	height: 100px;
 	background: #fff;
-	//background: url('../assets/images/dice/bg1.svg') center/cover no-repeat;
+	//background: url('@/assets/images/dice/bg1.svg') center/cover no-repeat;
 	border: 2px solid #333;
 	box-sizing: border-box;
 }
@@ -87,7 +87,7 @@
 	height: 15px;
 	background: #000;
 	//image-rendering: pixelated;
-	//background: url('../assets/images/dice/pip.svg') center/cover no-repeat;
+	//background: url('@/assets/images/dice/pip.svg') center/cover no-repeat;
 	border-radius: 50%;
 }
 
