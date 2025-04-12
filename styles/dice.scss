@@ -1,0 +1,116 @@
+/* Contenitore generale centrato */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f0f0f0;
+  }
+  
+  /* Contenitore dei dadi con effetto 3D */
+  .dice-container {
+    display: flex;
+    gap: 50px;
+    perspective: 800px;
+    margin-bottom: 20px;
+  }
+  
+  /* Ogni scene con la propria prospettiva interna */
+  .scene {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    perspective: 600px;
+  }
+  
+  /* Il cubo (dado) usa preserve-3d per mantenere le facce 3D e transition per animare */
+  .cube {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 2s ease-out;
+    /* Per rendere ombreggiatura o altezza costante, puoi personalizzare i background */
+  }
+  
+  /* Stile base per le facce del cubo */
+  .cube__face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border: 2px solid #333;
+    box-sizing: border-box;
+  }
+  
+  /* Posizionamento delle facce per formare un cubo */
+  .cube__face--front  { transform: rotateY(0deg)    translateZ(50px); }
+  .cube__face--back   { transform: rotateY(180deg)  translateZ(50px); }
+  .cube__face--right  { transform: rotateY(90deg)   translateZ(50px); }
+  .cube__face--left   { transform: rotateY(-90deg)  translateZ(50px); }
+  .cube__face--top    { transform: rotateX(90deg)   translateZ(50px); }
+  .cube__face--bottom { transform: rotateX(-90deg)  translateZ(50px); }
+  
+  /* Stile per i pip (i pallini) */
+  .pip {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #000;
+    border-radius: 50%;
+  }
+  
+  /* Posizionamento dei pip */
+  .pip.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .pip.top-left {
+    top: 15%;
+    left: 15%;
+  }
+  
+  .pip.top-right {
+    top: 15%;
+    right: 15%;
+  }
+  
+  .pip.bottom-left {
+    bottom: 15%;
+    left: 15%;
+  }
+  
+  .pip.bottom-right {
+    bottom: 15%;
+    right: 15%;
+  }
+  
+  .pip.middle-left {
+    top: 50%;
+    left: 15%;
+    transform: translateY(-50%);
+  }
+  
+  .pip.middle-right {
+    top: 50%;
+    right: 15%;
+    transform: translateY(-50%);
+  }
+  
+  /* Pulsante */
+  .roll-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  /* Risultato */
+  .result {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
