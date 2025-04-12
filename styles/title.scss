@@ -1,9 +1,5 @@
 @use 'sass:math';
 
-body {
-	user-select: none;
-}
-
 :root {
 	--shake-intensity: #{math.random() * 2}px;
 	--shake-rotation: #{math.random() * 2}deg;
@@ -19,6 +15,8 @@ body {
 * {
 	margin: 0;
 	padding: 0;
+	outline: none;
+	user-select: none;
 }
 
 @font-face {

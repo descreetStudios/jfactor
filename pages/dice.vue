@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="diceContainer">
 		<!-- Contenitore dei dadi con effetto 3D -->
 		<div class="dice-container clickable" @click="handleRoll" :disabled="rolling">
 			<!-- Primo dado -->
