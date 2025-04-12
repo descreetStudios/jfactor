@@ -1,4 +1,6 @@
 <template>
+	<div ref="left" class="left"></div>
+	<div ref="right" class="right"></div>
 	<!-- Collegamento al menu -->
 	<NuxtLink to="./">
 		<button class="menuBtn">Torna al Menu</button>
@@ -18,6 +20,9 @@
 import { generateSpiral } from "@/scripts/grid";
 
 export default {
+	mounted() {
+    	this.transitionOpen();
+  	},
 	name: "SpiralButtons",
 	data() {
 		return {
@@ -25,6 +30,10 @@ export default {
 		};
 	},
 	methods: {
+		transitionOpen() {
+			this.$refs.left.style.animation="leftOut 1s forwards";
+			this.$refs.right.style.animation="rightOut 1s forwards";
+    	},
 		handleClick(buttonNumber) {
 			if (buttonNumber !== null) {
 				alert(`Hai cliccato sul numero ${buttonNumber}`);
@@ -36,6 +45,7 @@ export default {
 
 <style lang="scss">
 @import url('../styles/grid.scss');
+@import url('../styles/transition.scss');
 
 // DEBUG
 //@import url('../styles/debug.scss');

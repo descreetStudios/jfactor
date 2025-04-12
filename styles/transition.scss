@@ -1,0 +1,51 @@
+.left, .right {
+    position: absolute;
+    z-index: 999;
+    width: 2vw;
+    height: 100vh;
+    background-color: red;
+}
+
+.right {
+    right: 0;
+}
+
+@keyframes leftIn {
+	from {
+		width: 1vw;
+	}
+
+	to {
+		width: 50vw;
+	}
+}
+
+@keyframes rightIn {
+	from {
+		width: 1vw;
+	}
+
+	to {
+		width: 50vw;
+	}
+}
+
+@keyframes leftOut {
+	from {
+		width: 50vw;
+	}
+
+	to {
+		width: 1vw;
+	}
+}
+
+@keyframes rightOut {
+	from {
+		width: 50vw;
+	}
+
+	to {
+		width: 1vw;
+	}
+}

@@ -14,21 +14,23 @@
 		</ul>
 	</div>
 
+	<div ref="left" class="left"></div>
+	<div ref="right" class="right"></div>
+
 	<!-- Buttons and Title -->
 	<div class="title">
 		<img class="titleImage" src="../assets/images/title.png" alt="UPG">
 		<div class="buttons">
-			<!-- manda alla pagina di gioco -->
-			<NuxtLink to="./game">
-				<button type="button" class="playButton">
+
+				<button type="button" class="playButton" ref="button" @click="transitionClose(1)">
 					<span>PLAY</span>
 				</button>
-			</NuxtLink>
 
-			<button type="button">
+			<button type="button" ref="button" @click="transitionClose(2)">
 				<span>TUTORIAL</span>
 			</button>
-			<button type="button">
+
+			<button type="button" ref="button" @click="transitionClose(3)">
 				<span>CREDITS</span>
 			</button>
 		</div>
@@ -40,13 +42,41 @@
 </template>
 
 <script>
-
+export default {
+	data() {
+		return {
+			page: ''
+		};
+	},	
+	methods: {
+		transitionClose(page) {
+			document.body.style.pointerEvents="none";
+			this.$refs.left.style.animation="leftIn 1s forwards"
+			this.$refs.right.style.animation="rightIn 1s forwards"
+			setTimeout(()=>{
+				switch (page) {
+					case 1:
+						navigateTo('./game');
+						break;
+					case 2:
+						navigateTo('./tutorial');
+						break;
+					case 3:
+						navigateTo('./credits');
+						break;
+				}
+				document.body.style.pointerEvents="all";
+			},1500)
+		},
+	}
+};
 </script>
 
 <style lang="scss">
 @import url('../styles/title.scss');
 @import url('../styles/bg.scss');
-//@import url('../styles/bat.scss');
+@import url('../styles/transition.scss');
+// @import url('../styles/bat.scss');
 
 // DEBUG
 //@import url('../styles/debug.scss');
