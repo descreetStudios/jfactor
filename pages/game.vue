@@ -53,6 +53,8 @@ const pieceImg = new URL('@/assets/images/piece.jpg', import.meta.url).href;
 export default {
 	mounted() {
     	this.transitionOpen();
+		this.width=this.$refs.navbar.scrollWidth;
+		this.$refs.navbar.style.setProperty('--fitcontent-width', `${this.width}px`);
   	},
 	name: "SpiralButtons",
 	data() {
@@ -61,10 +63,6 @@ export default {
 			width: 0,
 			showTitle: false,
 		};
-	},
-	mounted(){
-		this.width=this.$refs.navbar.scrollWidth;
-		this.$refs.navbar.style.setProperty('--fitcontent-width', `${this.width}px`);
 	},
 	methods: {
 		transitionOpen() {
