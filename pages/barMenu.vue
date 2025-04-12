@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss">
-	@import url('@/styles/menu.scss');
+	@import url('@/styles/barMenu.scss');
 	
 	@import url('@/styles/debug.scss');
 </style>
