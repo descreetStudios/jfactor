@@ -1,31 +1,42 @@
-export function generateSpiral(count, size)
-{
-	const grid = Array(size * size).fill(null);
-	let x = 0, y = 0;
-	let dx = 1, dy = 0;
-	let bounds = { left: 0, right: size - 1, top: 0, bottom: size - 1 };
+export function generateSpiral(size, gridSize) {
+	const spiral = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
 
-	for (let i = 1; i <= count; i++) {
-		grid[y * size + x] = i;
+	let x = Math.floor(gridSize / 2) - 1;
+	let y = Math.floor(gridSize / 2) - 1;
 
-		// Verifica la possibilità di cambiamento direzionale
-		if (dx === 1 && x === bounds.right) {
-			bounds.top++;
-			[dx, dy] = [0, 1];
-		} else if (dy === 1 && y === bounds.bottom) {
-			bounds.right--;
-			[dx, dy] = [-1, 0];
-		} else if (dx === -1 && x === bounds.left) {
-			bounds.bottom--;
-			[dx, dy] = [0, -1];
-		} else if (dy === -1 && y === bounds.top) {
-			bounds.left++;
-			[dx, dy] = [1, 0];
+	const directions = [
+		[1, 0],  // right
+		[0, 1],  // down
+		[-1, 0], // left
+		[0, -1], // up
+	];
+
+	let dir = 0;
+	let steps = 1;
+	let count = 1;
+
+	spiral[y][x] = count++;
+
+	while (count <= size) {
+		for (let r = 0; r < 2; r++) {
+			const [dx, dy] = directions[dir];
+			for (let i = 0; i < steps; i++) {
+				x += dx;
+				y += dy;
+
+				if (
+					x >= 0 && x < gridSize &&
+					y >= 0 && y < gridSize &&
+					spiral[y][x] === null
+				) {
+					spiral[y][x] = count++;
+					if (count > size) break;
+				}
+			}
+			dir = (dir + 1) % 4;
 		}
-
-		x += dx;
-		y += dy;
+		steps++;
 	}
 
-	return grid;
+	return spiral.flat();
 }

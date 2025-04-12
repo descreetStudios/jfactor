@@ -23,7 +23,7 @@ export function movePlayer(spiral, numGen, createImageAtPosition, pieceImg, refs
     alert("Movement: " + movement);
 
     for (let i = 0; i < movement; i++) {
-        const element = refs['cell' + i][0]; // Prendo il primo elemento soltanto dato che 
+        const element = refs['cell' + i][0];
         if (element) {
             console.log(element);
             const rect = element.getBoundingClientRect();
@@ -34,7 +34,7 @@ export function movePlayer(spiral, numGen, createImageAtPosition, pieceImg, refs
                 height: rect.height
             });
 
-            createImageAtPosition(pieceImg, rect.left, rect.top); // Using the imported function
+            createImageAtPosition(pieceImg, rect.left, rect.top);
         } else {
             console.log(`Elemento non trovato per index: ${i}`);
         }

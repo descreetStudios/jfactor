@@ -136,14 +136,14 @@
 		
 	</div>
 
-	<!-- Random button (unused) 
+	<!-- Random button (unused) -->
 	<button class="randBtn" @click="handleMove">Genera numero</button>
-	-->
+	
 
 	<div class="grid-wrapper">
 		<div class="spiral-grid">
 			<div v-for="(button, index) in spiral" :key="index"
-				:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell' + index"
+				:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell' + button"
 				@click="handleClick(button)">
 				{{ button !== null ? button : '' }}
 			</div>
@@ -197,7 +197,6 @@ const handleMove = () => {
 		navbar: navbar.value,
 		left: left.value,
 		right: right.value,
-		// Add any other $refs used in game.js
 	});
 };
 
