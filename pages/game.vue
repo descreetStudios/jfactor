@@ -2,7 +2,7 @@
 	<div ref="left" class="left"></div>
 	<div ref="right" class="right"></div>
 
-	<!-- Menu link -->
+	<!-- Navbar -->
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
 		<NuxtLink to="./">
 			<div class="firstCell">
@@ -32,17 +32,15 @@
 		</div>
 	</div>
 
-	<!-- Dices container -->
+	<!-- Dice Container -->
 	<div class="diceContainer">
 		<div class="dice-container clickable" @click="handleRoll" :disabled="rolling">
-			<!-- First dice -->
-			<div class="scene">
-				<div class="cube" :style="{ transform: dice1Transform }">
-					<!-- Face 1 (Front): 1 pip -->
+			<!-- Dice 1 and 2 scenes -->
+			<div class="scene" v-for="(transform, index) in [dice1Transform, dice2Transform]" :key="index">
+				<div class="cube" :style="{ transform }">
 					<div class="cube__face cube__face--front">
 						<div class="pip center"></div>
 					</div>
-					<!-- Face 6 (Back): 6 pips in 2 cols -->
 					<div class="cube__face cube__face--back">
 						<div class="pip top-left"></div>
 						<div class="pip top-right"></div>
@@ -51,69 +49,21 @@
 						<div class="pip bottom-left"></div>
 						<div class="pip bottom-right"></div>
 					</div>
-					<!-- Face 3 (Right): 3 pips -->
 					<div class="cube__face cube__face--right">
 						<div class="pip top-left"></div>
 						<div class="pip center"></div>
 						<div class="pip bottom-right"></div>
 					</div>
-					<!-- Face 4 (Left): 4 pips at angles -->
 					<div class="cube__face cube__face--left">
 						<div class="pip top-left"></div>
 						<div class="pip top-right"></div>
 						<div class="pip bottom-left"></div>
 						<div class="pip bottom-right"></div>
 					</div>
-					<!-- Face 2 (Top): 2 pips in diagonal -->
 					<div class="cube__face cube__face--top">
 						<div class="pip top-left"></div>
 						<div class="pip bottom-right"></div>
 					</div>
-					<!-- Face 5 (Bottom): 5 pips -->
-					<div class="cube__face cube__face--bottom">
-						<div class="pip top-left"></div>
-						<div class="pip top-right"></div>
-						<div class="pip center"></div>
-						<div class="pip bottom-left"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-				</div>
-			</div>
-			<!-- Second dice -->
-			<div class="scene">
-				<div class="cube" :style="{ transform: dice2Transform }">
-					<!-- Face 1 (Front) -->
-					<div class="cube__face cube__face--front">
-						<div class="pip center"></div>
-					</div>
-					<!-- Face 6 (Back) -->
-					<div class="cube__face cube__face--back">
-						<div class="pip top-left"></div>
-						<div class="pip top-right"></div>
-						<div class="pip middle-left"></div>
-						<div class="pip middle-right"></div>
-						<div class="pip bottom-left"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<!-- Face 3 (Right) -->
-					<div class="cube__face cube__face--right">
-						<div class="pip top-left"></div>
-						<div class="pip center"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<!-- Face 4 (Left) -->
-					<div class="cube__face cube__face--left">
-						<div class="pip top-left"></div>
-						<div class="pip top-right"></div>
-						<div class="pip bottom-left"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<!-- Face 2 (Top) -->
-					<div class="cube__face cube__face--top">
-						<div class="pip top-left"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<!-- Face 5 (Bottom) -->
 					<div class="cube__face cube__face--bottom">
 						<div class="pip top-left"></div>
 						<div class="pip top-right"></div>
@@ -124,56 +74,89 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- Pulsante per lanciare i dadi 
-		<button class="roll-button" @click="rollDice" :disabled="rolling">
-			Lancia i Dadi
-		</button>
-		-->
-
-		<!-- Visualizzazione del risultato -->
 		<div class="result" v-if="resultText">{{ resultText }}</div>
-		
 	</div>
 
-	<!-- Random button (unused) -->
-	<button class="randBtn" @click="handleMove">Genera numero</button>
-	
+	<!-- Win Button (temporary) -->
+	<button class="winButton" @click="winGame">Win Game</button>
 
-	<div class="grid-wrapper">
-		<div class="spiral-grid">
-			<div v-for="(button, index) in spiral" :key="index"
-				:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell' + button"
-				@click="handleClick(button)">
-				{{ button !== null ? button : '' }}
+	<!-- Grid -->
+	<div class="grid-wrapper" ref="gridWrapper">
+		<client-only>
+			<div class="spiral-grid">
+				<div v-for="(button, index) in spiral" :key="index"
+					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
+					@click="handleClick(button)" style="position: relative;">
+
+					{{ button !== null ? button : '' }}
+
+					<!-- Pawn -->
+					<div v-if="button === pawnPosition" ref="pawnContainer"
+						style="width: 25px; height: 25px; position: absolute; z-index: 10; top: 0; left: 0;">
+						<img :src="pieceImg" alt="Pawn" style="width: 25px; height: 25px;" />
+					</div>
+
+					<!-- Effects -->
+					<template v-if="button && cellEffects[button]">
+						<img v-if="cellEffects[button] > 0" :src="buffImg" alt="Buff"
+							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+						<img v-else-if="cellEffects[button] < 0" :src="debuffImg" alt="Debuff"
+							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+					</template>
+
+				</div>
 			</div>
-		</div>
+		</client-only>
 	</div>
-
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { generateSpiral } from "@/scripts/grid.js";
-import { createImageAtPosition, numGen, movePlayer } from "@/scripts/game.js";
-import { rollDice } from '@/scripts/dice.js';
+// Settings
+const DEBUG = true;
+const MAXCELLS = 64; // Av. cells + 1
 
+//#region Imports
+import { ref, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
+import { rollDice, diceResults } from '@/scripts/dice.js';
+import { generateCellEffects } from '@/scripts/game.js';
+import { generateSpiral } from '@/scripts/grid.js';
+
+import pieceImg from '@/assets/images/piece.jpg';
+import buffImg from '@/assets/images/buff.png';
+import debuffImg from '@/assets/images/debuff.png';
+
+const { proxy } = getCurrentInstance();
+//#endregion
+
+//#region References
+// Dice refs
 const dice1Transform = ref('rotateX(0deg) rotateY(0deg)');
 const dice2Transform = ref('rotateX(0deg) rotateY(0deg)');
 const resultText = ref('');
 const rolling = ref(false);
 
-const pieceImg = new URL('@/assets/images/piece.jpg', import.meta.url).href;
-
-const spiral = ref(generateSpiral(63, 8));
+// Navbar refs
+const navbar = ref(null);
 const width = ref(0);
 const showTitle = ref(false);
 
-// Refs for DOM elements
-const navbar = ref(null);
+// Transition refs
 const left = ref(null);
 const right = ref(null);
 
+// Movement refs
+const moves = ref(0);
+const position = ref(0);
+const targetPosition = ref(1);
+const pawnPosition = ref(0); // for parenting
+
+// Spiral refs
+const spiral = ref(generateSpiral(MAXCELLS-1, 8));
+const gridWrapper = ref(null);
+const cellEffects = ref(generateCellEffects());
+//#endregion
+
+//#region Dice system
 function setDiceTransforms({ dice1, dice2 }) {
   dice1Transform.value = dice1;
   dice2Transform.value = dice2;
@@ -186,36 +169,96 @@ function setResultText(text) {
 function handleRoll() {
   rollDice(rolling, setResultText, setDiceTransforms);
 }
+//#endregion
 
-const transitionOpen = () => {
-	left.value.style.animation = "leftOut 1s forwards";
-	right.value.style.animation = "rightOut 1s forwards";
-};
+//#region Movement system
+function checkEvents(pos) {
+	return cellEffects.value[pos] || 0;
+}
 
-const handleMove = () => {
-	movePlayer(spiral.value, numGen, createImageAtPosition, pieceImg, {
-		navbar: navbar.value,
-		left: left.value,
-		right: right.value,
-	});
-};
+async function updatePawnPosition(pos) {
+	await nextTick();
+	const cellEl = proxy.$refs[`cell-${pos}`]?.[0] || proxy.$refs[`cell-${pos}`];
+	if (!cellEl) return;
 
-const handleClick = (buttonNumber) => {
-	if (buttonNumber !== null) {
-		alert(`Hai cliccato sul numero ${buttonNumber}`);
+	const rect = cellEl.getBoundingClientRect();
+	const parentRect = proxy.$refs.gridWrapper.getBoundingClientRect();
+	const x = rect.left - parentRect.left + rect.width / 2 - 20;
+	const y = rect.top - parentRect.top + rect.height / 2 - 20;
+	const pawnEl = proxy.$refs.pawn;
+
+	if (pawnEl) {
+		pawnEl.style.left = `${x}px`;
+		pawnEl.style.top = `${y}px`;
 	}
-};
+}
 
+async function updateValues() {
+	await nextTick();
+	let target = position.value + (moves.value = diceResults.r1 + diceResults.r2);
+	if (target > MAXCELLS) target = MAXCELLS * 2 - target;
+	let effect = checkEvents(target);
+	DEBUG && console.log(`Cell Effect: ${effect}`);
+	target += effect;
+	targetPosition.value = pawnPosition.value = target;
+	updatePawnPosition(target);
+}
+
+function resetGame() {
+	moves.value = 0;
+	position.value = 0;
+	targetPosition.value = 1;
+	resultText.value = '';
+	diceResults.r1 = null;
+	diceResults.r2 = null;
+	setDiceTransforms({ dice1: 'rotateX(0deg) rotateY(0deg)', dice2: 'rotateX(0deg) rotateY(0deg)' });
+	cellEffects.value = generateCellEffects();
+	updatePawnPosition(position.value);
+}
+
+function winGame() {
+	position.value = MAXCELLS;
+	targetPosition.value = MAXCELLS;
+	setTimeout(() => {
+		alert('🎉 You won! Resetting the game...');
+		resetGame();
+	}, 500);
+}
+
+watch(resultText, () => {
+	if (!rolling.value && diceResults.r1 && diceResults.r2) {
+		updateValues().then(() => {
+			position.value = targetPosition.value;
+			updatePawnPosition(position.value);
+			if (position.value === MAXCELLS) {
+				setTimeout(() => {
+					alert('🎉 You won! Resetting the game...');
+					resetGame();
+				}, 500);
+			}
+		});
+	}
+});
+
+watch(pawnPosition, (newPos) => {
+	updatePawnPosition(newPos);
+});
+
+const handleClick = (button) => {
+	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
+};
+//#endregion
+
+//#region Navbar system
 const navbarOver = () => {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--target-width', `${width.value}px`);
-	navbar.value.style.animation = "navbarOver 1s forwards";
-
-	const checkWidth = setInterval(() => {
+	navbar.value.style.animation = 'navbarOver 1s forwards';
+	const check = setInterval(() => {
 		width.value = navbar.value.scrollWidth;
 		if (width.value >= 200) {
 			showTitle.value = true;
-			clearInterval(checkWidth);
+			clearInterval(check);
 		}
 	}, 100);
 };
@@ -223,21 +266,30 @@ const navbarOver = () => {
 const navbarLeave = () => {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--target-width', `${width.value}px`);
-	navbar.value.style.animation = "navbarLeave 1s forwards";
-
-	const checkWidth = setInterval(() => {
+	navbar.value.style.animation = 'navbarLeave 1s forwards';
+	const check = setInterval(() => {
 		width.value = navbar.value.scrollWidth;
 		if (width.value <= 400) {
 			showTitle.value = false;
-			clearInterval(checkWidth);
+			clearInterval(check);
 		}
 	}, 100);
 };
+//#endregion
+
+//#region Transitions
+const transitionOpen = () => {
+	left.value.style.animation = 'leftOut 1s forwards';
+	right.value.style.animation = 'rightOut 1s forwards';
+};
+//#endregion
 
 onMounted(() => {
 	transitionOpen();
+	updatePawnPosition(pawnPosition.value);
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--fitcontent-width', `${width.value}px`);
+	window.addEventListener('resize', () => updatePawnPosition(pawnPosition.value));
 });
 </script>
 

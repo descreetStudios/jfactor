@@ -8,6 +8,11 @@ export const diceMapping = {
 	6: { x: 180, y: 0 },
 };
 
+export const diceResults = {
+	r1: 0,
+	r2: 0,
+};
+
 export function rollDice(rolling, setResultText, setDiceTransforms) {
 	if (rolling.value) return;
 	rolling.value = true;
@@ -16,12 +21,14 @@ export function rollDice(rolling, setResultText, setDiceTransforms) {
 	const scenes = document.querySelectorAll(".scene");
 	scenes.forEach((scene) => {
 		scene.classList.add("bounce");
-		// Rimuovere la classe dopo che l'animazione è completata
 		setTimeout(() => scene.classList.remove("bounce"), 400);
 	});
 
 	const r1 = Math.floor(Math.random() * 6) + 1;
 	const r2 = Math.floor(Math.random() * 6) + 1;
+
+	diceResults.r1 = r1;
+	diceResults.r2 = r2;
 
 	// Extra full spins (3-6 rotazioni)
 	const spinX1 = Math.floor(Math.random() * 4 + 3) * 360;

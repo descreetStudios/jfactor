@@ -73,5 +73,6 @@ export default {
 <style lang="scss">
 	@import url('@/styles/barMenu.scss');
 	
+	/* Debug */
 	@import url('@/styles/debug.scss');
 </style>

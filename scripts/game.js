@@ -1,42 +1,19 @@
-// Function to create an image at a specified position
-export function createImageAtPosition(src, x, y) {
-    const img = document.createElement('img');
-    img.src = src;
-    img.style.width = '40px';
-    img.style.height = '40px';
-    img.style.position = 'absolute';
-    img.style.left = `${x}px`;
-    img.style.top = `${y}px`;
-    document.body.appendChild(img);
-}
+export function generateCellEffects(totalCells = 64, maxEffects = 15, effectRange = 6) {
+	const effects = {}, excluded = new Set([1, totalCells]);
 
-// Random number generator (for dice roll)
-export function numGen(min, max) {
-    return Math.floor(Math.random() * max) + min;
-}
+	while (Object.keys(effects).length < maxEffects) {
+		const cell = Math.floor(Math.random() * (totalCells - 2)) + 2;
+		if (excluded.has(cell)) continue;
 
-export function movePlayer(spiral, numGen, createImageAtPosition, pieceImg, refs) {
-    const die1 = numGen(1, 6);
-    const die2 = numGen(1, 6);
-    const movement = die1 + die2;
+		const move = Math.floor(Math.random() * (effectRange * 2 + 1)) - effectRange;
+		if (!move) continue;
 
-    alert("Movement: " + movement);
+		const target = cell + move;
+		if (target <= 1 || target >= totalCells || excluded.has(target)) continue;
 
-    for (let i = 0; i < movement; i++) {
-        const element = refs['cell' + i][0];
-        if (element) {
-            console.log(element);
-            const rect = element.getBoundingClientRect();
-            console.log(`Posizione dell'elemento ${i}:`, {
-                top: rect.top,
-                left: rect.left,
-                width: rect.width,
-                height: rect.height
-            });
+		effects[cell] = move;
+		excluded.add(cell).add(target);
+	}
 
-            createImageAtPosition(pieceImg, rect.left, rect.top);
-        } else {
-            console.log(`Elemento non trovato per index: ${i}`);
-        }
-    }
+	return effects;
 }
