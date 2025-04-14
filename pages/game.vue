@@ -285,6 +285,26 @@ const transitionOpen = () => {
 	left.value.style.animation = 'leftOut 1s forwards';
 	right.value.style.animation = 'rightOut 1s forwards';
 };
+
+const transitionClose = (page) => {
+	document.body.style.pointerEvents = "none";
+	left.value.style.animation = "leftIn 1s forwards";
+	right.value.style.animation = "rightIn 1s forwards";
+	setTimeout(() => {
+		switch (page) {
+			case 1:
+				navigateTo('./');
+				break;
+			case 2:
+				navigateTo('./credits');
+				break;
+			case 3:
+				navigateTo('./tutorial');
+				break;
+		}
+		document.body.style.pointerEvents = "all";
+	}, 1500)
+};
 //#endregion
 
 onMounted(() => {
