@@ -18,6 +18,9 @@
 	text-align: center;
 	max-width: 1000px;
 	width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px; // adjust for vertical spacing from top
 }
 
 .credits-title {
@@ -39,6 +42,7 @@
 	padding: 20px;
 	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 	transition: transform 0.3s ease;
+    animation: flicker 2s infinite ease-in-out;
 }
 
 .credit-card a {
@@ -50,6 +54,7 @@
 
 .credit-card:hover {
 	transform: translateY(-6px);
+    animation: subtle-shake 0.5s;
 }
 
 .credit-card .icon {
@@ -85,9 +90,33 @@
 }  
 
 .credits-img {
-    width: 400px; /* Adjust as needed */
+    width: 400px;
     height: auto;
     justify-content: flex;
-    margin: 0 auto; /* Center the image horizontally */
-    text-indent: -9999px; /* Hide any text inside */
+    margin: 0 auto; 
+    text-indent: -9999px;
+    animation: shake 2.0s infinite;
 }  
+
+// ANIMATIONS
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-0.5px, 0.5px); }
+    40% { transform: translate(0.5px, -0.5px); }
+    60% { transform: translate(-0.5px, 0.5px); }
+    80% { transform: translate(0.5px, -0.5px); }
+    100% { transform: translate(0, 0); }
+} 
+
+@keyframes subtle-shake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-0.5px, 0.5px); }
+    50% { transform: translate(0.5px, -0.5px); }
+    75% { transform: translate(-0.5px, 0.5px); }
+    100% { transform: translate(0, 0); }
+}  
+
+@keyframes flicker {
+    0%, 100% { box-shadow: 0 0 0px rgba(0, 0, 0, 0); }
+    50% { box-shadow: 0 0 2px rgba(0, 0, 0, 0.15); }
+}
