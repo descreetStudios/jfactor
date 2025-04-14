@@ -85,14 +85,14 @@
 }
 
 .titleImage {
-	z-index: 2;
+	z-index: 1;
 	max-width: 80%;
 	height: auto;
 	margin-bottom: 2rem;
 }
 
 .buttons {
-	z-index: 2;
+	z-index: 1;
 	display: flex;
 	flex-direction: column;
 	margin-top: 4vh;
@@ -172,7 +172,7 @@
 
 .content {
 	position: relative;
-	z-index: 2;
+	z-index: 1;
 	color: white;
 	text-align: center;
 	padding-top: 20vh;
