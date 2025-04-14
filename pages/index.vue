@@ -58,16 +58,23 @@
 
 <script>
 export default {
+	mounted() {
+		this.transitionOpen();
+	},
 	data() {
 		return {
 			page: ''
 		};
-	},	
+	},
 	methods: {
+		transitionOpen() {
+			this.$refs.left.style.animation = 'leftOut 1s forwards';
+			this.$refs.right.style.animation = 'rightOut 1s forwards';
+		},
 		transitionClose(page) {
 			document.body.style.pointerEvents = "none";
-			this.$refs.left.style.animation = "leftIn 1s forwards"
-			this.$refs.right.style.animation = "rightIn 1s forwards"
+			this.$refs.left.style.animation = "leftIn 1s forwards";
+			this.$refs.right.style.animation = "rightIn 1s forwards";
 			setTimeout(()=>{
 				switch (page) {
 					case 1:

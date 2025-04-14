@@ -285,13 +285,13 @@ const transitionClose = (page) => {
 	setTimeout(() => {
 		switch (page) {
 			case 1:
-				this.$router.push('./index');
+				navigateTo('./');
 				break;
 			case 2:
-				this.$router.push('./credits');
+				navigateTo('./credits');
 				break;
 			case 3:
-				this.$router.push('./tutorial');
+				navigateTo('./tutorial');
 				break;
 		}
 		document.body.style.pointerEvents = "all";

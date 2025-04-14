@@ -1,4 +1,8 @@
 <template>
+
+<div ref="left" class="left"></div>
+<div ref="right" class="right"></div>
+
   <div class="page-wrapper">
     <div class="box">
       <ul>
