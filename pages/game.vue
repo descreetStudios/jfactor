@@ -84,6 +84,8 @@
 	<div class="grid-wrapper" ref="gridWrapper">
 		<client-only>
 			<div class="spiral-grid">
+				<button :class="['button', 'button-0']" :ref="'cell-0'" @click="handleClick(0)"
+					style="position: absolute;"></button>
 				<div v-for="(button, index) in spiral" :key="index"
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
 					@click="handleClick(button)" style="position: relative;">
@@ -92,7 +94,7 @@
 
 					<!-- Pawn -->
 					<div v-if="button === pawnPosition" ref="pawnContainer"
-						style="width: 25px; height: 25px; position: absolute; z-index: 10; top: 0; left: 0;">
+						style="width: 25px; height: 25px; position: absolute; z-index: 1; top: 0; left: 0;">
 						<img :src="pieceImg" alt="Pawn" style="width: 25px; height: 25px;" />
 					</div>
 
@@ -208,6 +210,7 @@ function resetGame() {
 	moves.value = 0;
 	position.value = 0;
 	targetPosition.value = 1;
+	pawnPosition.value = 0;
 	resultText.value = '';
 	diceResults.r1 = null;
 	diceResults.r2 = null;
@@ -250,7 +253,7 @@ const handleClick = (button) => {
 //#endregion
 
 //#region Navbar system
-const navbarOver = () => {
+function navbarOver() {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--target-width', `${width.value}px`);
 	navbar.value.style.animation = 'navbarOver 1s forwards';
@@ -263,7 +266,7 @@ const navbarOver = () => {
 	}, 100);
 };
 
-const navbarLeave = () => {
+function navbarLeave() {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--target-width', `${width.value}px`);
 	navbar.value.style.animation = 'navbarLeave 1s forwards';
@@ -290,6 +293,24 @@ onMounted(() => {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--fitcontent-width', `${width.value}px`);
 	window.addEventListener('resize', () => updatePawnPosition(pawnPosition.value));
+
+	nextTick(() => {
+	const el63 = proxy.$refs[`cell-63`]?.[0] || proxy.$refs[`cell-63`];
+	const el64 = proxy.$refs[`cell-64`]?.[0] || proxy.$refs[`cell-64`];
+
+	if (el63 && el64) {
+		const rect = el63.getBoundingClientRect();
+		const parentRect = proxy.$refs.gridWrapper.getBoundingClientRect();
+
+		// Place 64 to the right of 63
+		const x = rect.left - parentRect.left + rect.width + 5;
+		const y = rect.top - parentRect.top;
+
+		el64.style.position = 'absolute';
+		el64.style.left = `${x}px`;
+		el64.style.top = `${y}px`;
+	}
+});
 });
 </script>
 
