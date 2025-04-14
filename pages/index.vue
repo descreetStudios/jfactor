@@ -34,7 +34,7 @@
 
 	<!-- Buttons and Title -->
 	<div class="title">
-		<img class="titleImage" src="@/assets/images/title.png" alt="UPG">
+		<img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
 		<div class="buttons">
 
 				<button type="button" class="playButton" ref="button" @click="transitionClose(1)">
@@ -62,7 +62,7 @@ export default {
 		return {
 			page: ''
 		};
-	},	
+	},
 	methods: {
 		transitionClose(page) {
 			document.body.style.pointerEvents="none";

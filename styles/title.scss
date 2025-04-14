@@ -86,16 +86,16 @@
 
 .titleImage {
 	z-index: 2;
-	max-width: 80%;
+	max-width: 40%;
 	height: auto;
-	margin-bottom: 2rem;
+	//margin-bottom: 2rem;
 }
 
 .buttons {
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
-	margin-top: 4vh;
+	//margin-top: 4vh;
 	gap: 2rem;
 	align-items: center;
 	overflow: visible;
