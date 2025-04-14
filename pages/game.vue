@@ -4,27 +4,19 @@
 
 	<!-- Navbar -->
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
-		<NuxtLink to="./">
-			<div class="firstCell">
-				<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
-				<transition name="fade">
-					<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
-				</transition>
-			</div>
-		</NuxtLink>
-		<div class="cell">
-			<img class="navbarImage" src="@/assets/images/playButton.png" alt="Home">
+		<div class="firstCell" @click="transitionClose(1)">
+			<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
 			<transition name="fade">
-				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">PLAY</h2>
+				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
 			</transition>
 		</div>
-		<div class="cell">
+		<div class="cell"  @click="transitionClose(2)">
 			<img class="navbarImage" src="@/assets/images/teamButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
 			</transition>
 		</div>
-		<div class="lastCell">
+		<div class="lastCell"  @click="transitionClose(3)">
 			<img class="navbarImage" src="@/assets/images/newsButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
@@ -281,6 +273,26 @@ const navbarLeave = () => {
 const transitionOpen = () => {
 	left.value.style.animation = 'leftOut 1s forwards';
 	right.value.style.animation = 'rightOut 1s forwards';
+};
+
+const transitionClose = (page) => {
+	document.body.style.pointerEvents = "none";
+	left.value.style.animation = "leftIn 1s forwards";
+	right.value.style.animation = "rightIn 1s forwards";
+	setTimeout(() => {
+		switch (page) {
+			case 1:
+				this.$router.push('./index');
+				break;
+			case 2:
+				this.$router.push('./credits');
+				break;
+			case 3:
+				this.$router.push('./tutorial');
+				break;
+		}
+		document.body.style.pointerEvents = "all";
+	}, 1500)
 };
 //#endregion
 

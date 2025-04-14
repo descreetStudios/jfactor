@@ -65,23 +65,23 @@ export default {
 	},	
 	methods: {
 		transitionClose(page) {
-			document.body.style.pointerEvents="none";
-			this.$refs.left.style.animation="leftIn 1s forwards"
-			this.$refs.right.style.animation="rightIn 1s forwards"
+			document.body.style.pointerEvents = "none";
+			this.$refs.left.style.animation = "leftIn 1s forwards"
+			this.$refs.right.style.animation = "rightIn 1s forwards"
 			setTimeout(()=>{
 				switch (page) {
 					case 1:
-						navigateTo('./game');
+						this.$router.push('./game');
 						break;
 					case 2:
-						navigateTo('./tutorial');
+						this.$router.push('./tutorial');
 						break;
 					case 3:
-						navigateTo('./credits');
+						this.$router.push('./credits');
 						break;
 				}
-				document.body.style.pointerEvents="all";
-			},1500)
+				document.body.style.pointerEvents = "all";
+			}, 1500)
 		},
 	}
 };
