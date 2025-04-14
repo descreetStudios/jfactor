@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.page-wrapper {
+	font-family: 'Poppins', sans-serif;
+	position: relative;
+	min-height: 100vh;
+	background: #3e0d32;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.content {
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+	max-width: 1000px;
+	width: 100%;
+}
+
+.credits-title {
+	font-size: 3rem;
+	margin-bottom: 40px;
+	color: #fbb6ce;
+}
+
+.credits-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 20px;
+}
+
+.credit-card {
+	background: rgba(255, 255, 255, 0.08);
+	backdrop-filter: blur(8px);
+	border-radius: 16px;
+	padding: 20px;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s ease;
+}
+
+.credit-card a {
+    color: #fff;
+    text-decoration: none !important;
+    font-size: 0.95rem;
+    display: block;
+}
+
+.credit-card:hover {
+	transform: translateY(-6px);
+}
+
+.credit-card .icon {
+	font-size: 2.5rem;
+	margin-bottom: 10px;
+}
+
+.credit-card h2 {
+	font-size: 1.2rem;
+	margin-bottom: 8px;
+	color: #ffb8d1;
+}
+
+.box ul li {
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	list-style: none;
+	opacity: 0;
+	background: radial-gradient(rgba(255, 70, 70, 0.8), transparent, transparent);
+	bottom: 0;
+	left: 10vh;
+	animation: animate 10s linear infinite;
+}
+
+.icon-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid #fff;
+}  
+
+.credits-img {
+    width: 400px; /* Adjust as needed */
+    height: auto;
+    justify-content: flex;
+    margin: 0 auto; /* Center the image horizontally */
+    text-indent: -9999px; /* Hide any text inside */
+}  
