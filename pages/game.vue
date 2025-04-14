@@ -4,27 +4,19 @@
 
 	<!-- Navbar -->
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
-		<NuxtLink to="./">
-			<div class="firstCell">
-				<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
-				<transition name="fade">
-					<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
-				</transition>
-			</div>
-		</NuxtLink>
-		<div class="cell">
-			<img class="navbarImage" src="@/assets/images/playButton.png" alt="Home">
+		<div class="firstCell" @click="transitionClose(1)">
+			<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
 			<transition name="fade">
-				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">PLAY</h2>
+				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
 			</transition>
 		</div>
-		<div class="cell">
+		<div class="cell"  @click="transitionClose(2)">
 			<img class="navbarImage" src="@/assets/images/teamButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
 			</transition>
 		</div>
-		<div class="lastCell">
+		<div class="lastCell"  @click="transitionClose(3)">
 			<img class="navbarImage" src="@/assets/images/newsButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
@@ -84,6 +76,8 @@
 	<div class="grid-wrapper" ref="gridWrapper">
 		<client-only>
 			<div class="spiral-grid">
+				<button :class="['button', 'button-0']" :ref="'cell-0'" @click="handleClick(0)"
+					style="position: absolute;"></button>
 				<div v-for="(button, index) in spiral" :key="index"
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
 					@click="handleClick(button)" style="position: relative;">
@@ -92,7 +86,7 @@
 
 					<!-- Pawn -->
 					<div v-if="button === pawnPosition" ref="pawnContainer"
-						style="width: 25px; height: 25px; position: absolute; z-index: 10; top: 0; left: 0;">
+						style="width: 25px; height: 25px; position: absolute; z-index: 1; top: 0; left: 0;">
 						<img :src="pieceImg" alt="Pawn" style="width: 25px; height: 25px;" />
 					</div>
 
@@ -208,6 +202,7 @@ function resetGame() {
 	moves.value = 0;
 	position.value = 0;
 	targetPosition.value = 1;
+	pawnPosition.value = 0;
 	resultText.value = '';
 	diceResults.r1 = null;
 	diceResults.r2 = null;
@@ -250,7 +245,7 @@ const handleClick = (button) => {
 //#endregion
 
 //#region Navbar system
-const navbarOver = () => {
+function navbarOver() {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--target-width', `${width.value}px`);
 	navbar.value.style.animation = 'navbarOver 1s forwards';
@@ -263,7 +258,7 @@ const navbarOver = () => {
 	}, 100);
 };
 
-const navbarLeave = () => {
+function navbarLeave() {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--target-width', `${width.value}px`);
 	navbar.value.style.animation = 'navbarLeave 1s forwards';
@@ -282,6 +277,26 @@ const transitionOpen = () => {
 	left.value.style.animation = 'leftOut 1s forwards';
 	right.value.style.animation = 'rightOut 1s forwards';
 };
+
+const transitionClose = (page) => {
+	document.body.style.pointerEvents = "none";
+	left.value.style.animation = "leftIn 1s forwards";
+	right.value.style.animation = "rightIn 1s forwards";
+	setTimeout(() => {
+		switch (page) {
+			case 1:
+				navigateTo('./');
+				break;
+			case 2:
+				navigateTo('./credits');
+				break;
+			case 3:
+				navigateTo('./tutorial');
+				break;
+		}
+		document.body.style.pointerEvents = "all";
+	}, 1500)
+};
 //#endregion
 
 onMounted(() => {
@@ -290,6 +305,24 @@ onMounted(() => {
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--fitcontent-width', `${width.value}px`);
 	window.addEventListener('resize', () => updatePawnPosition(pawnPosition.value));
+
+	nextTick(() => {
+	const el63 = proxy.$refs[`cell-63`]?.[0] || proxy.$refs[`cell-63`];
+	const el64 = proxy.$refs[`cell-64`]?.[0] || proxy.$refs[`cell-64`];
+
+	if (el63 && el64) {
+		const rect = el63.getBoundingClientRect();
+		const parentRect = proxy.$refs.gridWrapper.getBoundingClientRect();
+
+		// Place 64 to the right of 63
+		const x = rect.left - parentRect.left + rect.width + 5;
+		const y = rect.top - parentRect.top;
+
+		el64.style.position = 'absolute';
+		el64.style.left = `${x}px`;
+		el64.style.top = `${y}px`;
+	}
+});
 });
 </script>
 

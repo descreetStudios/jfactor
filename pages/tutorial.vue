@@ -14,8 +14,8 @@ export default {
   },
   methods: {
     transitionOpen() {
-      this.$refs.left.style.animation="leftOut 1s forwards";
-	    this.$refs.right.style.animation="rightOut 1s forwards";
+      this.$refs.left.style.animation = "leftOut 1s forwards";
+	    this.$refs.right.style.animation = "rightOut 1s forwards";
     },
   }
 }
