@@ -1,4 +1,8 @@
 <template>
+  <!-- for transition -->
+  <div ref="left" class="left"></div>
+  <div ref="right" class="right"></div>
+
   <div class="page-wrapper">
     <div class="box">
       <ul>
@@ -21,6 +25,14 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
+
+import creditsTitle from '@/assets/images/creditsTitle.png';
+
+// for transition
+const left = ref(null);
+const right = ref(null);
+
 const people = [
   { name: 'Brambilla Luca', icon: 'https://avatars.githubusercontent.com/u/82886061?v=4', link: 'https://github.com/ImLuCz' },
   { name: 'Bruschi Nicolas', icon: 'https://avatars.githubusercontent.com/u/199809797?s=64&v=4', link: 'https://github.com/NullSteam600395' },
@@ -28,23 +40,15 @@ const people = [
   { name: 'Mizzi Marco', icon: 'https://avatars.githubusercontent.com/u/133532352?s=64&v=4', link: 'https://github.com/descreetStudios' },
   { name: 'Zanellati Stefano', icon: 'https://avatars.githubusercontent.com/u/206925270?s=64&v=4', link: 'https://github.com/SteZane' },
 ]
-</script>
 
+const transitionOpen = () => {
+  left.value.style.animation = 'leftOut 1s forwards';
+  right.value.style.animation = 'rightOut 1s forwards';
+};
 
-<script>
-import creditsTitle from '@/assets/images/creditsTitle.png';
-
-export default {
-  mounted() {
-    this.transitionOpen();
-  },
-  methods: {
-    transitionOpen() {
-      this.$refs.left.style.animation="leftOut 1s forwards";
-	    this.$refs.right.style.animation="rightOut 1s forwards";
-    },
-  }
-}
+onMounted(() => {
+  transitionOpen();
+});
 </script>
 
 <style lang="scss">
