@@ -81,6 +81,10 @@
 }
 
 .icon-img {
+	-webkit-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	-ms-user-drag: none;
     width: 80px;
     height: 80px;
     object-fit: cover;
@@ -90,6 +94,10 @@
 }  
 
 .credits-img {
+	-webkit-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	-ms-user-drag: none;
     width: 400px;
     height: auto;
     justify-content: flex;

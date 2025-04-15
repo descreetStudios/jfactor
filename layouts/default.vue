@@ -13,8 +13,13 @@
         <div class="title">
             <img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
             <div class="buttons">
+                <span class="pixelText">
+                    <img src="@/assets/images/alert.png" alt="ALERT!" style="height: 4rem;">
+                    You are launching the game on an unsupported resolution
+                    <img src="@/assets/images/alert.png" alt="ALERT!" style="height: 4rem;" >
+                </span>
                 <button type="button" class="playButton" ref="button" @click="transitionClose(1)">
-                    <span>PLAY</span>
+                    <span>OK</span>
                 </button>
             </div>
         </div>
