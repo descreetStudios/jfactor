@@ -1,33 +1,10 @@
 <template>
 	<!-- Particles -->
 	<div class="box">
-		<ul>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
-	</div>
+        <ul>
+            <li v-for="n in 24" :key="n"></li>
+        </ul>
+    </div>
 
 	<div ref="left" class="left"></div>
 	<div ref="right" class="right"></div>

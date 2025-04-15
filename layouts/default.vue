@@ -3,35 +3,12 @@
         <!-- Particles -->
         <div class="box">
             <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li v-for="n in 24" :key="n"></li>
             </ul>
         </div>
 
         <div ref="left" class="left"></div>
-	    <div ref="right" class="right"></div>
+        <div ref="right" class="right"></div>
 
         <div class="title">
             <img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
@@ -47,47 +24,44 @@
     </div>
 </template>
 
-<script>
-    export default {
-        data(){
-            return{
-                error:false,
-                bypass:false,
-                width:0,
-                height:0
-            };
-        },
-        mounted(){
-            this.width=window.innerWidth;
-            this.height=screen.height;
-            if (this.width!=1920||this.height!=1080) {
-                this.error=true;
-            }
-        },
-        methods: {
-            transitionClose(page) {
-                document.body.style.pointerEvents="none";
-                this.$refs.left.style.animation="leftIn 1s forwards"
-                this.$refs.right.style.animation="rightIn 1s forwards"
-                setTimeout(()=>{
-                    switch (page) {
-                        case 1:
-                            navigateTo('./game');
-                            break;
-                        case 2:
-                            navigateTo('./tutorial');
-                            break;
-                        case 3:
-                            navigateTo('./credits');
-                            break;
-                    }
-                    document.body.style.pointerEvents="all";
-                    this.error=false;
-                    this.bypass=true;
-                },1000);
-            },
-        }
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const error = ref(false);
+const bypass = ref(false);
+const left = ref(null);
+const right = ref(null);
+
+onMounted(() => {
+    const width = window.innerWidth;
+    const height = window.screen.height;
+    if (width !== 1920 || height !== 1080) {
+        error.value = true;
     }
+});
+
+const transitionClose = (page) => {
+    document.body.style.pointerEvents = "none";
+    left.value.style.animation = "leftIn 1s forwards";
+    right.value.style.animation = "rightIn 1s forwards";
+
+    setTimeout(() => {
+        switch (page) {
+            case 1:
+                navigateTo('./game');
+                break;
+            case 2:
+                navigateTo('./tutorial');
+                break;
+            case 3:
+                navigateTo('./credits');
+                break;
+        }
+        document.body.style.pointerEvents = "all";
+        error.value = false;
+        bypass.value = true;
+    }, 1000);
+};
 </script>
 
 <style lang="scss">
