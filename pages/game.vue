@@ -83,8 +83,9 @@
 					{{ button !== null ? button : '' }}
 
 					<!-- Pawn -->
-					<div v-if="button === pawnPosition" ref="pawnContainer" class="pawn-container">
-						<img :src="pieceImg" alt="Pawn" class="pawn-img" />
+					<div v-if="button === targetPosition" ref="pawnContainer"
+						style="width: 25px; height: 25px; position: absolute; z-index: 1; top: 0; left: 0;">
+						<img :src="pieceImg" alt="Pawn" style="width: 25px; height: 25px;" />
 					</div>
 
 					<!-- Effects -->
@@ -138,8 +139,8 @@ const right = ref(null);
 // Movement refs
 const moves = ref(0);
 const position = ref(0);
-const targetPosition = ref(1);
-const pawnPosition = ref(0); // for parenting
+const targetPosition = ref(0);
+//const pawnPosition = ref(0); // for parenting
 
 // Spiral refs
 const spiral = ref(generateSpiral(MAXCELLS-1, 8));
@@ -186,20 +187,27 @@ async function updatePawnPosition(pos) {
 
 async function updateValues() {
 	await nextTick();
+
 	let target = position.value + (moves.value = diceResults.r1 + diceResults.r2);
 	if (target > MAXCELLS) target = MAXCELLS * 2 - target;
+
 	let effect = checkEvents(target);
 	DEBUG && console.log(`Cell Effect: ${effect}`);
 	target += effect;
-	targetPosition.value = pawnPosition.value = target;
-	updatePawnPosition(target);
+
+	while (position.value < target) {
+		await new Promise(resolve => setTimeout(resolve, 500));
+		position.value++;
+		targetPosition.value = position.value;
+		updatePawnPosition(position.value);
+	}
 }
 
 function resetGame() {
 	moves.value = 0;
 	position.value = 0;
 	targetPosition.value = 1;
-	pawnPosition.value = 0;
+	//pawnPosition.value = 0;
 	resultText.value = '';
 	diceResults.r1 = null;
 	diceResults.r2 = null;
@@ -232,7 +240,7 @@ watch(resultText, () => {
 	}
 });
 
-watch(pawnPosition, (newPos) => {
+watch(targetPosition, (newPos) => {
 	updatePawnPosition(newPos);
 });
 
@@ -298,10 +306,10 @@ const transitionClose = (page) => {
 
 onMounted(() => {
 	transitionOpen();
-	updatePawnPosition(pawnPosition.value);
+	updatePawnPosition(targetPosition.value);
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--fitcontent-width', `${width.value}px`);
-	window.addEventListener('resize', () => updatePawnPosition(pawnPosition.value));
+	window.addEventListener('resize', () => updatePawnPosition(targetPosition.value));
 
 	nextTick(() => {
 	const el63 = proxy.$refs[`cell-63`]?.[0] || proxy.$refs[`cell-63`];
