@@ -76,8 +76,6 @@
 	<div class="grid-wrapper" ref="gridWrapper">
 		<client-only>
 			<div class="spiral-grid">
-				<button :class="['button', 'button-0']" :ref="'cell-0'" @click="handleClick(0)"
-					style="position: absolute;"></button>
 				<div v-for="(button, index) in spiral" :key="index"
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
 					@click="handleClick(button)" style="position: relative;">
@@ -85,8 +83,7 @@
 					{{ button !== null ? button : '' }}
 
 					<!-- Pawn -->
-					<div v-if="button === pawnPosition" ref="pawnContainer" class="pawn-container"
-						style="width: 25px; height: 25px; position: absolute;">
+					<div v-if="button === pawnPosition" ref="pawnContainer" class="pawn-container">
 						<img :src="pieceImg" alt="Pawn" class="pawn-img" />
 					</div>
 
@@ -331,8 +328,8 @@ onMounted(() => {
 @import url('@/styles/transition.scss');
 @import url('@/styles/menuBar.scss');
 @import url('@/styles/piece.scss');
-
 @import url('@/styles/dice.scss');
+@import url('@/styles/cells.scss');
 
 /* DEBUG
 @import url('@/styles/debug.scss');

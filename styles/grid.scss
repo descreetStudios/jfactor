@@ -72,7 +72,13 @@ body {
 	top: -40px;
 }
 
-.button-1,
+// Starting cell special styles
+.button-0 {
+	width: 100px;
+	height: 100px;
+	background-image: url('../assets/images/cells/startCell.png');
+}
+
 .button-3,
 .button-4,
 .button-7,
@@ -110,7 +116,6 @@ body {
 	@extend .button-padding-x;
 }
 
-.button-1,
 .button-7,
 .button-8,
 .button-9,

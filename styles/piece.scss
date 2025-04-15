@@ -3,9 +3,12 @@
     height: 50px;
     object-fit: contain; // or 'cover' if you prefer it to crop a bit to fill
     pointer-events: none;
+    z-index: 1;
 }
 
 .pawn-container {
+    width: 25px;
+    height: 25px;
     position: absolute;
     top: 0;
     left: 0;
