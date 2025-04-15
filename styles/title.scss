@@ -85,6 +85,10 @@
 }
 
 .titleImage {
+	-webkit-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	-ms-user-drag: none;
 	z-index: 1;
 	max-width: 40%;
 	height: auto;
