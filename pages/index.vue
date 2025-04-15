@@ -55,17 +55,17 @@ export default {
 			setTimeout(()=>{
 				switch (page) {
 					case 1:
-						this.$router.push('./game');
+						navigateTo('./game');
 						break;
 					case 2:
-						this.$router.push('./tutorial');
+						navigateTo('./tutorial');
 						break;
 					case 3:
-						this.$router.push('./credits');
+						navigateTo('./credits');
 						break;
 				}
-				document.body.style.pointerEvents = "all";
-			}, 1500)
+				document.body.style.pointerEvents="all";
+			},1500)
 		},
 	}
 };

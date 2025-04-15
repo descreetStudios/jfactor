@@ -4,19 +4,27 @@
 
 	<!-- Navbar -->
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
-		<div class="firstCell" @click="transitionClose(1)">
-			<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
+		<NuxtLink to="./">
+			<div class="firstCell">
+				<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
+				<transition name="fade">
+					<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
+				</transition>
+			</div>
+		</NuxtLink>
+		<div class="cell">
+			<img class="navbarImage" src="@/assets/images/playButton.png" alt="Home">
 			<transition name="fade">
-				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
+				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">PLAY</h2>
 			</transition>
 		</div>
-		<div class="cell"  @click="transitionClose(2)">
+		<div class="cell">
 			<img class="navbarImage" src="@/assets/images/teamButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
 			</transition>
 		</div>
-		<div class="lastCell"  @click="transitionClose(3)">
+		<div class="lastCell">
 			<img class="navbarImage" src="@/assets/images/newsButton.png" alt="Home">
 			<transition name="fade">
 				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
