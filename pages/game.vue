@@ -115,7 +115,7 @@ import { rollDice, diceResults } from '@/scripts/dice.js';
 import { generateCellEffects } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
 
-import pieceImg from '@/assets/images/piece.jpg';
+import pieceImg from '@/assets/images/piece.png';
 import buffImg from '@/assets/images/buff.png';
 import debuffImg from '@/assets/images/debuff.png';
 
@@ -337,6 +337,7 @@ onMounted(() => {
 @import url('@/styles/grid.scss');
 @import url('@/styles/transition.scss');
 @import url('@/styles/menuBar.scss');
+@import url('@/styles/piece.scss');
 
 @import url('@/styles/dice.scss');
 
