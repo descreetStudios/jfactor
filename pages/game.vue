@@ -1,6 +1,10 @@
 <template>
-	<div ref="left" class="left"></div>
-	<div ref="right" class="right"></div>
+	<div ref="left" class="left">
+		<img src="@/assets/images/portone.jpg">
+	</div>
+	<div ref="right" class="right">
+		<img src="@/assets/images/portone.jpg">
+	</div>
 
 	<!-- Navbar -->
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">

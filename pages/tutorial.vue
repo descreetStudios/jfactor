@@ -1,10 +1,14 @@
 <template>
-  <div ref="left" class="left"></div>
-	<div ref="right" class="right"></div>
+  <div ref="left" class="left">
+		<img src="@/assets/images/portone.jpg">
+	</div>
+	<div ref="right" class="right">
+		<img src="@/assets/images/portone.jpg">
+	</div>
 
-    <div style="text-align: center;">
-        <h1>Tutorial</h1>
-    </div>
+  <div style="text-align: center;">
+      <h1>Tutorial</h1>
+  </div>
 </template>
 
 <script>

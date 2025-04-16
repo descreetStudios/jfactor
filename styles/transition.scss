@@ -1,22 +1,28 @@
 .left, .right {
     position: absolute;
     z-index: 5;
-    width: 2vw;
+    width: 50vw;
     height: 100vh;
-    background-color: red;
+	overflow: hidden;
+}
+
+.left {
+	left: 0;
+	overflow: hidden;
 }
 
 .right {
     right: 0;
+	overflow: hidden;
 }
 
 @keyframes leftIn {
 	from {
-		width: 1vw;
+		transform: translateX(-100%);
 	}
 
 	to {
-		width: 50vw;
+		transform: translateX(0);
 	}
 }
 
@@ -32,11 +38,11 @@
 
 @keyframes leftOut {
 	from {
-		width: 50vw;
+		transform: translateX(0);
 	}
 
 	to {
-		width: 1vw;
+		transform: translateX(-98%);
 	}
 }
 
