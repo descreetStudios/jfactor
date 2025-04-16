@@ -1,5 +1,12 @@
 <template>
     <div v-if="error && !bypass">
+        <div ref="left" class="left">
+		    <img src="@/assets/images/portone.jpg">
+	    </div>
+	    <div ref="right" class="right">
+	    	<img src="@/assets/images/portone.jpg">
+	    </div>
+
         <!-- Particles -->
         <div class="box">
             <ul>
@@ -7,16 +14,13 @@
             </ul>
         </div>
 
-        <div ref="left" class="left"></div>
-        <div ref="right" class="right"></div>
-
         <div class="title">
             <img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
             <div class="buttons">
                 <span class="pixelText">
-                    <img src="@/assets/images/alert.png" alt="ALERT!" style="height: 4rem;">
+                    <img src="@/assets/images/alert.png" alt="ALERT!" class="alert" style="height: 4rem;">
                     You are launching the game on an unsupported resolution
-                    <img src="@/assets/images/alert.png" alt="ALERT!" style="height: 4rem;" >
+                    <img src="@/assets/images/alert.png" alt="ALERT!" class="alert" style="height: 4rem; " >
                 </span>
                 <button type="button" class="playButton" ref="button" @click="transitionClose(1)">
                     <span>OK</span>
@@ -42,11 +46,20 @@ onMounted(() => {
     const height = window.screen.height;
     if (width !== 1920 || height !== 1080) {
         error.value = true;
+        nextTick(() => {
+            transitionOpen();
+        });
     }
 });
 
+const transitionOpen = () => {
+  if (left.value && right.value) {
+      left.value.style.animation = 'leftOut 1s forwards';
+      right.value.style.animation = 'rightOut 1s forwards';
+  }
+};
+
 const transitionClose = (page) => {
-    document.body.style.pointerEvents = "none";
     left.value.style.animation = "leftIn 1s forwards";
     right.value.style.animation = "rightIn 1s forwards";
 
@@ -62,10 +75,9 @@ const transitionClose = (page) => {
                 navigateTo('./credits');
                 break;
         }
-        document.body.style.pointerEvents = "all";
         error.value = false;
         bypass.value = true;
-    }, 1000);
+    }, 1500);
 };
 </script>
 
