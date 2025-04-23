@@ -76,6 +76,8 @@
 }
 
 .title {
+	background-image: url('~/assets/images/background.png');
+	background-repeat: no-repeat;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -186,12 +188,4 @@
 	color: white;
 	text-align: center;
 	padding-top: 20vh;
-}
-
-.alert {
-	height: 4rem;
-	-webkit-user-drag: none;
-	-moz-user-drag: none;
-	-o-user-drag: none;
-	-ms-user-drag: none;
 }
