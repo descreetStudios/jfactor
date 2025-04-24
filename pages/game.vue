@@ -92,6 +92,9 @@
 	<!-- Win Button (temporary) -->
 	<button class="winButton" @click="winGame">Win Game</button>
 
+	<!-- TP Button (temporary) -->
+	<button class="tpButton" @click="tp">tp</button>
+
 	<!-- Grid -->
 	<div class="grid-wrapper" ref="gridWrapper">
 		<client-only>
@@ -124,7 +127,7 @@
 <script setup>
 // Settings
 const DEBUG = true;
-const MAXCELLS = 64; // Av. cells + 1
+const MAXCELLS = 63; // Av. cells
 
 //#region Imports
 import { ref, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
@@ -156,14 +159,13 @@ const left = ref(null);
 const right = ref(null);
 
 // Movement refs
-const moves = ref(0);
 const position = ref(0);
 const targetPosition = ref(0);
 
 // Spiral refs
 const spiral = ref(generateSpiral(MAXCELLS-1, 8));
 const gridWrapper = ref(null);
-const cellEffects = ref(generateCellEffects());
+const cellEffects = ref(generateCellEffects(MAXCELLS));
 
 // Debug refs
 let showDebug = ref(false);
@@ -212,46 +214,56 @@ async function updateValues() {
 	rolling.value = true;
 	await nextTick();
 
-	// Calculate base move
-	let target = position.value + (moves.value = diceResults.r1 + diceResults.r2);
-	if (target > MAXCELLS) target = MAXCELLS * 2 - target;
+	let baseMove = diceResults.r1 + diceResults.r2;
+	let rawTarget = position.value + baseMove;
 
-	// First phase: Move to initial target
-	while (position.value < target) {
+	// Step 1: Avanza fino a 63 o al target
+	let maxReach = Math.min(rawTarget, MAXCELLS);
+	while (position.value < maxReach) {
 		await new Promise(resolve => setTimeout(resolve, 500));
 		position.value++;
 		targetPosition.value = position.value;
 		updatePawnPosition(position.value);
 	}
 
-	// Now apply the effect AFTER arriving
+	// Step 2: Overshot? Rimbalza indietro
+	if (rawTarget > MAXCELLS) {
+		let overshot = rawTarget - MAXCELLS;
+		let reboundTarget = MAXCELLS - overshot;
+		DEBUG && console.log(`Overshot! Went to ${MAXCELLS}, now bouncing back ${overshot} → to ${reboundTarget}`);
+
+		while (position.value > reboundTarget) {
+			await new Promise(resolve => setTimeout(resolve, 500));
+			position.value--;
+			targetPosition.value = position.value;
+			updatePawnPosition(position.value);
+		}
+	}
+
+	// Step 3: Ora calcola e applica effetto cella
 	let effect = checkEvents(position.value);
-	DEBUG && console.log(`Cell Effect: ${effect}`);
+	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
 
-	// Only move again if there's a non-zero effect
-	let finalTarget = position.value + effect;
-	if (finalTarget > MAXCELLS) finalTarget = MAXCELLS * 2 - finalTarget;
-	if (finalTarget < 0) finalTarget = 0;
-
-	// Second phase: Move due to event effect
-	while (position.value < finalTarget) {
+	let effectTarget = position.value + effect;
+	while (position.value !== effectTarget) {
 		await new Promise(resolve => setTimeout(resolve, 500));
-		position.value++;
+		position.value += (position.value < effectTarget) ? 1 : -1;
 		targetPosition.value = position.value;
 		updatePawnPosition(position.value);
 	}
 
-	while (position.value > finalTarget) {
-		await new Promise(resolve => setTimeout(resolve, 500));
-		position.value--;
-		targetPosition.value = position.value;
-		updatePawnPosition(position.value);
+	// Step 4: Vittoria se sei preciso su 63
+	if (position.value === MAXCELLS) {
+		setTimeout(() => {
+			alert('🎉 You won! Resetting the game...');
+			resetGame();
+		}, 500);
 	}
+
 	rolling.value = false;
 }
 
 function resetGame() {
-	moves.value = 0;
 	position.value = 0;
 	targetPosition.value = 0;
 	resultText.value = '';
@@ -271,17 +283,18 @@ function winGame() {
 	}, 500);
 }
 
+function tp() {
+	position.value = MAXCELLS - 5;
+	targetPosition.value = MAXCELLS - 5;
+	setTimeout(() => {
+	}, 500);
+}
+
 watch(resultText, () => {
 	if (!rolling.value && diceResults.r1 && diceResults.r2) {
 		updateValues().then(() => {
 			position.value = targetPosition.value;
 			updatePawnPosition(position.value);
-			if (position.value === MAXCELLS) {
-				setTimeout(() => {
-					alert('🎉 You won! Resetting the game...');
-					resetGame();
-				}, 500);
-			}
 		});
 	}
 });
