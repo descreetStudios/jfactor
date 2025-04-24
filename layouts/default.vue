@@ -1,5 +1,6 @@
 <template>
     <div v-if="error && !bypass">
+        <!-- Transition -->
         <div ref="left" class="left">
 		    <img src="@/assets/images/portone.jpg">
 	    </div>
@@ -8,10 +9,13 @@
 	    </div>
 
         <!-- Particles -->
-        <div class="box">
-            <ul>
-                <li v-for="n in 24" :key="n"></li>
-            </ul>
+        <div>
+            <div class="rain front-row">
+                <div v-for="(drop, index) in drops" :key="index" v-html="drop"></div>
+            </div>
+            <div class="rain back-row">
+                <div v-for="(backDrop, index) in backDrops" :key="index" v-html="backDrop"></div>
+            </div>
         </div>
 
         <div class="title">
@@ -40,17 +44,34 @@ const error = ref(false);
 const bypass = ref(false);
 const left = ref(null);
 const right = ref(null);
+const drops = ref([]);
+const backDrops = ref([]);
 
-onMounted(() => {
-    const width = window.innerWidth;
-    const height = window.screen.height;
-    if (width !== 1920 || height !== 1080) {
-        error.value = true;
-        nextTick(() => {
-            transitionOpen();
-        });
-    }
-});
+const makeItRain = () => {
+  let increment = 0;
+
+  while (increment < 100) {
+    const randoHundo = Math.floor(Math.random() * (98 - 1 + 1) + 1);
+    const randoFiver = Math.floor(Math.random() * (5 - 2 + 1) + 2);
+    increment += randoFiver;
+
+    const drop = `
+      <div class="drop" style="left: ${increment}%; bottom: ${randoFiver + randoFiver - 1 + 90}%; animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;">
+        <div class="stem" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
+        <div class="splat" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
+      </div>
+    `;
+    const backDrop = `
+      <div class="drop" style="right: ${increment}%; bottom: ${randoFiver + randoFiver - 1 + 90}%; animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;">
+        <div class="stem" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
+        <div class="splat" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
+      </div>
+    `;
+
+    drops.value.push(drop);
+    backDrops.value.push(backDrop);
+  }
+};
 
 const transitionOpen = () => {
   if (left.value && right.value) {
@@ -79,6 +100,18 @@ const transitionClose = (page) => {
         bypass.value = true;
     }, 1500);
 };
+
+onMounted(() => {
+    makeItRain();
+    const width = window.innerWidth;
+    const height = window.screen.height;
+    if (width !== 1920 || height !== 1080) {
+        error.value = true;
+        nextTick(() => {
+            transitionOpen();
+        });
+    }
+});
 </script>
 
 <style lang="scss">

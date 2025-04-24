@@ -91,14 +91,14 @@
 	-moz-user-drag: none;
 	-o-user-drag: none;
 	-ms-user-drag: none;
-	z-index: 1;
+	z-index: 2;
 	max-width: 40%;
 	height: auto;
 	//margin-bottom: 2rem;
 }
 
 .buttons {
-	z-index: 1;
+	z-index: 2;
 	display: flex;
 	flex-direction: column;
 	//margin-top: 4vh;
@@ -129,7 +129,7 @@
 
 .buttons button:hover {
 	transform: scale(1.1);
-	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	//box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 	color: rgb(152, 20, 91);
 }
 
@@ -184,7 +184,7 @@
 
 .content {
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	color: white;
 	text-align: center;
 	padding-top: 20vh;
