@@ -6,6 +6,22 @@
 		<img src="@/assets/images/portone.jpg">
 	</div>
 
+	<!-- DebugMenu -->
+	<div v-show="showDebug" class="debugMenu">
+		<div class="debugHead">
+			<h1 class="debugTitle">DEBUG MENU</h1>
+			<div class="debugExit">
+				<img src="@/assets/images/debugClose.png" @click="toggleDebug()">
+			</div>
+		</div>
+		<div class="debugBody">
+
+		</div>
+	 </div>
+
+	<!-- Debug Button -->
+	 <button @click="debugClick()" type="button">Debug</button>
+
 	<!-- Navbar -->
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
 		<div class="firstCell" @click="transitionClose(1)">
@@ -148,6 +164,11 @@ const targetPosition = ref(0);
 const spiral = ref(generateSpiral(MAXCELLS-1, 8));
 const gridWrapper = ref(null);
 const cellEffects = ref(generateCellEffects());
+
+// Debug refs
+let showDebug = ref(false);
+const clickCount = ref(0);
+let clickTimeout = null;
 //#endregion
 
 //#region Dice system
@@ -329,12 +350,36 @@ const transitionClose = (page) => {
 };
 //#endregion
 
+//#region Debug menu
+const debugClick = () => {
+  clickCount.value++;
+
+  if (clickTimeout) {
+    clearTimeout(clickTimeout);
+  }
+
+  clickTimeout = setTimeout(() => {
+    clickCount.value = 0;
+  }, 500);
+
+  if (clickCount.value === 5) {
+    toggleDebug();
+    clickCount.value = 0;
+  }
+};
+
+const toggleDebug = () => {
+  showDebug.value = !showDebug.value;
+};
+//#endregion
+
 onMounted(() => {
 	transitionOpen();
 	updatePawnPosition(targetPosition.value);
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--fitcontent-width', `${width.value}px`);
 	window.addEventListener('resize', () => updatePawnPosition(targetPosition.value));
+	let debug = false;
 });
 </script>
 
@@ -344,6 +389,7 @@ onMounted(() => {
 @import url('@/styles/menuBar.scss');
 @import url('@/styles/pawn.scss');
 @import url('@/styles/dice.scss');
+@import url('@/styles/debug.scss');
 
 /* DEBUG
 @import url('@/styles/debug.scss');

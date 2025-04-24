@@ -1,3 +1,37 @@
-* {
-	outline: 1px solid red;
+.debugMenu {
+  	position: absolute;
+  	top: 15%;
+  	left: 15%;
+  	width: 70%;
+  	height: 70%;
+  	background-color: rgba(0, 0, 0, 0.5);
+  	z-index: 7;
+}
+
+.debugHead {
+	font-size: large;
+	color: white;
+}
+
+.debugTitle {
+	text-align: center;
+}
+
+.debugExit {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	right: 0;
+	top: 0;
+	overflow: hidden;
+	padding: 10px;
+}
+
+.debugExit:hover {
+	transform: scale(1.1);
+}
+
+.debugExit img {
+	width: 100%;
+	height: auto;
 }
