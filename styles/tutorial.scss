@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.page-wrapper {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: #3e0d32;
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll; /* Allow vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }  
+
+.content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  text-align: center;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  padding: 40px 20px;
+}
+
+.credits-title {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #fbb6ce;
+  animation: flicker 2s infinite ease-in-out;
+}
+
+.section-nav {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.section-nav a {
+  color: #fbb6ce;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.section-nav a:hover {
+  color: #ffffff;
+}
+
+.section-block {
+  margin-bottom: 50px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.section-block h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #ffb8d1;
+}
+
+.section-block p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+/* Animations */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
