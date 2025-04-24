@@ -1,4 +1,4 @@
-export function generateCellEffects(totalCells = 64, maxEffects = 15, effectRange = 6) {
+export function generateCellEffects(totalCells = 63, maxEffects = 15, effectRange = 6) {
 	const effects = {}, excluded = new Set([1, totalCells]);
 
 	while (Object.keys(effects).length < maxEffects) {
