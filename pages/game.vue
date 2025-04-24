@@ -106,7 +106,7 @@
 					{{ button !== null ? button : '' }}
 
 					<!-- Pawn -->
-					<div v-if="button === targetPosition" class="pawnContainer">
+					<div v-if="button === position" class="pawnContainer">
 						<img :src="pieceImg" alt="Pawn" class="pawnImg" />
 					</div>
 
@@ -160,7 +160,6 @@ const right = ref(null);
 
 // Movement refs
 const position = ref(0);
-const targetPosition = ref(0);
 
 // Spiral refs
 const spiral = ref(generateSpiral(MAXCELLS-1, 8));
@@ -195,6 +194,7 @@ function checkEvents(pos) {
 
 async function updatePawnPosition(pos) {
 	await nextTick();
+
 	const cellEl = proxy.$refs[`cell-${pos}`]?.[0] || proxy.$refs[`cell-${pos}`];
 	if (!cellEl) return;
 
@@ -211,36 +211,31 @@ async function updatePawnPosition(pos) {
 }
 
 async function updateValues() {
-	rolling.value = true;
 	await nextTick();
+	rolling.value = true;
 
-	let baseMove = diceResults.r1 + diceResults.r2;
-	let rawTarget = position.value + baseMove;
+	let target = position.value + diceResults.r1 + diceResults.r2;
 
-	// Step 1: Avanza fino a 63 o al target
-	let maxReach = Math.min(rawTarget, MAXCELLS);
+	// Step 1: Go to cell 63 or target cell
+	let maxReach = Math.min(target, MAXCELLS);
 	while (position.value < maxReach) {
-		await new Promise(resolve => setTimeout(resolve, 500));
-		position.value++;
-		targetPosition.value = position.value;
-		updatePawnPosition(position.value);
+		await new Promise(resolve => setTimeout(resolve, 500)); // Wait 500ms
+		position.value++; // Step increment
 	}
 
-	// Step 2: Overshot? Rimbalza indietro
-	if (rawTarget > MAXCELLS) {
-		let overshot = rawTarget - MAXCELLS;
-		let reboundTarget = MAXCELLS - overshot;
+	// Step 2: Overshoot if target is too high
+	if (target > MAXCELLS) {
+		let overshot = target - MAXCELLS;
+		let reboundTarget = MAXCELLS - overshot; // Final target with overshot calculation
 		DEBUG && console.log(`Overshot! Went to ${MAXCELLS}, now bouncing back ${overshot} → to ${reboundTarget}`);
 
 		while (position.value > reboundTarget) {
 			await new Promise(resolve => setTimeout(resolve, 500));
 			position.value--;
-			targetPosition.value = position.value;
-			updatePawnPosition(position.value);
 		}
 	}
 
-	// Step 3: Ora calcola e applica effetto cella
+	// Step 3: Calculate cell effect
 	let effect = checkEvents(position.value);
 	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
 
@@ -248,11 +243,9 @@ async function updateValues() {
 	while (position.value !== effectTarget) {
 		await new Promise(resolve => setTimeout(resolve, 500));
 		position.value += (position.value < effectTarget) ? 1 : -1;
-		targetPosition.value = position.value;
-		updatePawnPosition(position.value);
 	}
 
-	// Step 4: Vittoria se sei preciso su 63
+	// Step 4: Win game
 	if (position.value === MAXCELLS) {
 		setTimeout(() => {
 			alert('🎉 You won! Resetting the game...');
@@ -260,12 +253,13 @@ async function updateValues() {
 		}, 500);
 	}
 
+	updatePawnPosition(position.value);
+
 	rolling.value = false;
 }
 
 function resetGame() {
 	position.value = 0;
-	targetPosition.value = 0;
 	resultText.value = '';
 	diceResults.r1 = null;
 	diceResults.r2 = null;
@@ -276,7 +270,6 @@ function resetGame() {
 
 function winGame() {
 	position.value = MAXCELLS;
-	targetPosition.value = MAXCELLS;
 	setTimeout(() => {
 		alert('🎉 You won! Resetting the game...');
 		resetGame();
@@ -285,22 +278,14 @@ function winGame() {
 
 function tp() {
 	position.value = MAXCELLS - 5;
-	targetPosition.value = MAXCELLS - 5;
-	setTimeout(() => {
-	}, 500);
 }
 
 watch(resultText, () => {
 	if (!rolling.value && diceResults.r1 && diceResults.r2) {
 		updateValues().then(() => {
-			position.value = targetPosition.value;
 			updatePawnPosition(position.value);
 		});
 	}
-});
-
-watch(targetPosition, (newPos) => {
-	updatePawnPosition(newPos);
 });
 
 const handleClick = (button) => {
@@ -388,10 +373,10 @@ const toggleDebug = () => {
 
 onMounted(() => {
 	transitionOpen();
-	updatePawnPosition(targetPosition.value);
+	updatePawnPosition(position.value);
 	width.value = navbar.value.scrollWidth;
 	navbar.value.style.setProperty('--fitcontent-width', `${width.value}px`);
-	window.addEventListener('resize', () => updatePawnPosition(targetPosition.value));
+	window.addEventListener('resize', () => updatePawnPosition(position.value));
 	let debug = false;
 });
 </script>
