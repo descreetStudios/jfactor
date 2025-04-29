@@ -1,5 +1,5 @@
 <template>
-  <title>Untitled Goose Game - Tutorial</title>
+  <title>Untitled Plague Game - Tutorial</title>
   <div class="page-wrapper">
     <div class="content">
       <!-- yap sesh -->

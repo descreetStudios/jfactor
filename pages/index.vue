@@ -1,5 +1,5 @@
 <template>
-	<title>Untitled Goose Game - Homepage</title>
+	<title>Untitled Plague Game - Homepage</title>
 
 	<!-- Particles -->
 	<div>

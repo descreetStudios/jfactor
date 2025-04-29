@@ -1,5 +1,5 @@
 <template>
-	<title>Untitled Goose Game - Game</title>
+	<title>Untitled Plague Game - Game</title>
 	<!-- DebugMenu -->
 	<div v-show="showDebug" class="debugMenu">
 		<div class="debugHead">
