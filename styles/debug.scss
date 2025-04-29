@@ -2,10 +2,10 @@
 
 .debugMenu {
     position: absolute;
-    top: 15%;
-    left: 15%;
-    width: 70%;
-    height: 70%;
+    top: 10%;
+    left: 5%;
+    width: 20%;
+    height: 40%;
     background: rgba(50, 0, 100, 0.9);
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
@@ -25,21 +25,21 @@
 }
 
 .debugHead {
-    font-size: 3rem; 
+    font-size: 1rem; 
     color: #fbb6ce; 
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .debugExit {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    right: 10px;
+    width: 30px;
+    height: auto;
+    right: 5px;
     top: 10px;
     overflow: hidden;
-    padding: 10px;
+    padding: 5px;
 }
 
 .debugExit:hover {
@@ -53,9 +53,9 @@
 }
 
 .debugBody {
-    font-size: 1.5rem; 
+    font-size: 0.9rem; 
     color: white;
-    text-align: center;
+    text-align: left;
 }
 
 .debugBody button {
@@ -64,12 +64,12 @@
     border-radius: 8px;
     color: #fbb6ce; 
     padding: 15px 20px;
-    font-size: 1.5rem; 
+    font-size: 0.9rem; 
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
     margin: 15px 0;
-    display: block;
-    width: 100%; 
+    display: inline-block;
+    width: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 

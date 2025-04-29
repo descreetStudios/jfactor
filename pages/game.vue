@@ -12,17 +12,17 @@
 			<form>
 			Win game
 			<!-- Win Button (temporary) -->
-			<button type="button" class="winButton" @click="winGame">Win Game</button>
+			<button type="button" class="winButton" @click="winGame">Win Game</button><br>
 
 			Teleport to
 			<input type="number" v-model="tpCell" placeholder="Enter the number of cell">
 			cell
 			<!-- TP Button (temporary) -->
-			<button type="button" class="tpButton" @click="tp">Submit</button>
+			<button type="button" class="tpButton" @click="tp">Submit</button><br>
 
 			Forward movement: 
 			<input type="number" v-model="forward" placeholder="Enter the number of cells">
-			<button type="button" class="moveButton" @click="debugMove">Submit</button>
+			<button type="button" class="moveButton" @click="debugMove">Submit</button><br>
 			
 			Backward movement:
 			<input type="number" v-model="backward" placeholder="Enter the number of cells">
@@ -111,7 +111,7 @@
 <script setup>
 // Settings
 const DEBUG = true;
-const MAXCELLS = 63; // Av. cells
+const MAXCELLS = 63; // Available cells
 
 //#region Imports
 import { ref, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
@@ -194,46 +194,62 @@ async function updateValues() {
 
 	let target = position.value + diceResults.r1 + diceResults.r2;
 
-	// Step 1: Go to cell 63 or target cell
-	let maxReach = Math.min(target, MAXCELLS);
-	while (position.value < maxReach) {
-		await new Promise(resolve => setTimeout(resolve, 500)); // Wait 500ms
-		position.value++; // Step increment
-	}
+	const maxReach = Math.min(target, MAXCELLS);
+	await moveToTarget(maxReach);
 
-	// Step 2: Overshoot if target is too high
 	if (target > MAXCELLS) {
-		let overshot = target - MAXCELLS;
-		let reboundTarget = MAXCELLS - overshot; // Final target with overshot calculation
-		DEBUG && console.log(`Overshot! Went to ${MAXCELLS}, now bouncing back ${overshot} → to ${reboundTarget}`);
-
-		while (position.value > reboundTarget) {
-			await new Promise(resolve => setTimeout(resolve, 500));
-			position.value--;
-		}
+		await handleOvershoot(target);
 	}
 
-	// Step 3: Calculate cell effect
-	let effect = checkEvents(position.value);
-	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
+	await applyCellEffect();
 
-	let effectTarget = position.value + effect;
-	while (position.value !== effectTarget) {
-		await new Promise(resolve => setTimeout(resolve, 500));
-		position.value += (position.value < effectTarget) ? 1 : -1;
-	}
-
-	// Step 4: Win game
 	if (position.value === MAXCELLS) {
-		setTimeout(() => {
-			alert('🎉 You won! Resetting the game...');
-			resetGame();
-		}, 500);
+		handleWin();
 	}
 
 	updatePawnPosition(position.value);
-
 	rolling.value = false;
+}
+
+async function moveToTarget(target) {
+	while (position.value < target) {
+		await delay(500);
+		position.value++;
+	}
+}
+
+async function handleOvershoot(target) {
+	const overshot = target - MAXCELLS;
+	const reboundTarget = MAXCELLS - overshot;
+
+	DEBUG && console.log(`Overshot! Went to ${MAXCELLS}, now bouncing back ${overshot} → to ${reboundTarget}`);
+
+	while (position.value > reboundTarget) {
+		await delay(500);
+		position.value--;
+	}
+}
+
+async function applyCellEffect() {
+	const effect = checkEvents(position.value);
+	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
+
+	const effectTarget = position.value + effect;
+	while (position.value !== effectTarget) {
+		await delay(500);
+		position.value += (position.value < effectTarget) ? 1 : -1;
+	}
+}
+
+function handleWin() {
+	setTimeout(() => {
+		alert('🎉 You won! Resetting the game...');
+		resetGame();
+	}, 500);
+}
+
+function delay(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function resetGame() {
@@ -330,10 +346,7 @@ async function debugMove() {
 
 function winGame() {
 	position.value = MAXCELLS;
-	setTimeout(() => {
-		alert('🎉 You won! Resetting the game...');
-		resetGame();
-	}, 500);
+	handleWin();
 }
 
 function tp() {
@@ -348,7 +361,6 @@ const handleClick = (button) => {
 onMounted(() => {
 	updatePawnPosition(position.value);
 	window.addEventListener('resize', () => updatePawnPosition(position.value));
-	let debug = false;
 });
 </script>
 
