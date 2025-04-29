@@ -1,4 +1,26 @@
-export function generateCellEffects(totalCells = 63, maxEffects = 15, effectRange = 6) {
+const questions = [
+	{
+		question: "q1",
+		answers: [
+			{ans1: "ans1", correct: true},
+			{ans2: "ans2", correct: false},
+			{ans3: "ans3", correct: false},
+			{ans4: "ans4", correct: false}
+		]
+	},
+	{
+		question: "q2",
+		answers: [
+			{ans1: "ans1", correct: false},
+			{ans2: "ans2", correct: false},
+			{ans3: "ans3", correct: true},
+			{ans4: "ans4", correct: false}
+		]
+	}
+]
+
+export function generateCellEffects(totalCells = 63, maxEffects = 15, effectRange = 6)
+{
 	const effects = {}, excluded = new Set([1, totalCells]);
 
 	while (Object.keys(effects).length < maxEffects) {

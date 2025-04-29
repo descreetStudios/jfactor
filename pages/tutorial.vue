@@ -1,4 +1,5 @@
 <template>
+  <title>Untitled Plague Game - Tutorial</title>
   <div class="page-wrapper">
     <div class="content">
       <!-- yap sesh -->
