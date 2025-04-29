@@ -1,12 +1,4 @@
 <template>
-  <!-- for transition -->
-  <div ref="left" class="left">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-	<div ref="right" class="right">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-
   <div class="page-wrapper">
     <div class="box">
       <ul>
@@ -29,13 +21,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
 
 import creditsTitle from '@/assets/images/creditsTitle.png';
-
-// for transition
-const left = ref(null);
-const right = ref(null);
 
 const people = [
   { name: 'Brambilla Luca', icon: 'https://avatars.githubusercontent.com/u/82886061?v=4', link: 'https://github.com/ImLuCz' },
@@ -44,18 +31,8 @@ const people = [
   { name: 'Mizzi Marco', icon: 'https://avatars.githubusercontent.com/u/133532352?s=64&v=4', link: 'https://github.com/descreetStudios' },
   { name: 'Zanellati Stefano', icon: 'https://avatars.githubusercontent.com/u/206925270?s=64&v=4', link: 'https://github.com/SteZane' },
 ]
-
-const transitionOpen = () => {
-  left.value.style.animation = 'leftOut 1s forwards';
-  right.value.style.animation = 'rightOut 1s forwards';
-};
-
-onMounted(() => {
-  transitionOpen();
-});
 </script>
 
 <style lang="scss">
-    @import url('../styles/transition.scss');
     @import url('../styles/credits.scss');
 </style>

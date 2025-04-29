@@ -1,13 +1,12 @@
 <template>
+    <!-- Transition -->
+    <div ref="left" class="left">
+        <img src="@/assets/images/portone.jpg">
+    </div>
+    <div ref="right" class="right">
+        <img src="@/assets/images/portone.jpg">
+    </div>
     <div v-if="error && !bypass">
-        <!-- Transition -->
-        <div ref="left" class="left">
-		    <img src="@/assets/images/portone.jpg">
-	    </div>
-	    <div ref="right" class="right">
-	    	<img src="@/assets/images/portone.jpg">
-	    </div>
-
         <!-- Particles -->
         <div>
             <div class="rain front-row">
@@ -24,7 +23,7 @@
                 <span class="pixelText">
                     <img src="@/assets/images/alert.png" alt="ALERT!" class="alert" style="height: 4rem;">
                     You are launching the game on an unsupported resolution
-                    <img src="@/assets/images/alert.png" alt="ALERT!" class="alert" style="height: 4rem; " >
+                    <img src="@/assets/images/alert.png" alt="ALERT!" class="alert" style="height: 4rem; ">
                 </span>
                 <button type="button" class="playButton" ref="button" @click="transitionClose(1)">
                     <span>OK</span>
@@ -33,7 +32,28 @@
         </div>
     </div>
     <div v-else>
-        <slot />
+        <NuxtPage />
+        <!-- Navbar -->
+        <div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
+            <div class="firstCell" @click="transitionClose(1)">
+                <img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
+                <transition name="fade">
+                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
+                </transition>
+            </div>
+            <div class="cell" @click="transitionClose(2)">
+                <img class="navbarImage" src="@/assets/images/teamButton.png" alt="Home">
+                <transition name="fade">
+                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
+                </transition>
+            </div>
+            <div class="lastCell" @click="transitionClose(3)">
+                <img class="navbarImage" src="@/assets/images/newsButton.png" alt="Home">
+                <transition name="fade">
+                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
+                </transition>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -47,37 +67,71 @@ const right = ref(null);
 const drops = ref([]);
 const backDrops = ref([]);
 
+// Navbar refs
+const navbar = ref(null);
+const widthNavbar = ref(0);
+const showTitle = ref(false);
+
+//#region Navbar system
+function navbarOver() {
+    widthNavbar.value = navbar.value.scrollWidth;
+    navbar.value.style.setProperty('--target-width', `${widthNavbar.value}px`);
+    navbar.value.style.animation = 'navbarOver 1s forwards';
+    const check = setInterval(() => {
+        widthNavbar.value = navbar.value.scrollWidth;
+        if (widthNavbar.value >= 200) {
+            showTitle.value = true;
+            clearInterval(check);
+        }
+    }, 100);
+};
+
+function navbarLeave() {
+    widthNavbar.value = navbar.value.scrollWidth;
+    navbar.value.style.setProperty('--target-width', `${widthNavbar.value}px`);
+    navbar.value.style.animation = 'navbarLeave 1s forwards';
+    const check = setInterval(() => {
+        widthNavbar.value = navbar.value.scrollWidth;
+        if (widthNavbar.value <= 400) {
+            showTitle.value = false;
+            clearInterval(check);
+        }
+    }, 100);
+};
+//#endregion
+
 const makeItRain = () => {
-  let increment = 0;
+    let increment = 0;
 
-  while (increment < 100) {
-    const randoHundo = Math.floor(Math.random() * (98 - 1 + 1) + 1);
-    const randoFiver = Math.floor(Math.random() * (5 - 2 + 1) + 2);
-    increment += randoFiver;
+    while (increment < 100) {
+        const randoHundo = Math.floor(Math.random() * (98 - 1 + 1) + 1);
+        const randoFiver = Math.floor(Math.random() * (5 - 2 + 1) + 2);
+        increment += randoFiver;
 
-    const drop = `
+        const drop = `
       <div class="drop" style="left: ${increment}%; bottom: ${randoFiver + randoFiver - 1 + 90}%; animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;">
         <div class="stem" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
         <div class="splat" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
       </div>
     `;
-    const backDrop = `
+        const backDrop = `
       <div class="drop" style="right: ${increment}%; bottom: ${randoFiver + randoFiver - 1 + 90}%; animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;">
         <div class="stem" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
         <div class="splat" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>
       </div>
     `;
 
-    drops.value.push(drop);
-    backDrops.value.push(backDrop);
-  }
+        drops.value.push(drop);
+        backDrops.value.push(backDrop);
+    }
 };
 
+//#region Transitions
 const transitionOpen = () => {
-  if (left.value && right.value) {
-      left.value.style.animation = 'leftOut 1s forwards';
-      right.value.style.animation = 'rightOut 1s forwards';
-  }
+    if (left.value && right.value) {
+        left.value.style.animation = 'leftOut 1s forwards';
+        right.value.style.animation = 'rightOut 1s forwards';
+    }
 };
 
 const transitionClose = (page) => {
@@ -98,10 +152,15 @@ const transitionClose = (page) => {
         }
         error.value = false;
         bypass.value = true;
+        transitionOpen();
     }, 1500);
 };
+//#endregion
 
 onMounted(() => {
+    transitionOpen();
+    widthNavbar.value = navbar.value.scrollWidth;
+    navbar.value.style.setProperty('--fitcontent-width', `${widthNavbar.value}px`);
     makeItRain();
     const width = window.innerWidth;
     const height = window.screen.height;
@@ -115,10 +174,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-    @import url('@/styles/title.scss');
-    @import url('@/styles/bg.scss');
-    @import url('@/styles/transition.scss');
-    
-    /*Debug*/
-    //@import url('@/styles/debug.scss');
-</style>
+@import url('@/styles/title.scss');
+@import url('@/styles/bg.scss');
+@import url('@/styles/transition.scss');
+@import url('@/styles/menuBar.scss');
+
+/*Debug*/
+//@import url('@/styles/debug.scss');</style>

@@ -9,14 +9,6 @@
 		</div>
 	</div>
 
-	<!-- Transition -->
-	<div ref="left" class="left">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-	<div ref="right" class="right">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-
 	<!-- Buttons and Title -->
 	<div class="title">
 		<img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
@@ -44,12 +36,10 @@
 <script>
 export default {
 	mounted() {
-		this.transitionOpen();
 		this.makeItRain();
 	},
 	data() {
 		return {
-			page: '',
 			drops: [],
 			backDrops: []
 		};
@@ -80,29 +70,6 @@ export default {
 				this.backDrops.push(backDrop);
 			}
 		},
-		transitionOpen() {
-			this.$refs.left.style.animation = 'leftOut 1s forwards';
-			this.$refs.right.style.animation = 'rightOut 1s forwards';
-		},
-		transitionClose(page) {
-			document.body.style.pointerEvents = "none";
-			this.$refs.left.style.animation = "leftIn 1s forwards";
-			this.$refs.right.style.animation = "rightIn 1s forwards";
-			setTimeout(() => {
-				switch (page) {
-					case 1:
-						navigateTo('./game');
-						break;
-					case 2:
-						navigateTo('./tutorial');
-						break;
-					case 3:
-						navigateTo('./credits');
-						break;
-				}
-				document.body.style.pointerEvents = "all";
-			}, 1500)
-		},
 	}
 };
 </script>
@@ -110,7 +77,6 @@ export default {
 <style lang="scss">
 @import url('@/styles/title.scss');
 @import url('@/styles/bg.scss');
-@import url('@/styles/transition.scss');
 // @import url('@/styles/bat.scss');
 
 /* DEBUG
