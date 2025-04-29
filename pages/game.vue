@@ -11,16 +11,34 @@
 		<div class="debugHead">
 			<h1 class="debugTitle">DEBUG MENU</h1>
 			<div class="debugExit">
-				<img src="@/assets/images/debugClose.png" @click="toggleDebug()">
+				<img src="@/assets/images/debugClose.png" @click="toggleDebug">
 			</div>
 		</div>
 		<div class="debugBody">
+			<form>
+			Win game
+			<!-- Win Button (temporary) -->
+			<button type="button" class="winButton" @click="winGame">Win Game</button>
 
+			Teleport to
+			<input type="number" v-model="tpCell" placeholder="Enter the number of cell">
+			cell
+			<!-- TP Button (temporary) -->
+			<button type="button" class="tpButton" @click="tp">Submit</button>
+
+			Forward movement: 
+			<input type="number" v-model="forward" placeholder="Enter the number of cells">
+			<button type="button" class="moveButton" @click="debugMove">Submit</button>
+			
+			Backward movement:
+			<input type="number" v-model="backward" placeholder="Enter the number of cells">
+			<button type="button" class="moveButton" @click="debugMove">Submit</button>
+			</form>
 		</div>
 	 </div>
 
 	<!-- Debug Button -->
-	 <button @click="debugClick()" type="button">Debug</button>
+	 <button @click="debugClick">Debug</button>
 
 	<!-- Navbar -->
 	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
@@ -88,12 +106,6 @@
 		</div>
 		<div class="result" v-if="resultText">{{ resultText }}</div>
 	</div>
-
-	<!-- Win Button (temporary) -->
-	<button class="winButton" @click="winGame">Win Game</button>
-
-	<!-- TP Button (temporary) -->
-	<button class="tpButton" @click="tp">tp</button>
 
 	<!-- Grid -->
 	<div class="grid-wrapper" ref="gridWrapper">
@@ -170,6 +182,9 @@ const cellEffects = ref(generateCellEffects(MAXCELLS));
 let showDebug = ref(false);
 const clickCount = ref(0);
 let clickTimeout = null;
+const forward = ref(0);
+const backward = ref(0);
+const tpCell = ref(0);
 //#endregion
 
 //#region Dice system
@@ -268,18 +283,6 @@ function resetGame() {
 	updatePawnPosition(position.value);
 }
 
-function winGame() {
-	position.value = MAXCELLS;
-	setTimeout(() => {
-		alert('🎉 You won! Resetting the game...');
-		resetGame();
-	}, 500);
-}
-
-function tp() {
-	position.value = MAXCELLS - 5;
-}
-
 watch(resultText, () => {
 	if (!rolling.value && diceResults.r1 && diceResults.r2) {
 		updateValues().then(() => {
@@ -287,10 +290,6 @@ watch(resultText, () => {
 		});
 	}
 });
-
-const handleClick = (button) => {
-	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
-};
 //#endregion
 
 //#region Navbar system
@@ -368,6 +367,73 @@ const debugClick = () => {
 
 const toggleDebug = () => {
   showDebug.value = !showDebug.value;
+};
+
+async function debugMove() {
+	await nextTick();
+	rolling.value = true;
+
+	let target = position.value + forward.value - backward.value;
+
+	// Step 1: Go to cell 63 or target cell
+	let maxReach = Math.min(target, MAXCELLS);
+	while (position.value < maxReach) {
+		await new Promise(resolve => setTimeout(resolve, 500)); // Wait 500ms
+		position.value++; // Step increment
+	}
+
+	// Step 2: Overshoot if target is too high
+	if (target > MAXCELLS) {
+		let overshot = target - MAXCELLS;
+		let reboundTarget = MAXCELLS - overshot; // Final target with overshot calculation
+		DEBUG && console.log(`Overshot! Went to ${MAXCELLS}, now bouncing back ${overshot} → to ${reboundTarget}`);
+
+		while (position.value > reboundTarget) {
+			await new Promise(resolve => setTimeout(resolve, 500));
+			position.value--;
+		}
+	}
+
+	// Step 3: Calculate cell effect
+	let effect = checkEvents(position.value);
+	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
+
+	let effectTarget = position.value + effect;
+	while (position.value !== effectTarget) {
+		await new Promise(resolve => setTimeout(resolve, 500));
+		position.value += (position.value < effectTarget) ? 1 : -1;
+	}
+
+	// Step 4: Win game
+	if (position.value === MAXCELLS) {
+		setTimeout(() => {
+			alert('🎉 You won! Resetting the game...');
+			resetGame();
+		}, 500);
+	}
+
+	updatePawnPosition(position.value);
+
+	rolling.value = false;
+
+	forward.value = 0;
+	backward.value = 0;
+}
+
+function winGame() {
+	position.value = MAXCELLS;
+	setTimeout(() => {
+		alert('🎉 You won! Resetting the game...');
+		resetGame();
+	}, 500);
+}
+
+function tp() {
+	position.value = tpCell.value;
+}
+
+const handleClick = (button) => {
+	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
 };
 //#endregion
 

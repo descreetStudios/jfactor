@@ -1,37 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 .debugMenu {
-  	position: absolute;
-  	top: 15%;
-  	left: 15%;
-  	width: 70%;
-  	height: 70%;
-  	background-color: rgba(0, 0, 0, 0.5);
-  	z-index: 7;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+    background: rgba(50, 0, 100, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    z-index: 7;
+    padding: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .debugHead {
-	font-size: large;
-	color: white;
-}
-
-.debugTitle {
-	text-align: center;
+    font-size: 3rem; 
+    color: #fbb6ce; 
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .debugExit {
-	position: absolute;
-	width: 40px;
-	height: 40px;
-	right: 0;
-	top: 0;
-	overflow: hidden;
-	padding: 10px;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 10px;
+    top: 10px;
+    overflow: hidden;
+    padding: 10px;
 }
 
 .debugExit:hover {
-	transform: scale(1.1);
+    transform: scale(1.1);
+    transition: transform 0.2s;
 }
 
 .debugExit img {
-	width: 100%;
-	height: auto;
+    width: 100%;
+    height: auto;
+}
+
+.debugBody {
+    font-size: 1.5rem; 
+    color: white;
+    text-align: center;
+}
+
+.debugBody button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: #fbb6ce; 
+    padding: 15px 20px;
+    font-size: 1.5rem; 
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin: 15px 0;
+    display: block;
+    width: 100%; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.debugBody button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px);
+}
+
+.debugBody button:active {
+    transform: translateY(2px);
 }
