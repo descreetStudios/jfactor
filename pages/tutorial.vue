@@ -1,5 +1,4 @@
 <template>
-<!-- yap sesh -->
   <div class="page-wrapper">
     <div class="content">
       <!-- yap sesh -->
