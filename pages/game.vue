@@ -2,34 +2,36 @@
 	<title>Untitled Plague Game - Game</title>
 	<!-- DebugMenu -->
 	<div v-show="showDebug" class="debugMenu">
-		<div class="debugHead">
-			<h1 class="debugTitle">DEBUG MENU</h1>
-			<div class="debugExit">
-				<img src="@/assets/images/debugClose.png" @click="toggleDebug">
-			</div>
-		</div>
-		<div class="debugBody">
-			<form>
-			Win game
-			<!-- Win Button (temporary) -->
-			<button type="button" class="winButton" @click="winGame">Win Game</button><br>
-
-			Teleport to
-			<input type="number" v-model="tpCell" placeholder="Enter the number of cell">
-			cell
-			<!-- TP Button (temporary) -->
-			<button type="button" class="tpButton" @click="tp">Submit</button><br>
-
-			Forward movement: 
-			<input type="number" v-model="forward" placeholder="Enter the number of cells">
-			<button type="button" class="moveButton" @click="debugMove">Submit</button><br>
-			
-			Backward movement:
-			<input type="number" v-model="backward" placeholder="Enter the number of cells">
-			<button type="button" class="moveButton" @click="debugMove">Submit</button>
-			</form>
-		</div>
-	 </div>
+  <div class="debugHead">
+    <h1 class="debugTitle">DEBUG MENU</h1>
+    <div class="debugExit" @click="toggleDebug">
+      <span class="closeX">X</span>
+    </div>
+  </div>
+  <div class="debugBody">
+    <form>
+      <div class="formRow">
+        <span>Win game</span>
+        <button type="button" class="winButton" @click="winGame">Win Game</button>
+      </div>
+      <div class="formRow">
+        <span>Teleport to</span>
+        <input type="number" class="debugInput" v-model="tpCell" placeholder="Enter the number of cell">
+        <button type="button" class="debugButton" @click="tp">Submit</button>
+      </div>
+      <div class="formRow">
+        <span>Forward movement:</span>
+        <input type="number" class="debugInput" v-model="forward" placeholder="Enter the number of cells">
+        <button type="button" class="debugButton" @click="debugMove">Submit</button>
+      </div>
+      <div class="formRow">
+        <span>Backward movement:</span>
+        <input type="number" class="debugInput" v-model="backward" placeholder="Enter the number of cells">
+        <button type="button" class="debugButton" @click="debugMove">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 	<!-- Debug Button -->
 	 <button @click="debugClick">Debug</button>
