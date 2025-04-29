@@ -75,6 +75,11 @@ html {
   text-align: left;
 }
 
+/* Make text selectable only on this page */
+p {
+  user-select: text;
+}
+
 /* Animations */
 @keyframes flicker {
   0%, 100% { opacity: 1; }
