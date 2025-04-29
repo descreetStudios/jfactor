@@ -1,25 +1,20 @@
 <template>
-  <div ref="left" class="left">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-	<div ref="right" class="right">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-
-<!-- yap sesh -->
+  <title>Untitled Plague Game - Tutorial</title>
   <div class="page-wrapper">
     <div class="content">
+      <!-- yap sesh -->
       <h1 class="credits-title">UNTITLED PLAGUE GAME</h1>
 
       <nav class="section-nav">
         <a href="#lore">Lore</a>
         <a href="#mechanics">Mechanics</a>
+        <a href="#cellTypes">Cell Types</a>
       </nav>
 
       <section id="lore" class="section-block">
         <h2>Lore</h2>
         <p>
-          In this game, the player takes on the role of a medieval peasant living in quite the metropolis. 
+          In this game, the player takes on the role of a medieval peasant living in a bustling town. 
         </p>
         <p><em>During the black plague.</em></p>
         <p>
@@ -50,25 +45,29 @@
           If you land on a special cell, you might be set back or launched forward a certain number of steps, or something else might happen to your piece.
         </p>
       </section>
+
+      <section id="cellTypes" class="section-block">
+        <h2>Cell Types</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </section>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  mounted() {
-    this.transitionOpen();
-  },
-  methods: {
-    transitionOpen() {
-      this.$refs.left.style.animation="leftOut 1s forwards";
-	    this.$refs.right.style.animation="rightOut 1s forwards";
-    },
-  }
-}
 </script>
 
 <style lang="scss">
-    @import url('../styles/transition.scss');
     @import url('../styles/tutorial.scss');
 </style>

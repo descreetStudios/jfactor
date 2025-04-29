@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+html {
+  overflow-y: scroll;
+}
+
+
 .page-wrapper {
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
@@ -68,6 +73,11 @@
   line-height: 1.7;
   margin-bottom: 16px;
   text-align: left;
+}
+
+/* Make text selectable only on this page */
+p {
+  user-select: text;
 }
 
 /* Animations */

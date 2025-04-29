@@ -1,11 +1,5 @@
 <template>
-	<div ref="left" class="left">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-	<div ref="right" class="right">
-		<img src="@/assets/images/portone.jpg">
-	</div>
-
+	<title>Untitled Plague Game - Game</title>
 	<!-- DebugMenu -->
 	<div v-show="showDebug" class="debugMenu">
 		<div class="debugHead">
@@ -39,28 +33,6 @@
 
 	<!-- Debug Button -->
 	 <button @click="debugClick">Debug</button>
-
-	<!-- Navbar -->
-	<div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
-		<div class="firstCell" @click="transitionClose(1)">
-			<img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
-			<transition name="fade">
-				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
-			</transition>
-		</div>
-		<div class="cell" @click="transitionClose(2)">
-			<img class="navbarImage" src="@/assets/images/teamButton.png" alt="Home">
-			<transition name="fade">
-				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
-			</transition>
-		</div>
-		<div class="lastCell" @click="transitionClose(3)">
-			<img class="navbarImage" src="@/assets/images/newsButton.png" alt="Home">
-			<transition name="fade">
-				<h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
-			</transition>
-		</div>
-	</div>
 
 	<!-- Dice Container -->
 	<div class="diceContainer">
@@ -160,15 +132,6 @@ const dice1Transform = ref('rotateX(0deg) rotateY(0deg)');
 const dice2Transform = ref('rotateX(0deg) rotateY(0deg)');
 const resultText = ref('');
 const rolling = ref(false);
-
-// Navbar refs
-const navbar = ref(null);
-const width = ref(0);
-const showTitle = ref(false);
-
-// Transition refs
-const left = ref(null);
-const right = ref(null);
 
 // Movement refs
 const position = ref(0);
@@ -308,61 +271,6 @@ watch(resultText, () => {
 });
 //#endregion
 
-//#region Navbar system
-function navbarOver() {
-	width.value = navbar.value.scrollWidth;
-	navbar.value.style.setProperty('--target-width', `${width.value}px`);
-	navbar.value.style.animation = 'navbarOver 1s forwards';
-	const check = setInterval(() => {
-		width.value = navbar.value.scrollWidth;
-		if (width.value >= 200) {
-			showTitle.value = true;
-			clearInterval(check);
-		}
-	}, 100);
-};
-
-function navbarLeave() {
-	width.value = navbar.value.scrollWidth;
-	navbar.value.style.setProperty('--target-width', `${width.value}px`);
-	navbar.value.style.animation = 'navbarLeave 1s forwards';
-	const check = setInterval(() => {
-		width.value = navbar.value.scrollWidth;
-		if (width.value <= 400) {
-			showTitle.value = false;
-			clearInterval(check);
-		}
-	}, 100);
-};
-//#endregion
-
-//#region Transitions
-const transitionOpen = () => {
-	left.value.style.animation = 'leftOut 1s forwards';
-	right.value.style.animation = 'rightOut 1s forwards';
-};
-
-const transitionClose = (page) => {
-	document.body.style.pointerEvents = "none";
-	left.value.style.animation = "leftIn 1s forwards";
-	right.value.style.animation = "rightIn 1s forwards";
-	setTimeout(() => {
-		switch (page) {
-			case 1:
-				navigateTo('./');
-				break;
-			case 2:
-				navigateTo('./credits');
-				break;
-			case 3:
-				navigateTo('./tutorial');
-				break;
-		}
-		document.body.style.pointerEvents = "all";
-	}, 1500)
-};
-//#endregion
-
 //#region Debug menu
 const debugClick = () => {
   clickCount.value++;
@@ -451,18 +359,13 @@ const handleClick = (button) => {
 //#endregion
 
 onMounted(() => {
-	transitionOpen();
 	updatePawnPosition(position.value);
-	width.value = navbar.value.scrollWidth;
-	navbar.value.style.setProperty('--fitcontent-width', `${width.value}px`);
 	window.addEventListener('resize', () => updatePawnPosition(position.value));
 });
 </script>
 
 <style lang="scss">
 @import url('@/styles/grid.scss');
-@import url('@/styles/transition.scss');
-@import url('@/styles/menuBar.scss');
 @import url('@/styles/pawn.scss');
 @import url('@/styles/dice.scss');
 @import url('@/styles/debug.scss');
