@@ -1,4 +1,6 @@
 <template>
+	<title>Untitled Goose Game - Homepage</title>
+
 	<!-- Particles -->
 	<div>
 		<div class="rain front-row">

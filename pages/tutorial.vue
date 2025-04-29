@@ -1,4 +1,5 @@
 <template>
+  <title>Untitled Goose Game - Tutorial</title>
   <div class="page-wrapper">
     <div class="content">
       <!-- yap sesh -->

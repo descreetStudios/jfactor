@@ -1,4 +1,5 @@
 <template>
+	<title>Untitled Goose Game - Game</title>
 	<!-- DebugMenu -->
 	<div v-show="showDebug" class="debugMenu">
 		<div class="debugHead">

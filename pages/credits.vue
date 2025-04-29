@@ -1,4 +1,5 @@
 <template>
+  <title>Untitled Goose Game - Credits</title>
   <div class="page-wrapper">
     <div class="box">
       <ul>
