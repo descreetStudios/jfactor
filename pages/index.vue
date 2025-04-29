@@ -11,25 +11,6 @@
 		</div>
 	</div>
 
-	<!-- Buttons and Title -->
-	<div class="title">
-		<img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
-		<div class="buttons">
-
-			<button type="button" class="playButton" ref="button" @click="transitionClose(1)">
-				<span>PLAY</span>
-			</button>
-
-			<button type="button" ref="button" @click="transitionClose(2)">
-				<span>TUTORIAL</span>
-			</button>
-
-			<button type="button" ref="button" @click="transitionClose(3)">
-				<span>CREDITS</span>
-			</button>
-		</div>
-	</div>
-
 	<!--
 	<div class="bat"></div>
 	-->
@@ -77,8 +58,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('@/styles/title.scss');
-@import url('@/styles/bg.scss');
+// @import url('@/styles/title.scss');
+// @import url('@/styles/bg.scss');
 // @import url('@/styles/bat.scss');
 
 /* DEBUG

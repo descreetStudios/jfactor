@@ -6,6 +6,7 @@
     <div ref="right" class="right">
         <img src="@/assets/images/portone.jpg">
     </div>
+
     <div v-if="error && !bypass">
         <!-- Particles -->
         <div>
@@ -33,24 +34,43 @@
     </div>
     <div v-else>
         <NuxtPage />
+        <!-- Buttons and Title -->
+        <div v-if="!navbarVisible && !error" class="title">
+            <img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
+            <div class="buttons">
+
+                <button type="button" class="playButton" ref="button" @click="transitionClose(2)">
+                    <span>PLAY</span>
+                </button>
+
+                <button type="button" ref="button" @click="transitionClose(3)">
+                    <span>TUTORIAL</span>
+                </button>
+
+                <button type="button" ref="button" @click="transitionClose(4)">
+                    <span>CREDITS</span>
+                </button>
+            </div>
+        </div>
         <!-- Navbar -->
-        <div class="navbar" ref="navbar" @mouseenter="navbarOver" @mouseleave="navbarLeave">
+        <div v-if="navbarVisible && !error" class="navbar" ref="navbar" @mouseenter="navbarOver"
+            @mouseleave="navbarLeave">
             <div class="firstCell" @click="transitionClose(1)">
                 <img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
                 <transition name="fade">
                     <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
                 </transition>
             </div>
-            <div class="cell" @click="transitionClose(2)">
-                <img class="navbarImage" src="@/assets/images/teamButton.png" alt="Home">
+            <div class="cell" @click="transitionClose(3)">
+                <img class="navbarImage" src="@/assets/images/newsButton.png" alt="Tutorial">
                 <transition name="fade">
-                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
+                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">TUTORIAL</h2>
                 </transition>
             </div>
-            <div class="lastCell" @click="transitionClose(3)">
-                <img class="navbarImage" src="@/assets/images/newsButton.png" alt="Home">
+            <div class="lastCell" @click="transitionClose(4)">
+                <img class="navbarImage" src="@/assets/images/teamButton.png" alt="Credits">
                 <transition name="fade">
-                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">NEWS AND <br> UPDATES</h2>
+                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
                 </transition>
             </div>
         </div>
@@ -58,8 +78,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router'
 
+const navbarVisible = ref(false);
+const route = useRoute();
 const error = ref(false);
 const bypass = ref(false);
 const left = ref(null);
@@ -126,6 +149,26 @@ const makeItRain = () => {
     }
 };
 
+function updateNavbarWidth() {
+    if (navbar.value) {
+        widthNavbar.value = navbar.value.scrollWidth;
+        navbar.value.style.setProperty('--fitcontent-width', `${widthNavbar.value}px`);
+    }
+}
+
+watch(
+    () => route.name, 
+    (newName) => {
+        navbarVisible.value = newName !== 'index' && !error.value; 
+        nextTick(() => {
+            if (navbarVisible.value) {
+                updateNavbarWidth();
+            }
+        });
+    },
+    { immediate: true }
+);
+
 //#region Transitions
 const transitionOpen = () => {
     if (left.value && right.value) {
@@ -141,12 +184,15 @@ const transitionClose = (page) => {
     setTimeout(() => {
         switch (page) {
             case 1:
-                navigateTo('./game');
+                navigateTo('./');
                 break;
             case 2:
-                navigateTo('./tutorial');
+                navigateTo('./game');
                 break;
             case 3:
+                navigateTo('./tutorial');
+                break;
+            case 4:
                 navigateTo('./credits');
                 break;
         }
@@ -158,9 +204,10 @@ const transitionClose = (page) => {
 //#endregion
 
 onMounted(() => {
+    nextTick(() => {
+            updateNavbarWidth();
+    });
     transitionOpen();
-    widthNavbar.value = navbar.value.scrollWidth;
-    navbar.value.style.setProperty('--fitcontent-width', `${widthNavbar.value}px`);
     makeItRain();
     const width = window.innerWidth;
     const height = window.screen.height;
