@@ -36,6 +36,11 @@
 	<!-- Debug Button -->
 	 <button @click="debugClick">Debug</button>
 
+	<!-- Challenge Button -->
+	<NuxtLink to="./challenge">
+		<button>Challenge</button>
+	</NuxtLink>
+
 	<!-- Dice Container -->
 	<div class="diceContainer">
 		<div class="dice-container clickable" @click="handleRoll" :disabled="rolling">
