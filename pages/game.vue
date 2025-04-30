@@ -1,6 +1,6 @@
 <template>
 	<title>Untitled Plague Game - Game</title>
-	<!-- DebugMenu -->
+	<!-- DebugMenu container -->
 	<div v-show="showDebug" class="debugMenu">
 		<div class="debugHead">
 			<h1 class="debugTitle">DEBUG MENU</h1>
@@ -12,22 +12,12 @@
 			<form>
 				<div class="formRow">
 					<span>Win game</span>
-					<button type="button" class="winButton" @click="winGame">Win Game</button>
+					<button type="button" class="winButton" @click="handleWin">Win Game</button>
 				</div>
 				<div class="formRow">
 					<span>Teleport to</span>
 					<input type="number" class="debugInput" v-model="tpCell" placeholder="Enter the number of cell">
 					<button type="button" class="debugButton" @click="tp">Submit</button>
-				</div>
-				<div class="formRow">
-					<span>Forward movement:</span>
-					<input type="number" class="debugInput" v-model="forward" placeholder="Enter the number of cells">
-					<button type="button" class="debugButton" @click="debugMove">Submit</button>
-				</div>
-				<div class="formRow">
-					<span>Backward movement:</span>
-					<input type="number" class="debugInput" v-model="backward" placeholder="Enter the number of cells">
-					<button type="button" class="debugButton" @click="debugMove">Submit</button>
 				</div>
 			</form>
 		</div>
@@ -36,9 +26,9 @@
 	<!-- Debug Button -->
 	<button @click="debugClick">Debug</button>
 
-	<!-- Challenge Button -->
-	<NuxtLink to="./challenge">
-		<button>Challenge</button>
+	<!-- Quest Button -->
+	<NuxtLink to="./quest">
+		<button>Quest</button>
 	</NuxtLink>
 
 	<!-- Dice Container -->
@@ -125,7 +115,7 @@ const DEBUG = true;
 const MAXCELLS = 63; // Available cells
 
 //#region Imports
-import { ref, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
+import { ref, computed, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import { rollDice, diceResults } from '@/scripts/dice.js';
 import { generateEffects } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
@@ -157,8 +147,6 @@ const effects = ref(generateEffects(MAXCELLS));
 let showDebug = ref(false);
 const clickCount = ref(0);
 let clickTimeout = null;
-const forward = ref(0);
-const backward = ref(0);
 const tpCell = ref(0);
 //#endregion
 
@@ -255,7 +243,6 @@ async function applyCellEffect() {
 			position.value += (position.value < effectTarget) ? 1 : -1;
 		}
 	}
-
 }
 
 function handleWin() {
@@ -288,7 +275,9 @@ watch(resultText, () => {
 });
 //#endregion
 
-//#region Debug menu
+//#region Debug
+
+// Debug menu 5 consecutive clicks
 const debugClick = () => {
 	clickCount.value++;
 
@@ -306,70 +295,23 @@ const debugClick = () => {
 	}
 };
 
+// Debug menu on/off
 const toggleDebug = () => {
 	showDebug.value = !showDebug.value;
 };
 
-async function debugMove() {
-	await nextTick();
-	rolling.value = true;
-
-	let target = position.value + forward.value - backward.value;
-
-	// Step 1: Go to cell 63 or target cell
-	let maxReach = Math.min(target, MAXCELLS);
-	while (position.value < maxReach) {
-		await new Promise(resolve => setTimeout(resolve, 500)); // Wait 500ms
-		position.value++; // Step increment
-	}
-
-	// Step 2: Overshoot if target is too high
-	if (target > MAXCELLS) {
-		let overshot = target - MAXCELLS;
-		let reboundTarget = MAXCELLS - overshot; // Final target with overshot calculation
-		DEBUG && console.log(`Overshot! Went to ${MAXCELLS}, now bouncing back ${overshot} → to ${reboundTarget}`);
-
-		while (position.value > reboundTarget) {
-			await new Promise(resolve => setTimeout(resolve, 500));
-			position.value--;
+// Teleport pawn
+async function tp() {
+	if (tpCell.value >= 1 && tpCell.value <= 63) {
+		position.value = tpCell.value;
+		await applyCellEffect();
+		if (position.value == MAXCELLS){
+			handleWin();
 		}
 	}
-
-	// Step 3: Calculate cell effect
-	let effect = checkEvents(position.value);
-	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
-
-	let effectTarget = position.value + effect;
-	while (position.value !== effectTarget) {
-		await new Promise(resolve => setTimeout(resolve, 500));
-		position.value += (position.value < effectTarget) ? 1 : -1;
-	}
-
-	// Step 4: Win game
-	if (position.value === MAXCELLS) {
-		setTimeout(() => {
-			alert('🎉 You won! Resetting the game...');
-			resetGame();
-		}, 500);
-	}
-
-	updatePawnPosition(position.value);
-
-	rolling.value = false;
-
-	forward.value = 0;
-	backward.value = 0;
 }
 
-function winGame() {
-	position.value = MAXCELLS;
-	handleWin();
-}
-
-function tp() {
-	position.value = tpCell.value;
-}
-
+// Debug cells number
 const handleClick = (button) => {
 	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
 };
@@ -385,8 +327,8 @@ onMounted(() => {
 @import url('@/styles/grid.scss');
 @import url('@/styles/pawn.scss');
 @import url('@/styles/dice.scss');
-@import url('@/styles/debug.scss');
-
+@import url('@/styles/quest.scss');
+@import url('@/styles/debugMenu.scss');
 /* DEBUG
 @import url('@/styles/debug.scss');
 */

@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.debugMenu {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 20%;
+  height: auto;
+  background: rgba(20, 20, 40, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 7;
+  padding: 20px;
+  animation: fadeIn 0.5s ease;
+  border: 2px solid #fbb6ce;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.debugHead {
+  font-size: 1.5rem;
+  color: #fbb6ce;
+  text-align: center;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #fbb6ce, 0 0 20px #ff00ff;
+}
+
+.debugExit {
+  position: absolute;
+  width: 30px;
+  height: auto;
+  right: 5px;
+  top: 10px;
+  overflow: hidden;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.debugExit:hover {
+  transform: scale(1.1);
+}
+
+.closeX {
+  font-size: 1.5rem;
+  color: #ff0000;
+  text-shadow: 
+    0 0 5px #ff0000, 
+    0 0 10px #ff0000, 
+    0 0 15px #ff4d4d, 
+    0 0 20px #ff4d4d, 
+    0 0 25px #ff4d4d;
+  cursor: pointer;
+}
+
+.debugBody {
+  font-size: 1rem;
+  color: white;
+  text-align: left;
+}
+
+.debugBody form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formRow {
+  margin: 10px 0;
+}
+
+.formRow span {
+  float: left;
+  color: #fbb6ce;
+  font-size: 1.2rem;
+  width: 50%;
+}
+
+.formRow input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #fbb6ce;
+  border-radius: 8px;
+  color: #fbb6ce;
+  padding: 10px;
+  width: 15%;
+  text-align: center;
+  float: left;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin-right: 10px;
+}
+
+.formRow input::-webkit-inner-spin-button,
+.formRow input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.formRow button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  color: #fbb6ce;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  float: left;
+  line-height: 1;
+}
+
+.formRow button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-4px);
+}
+
+.formRow button:active {
+  transform: translateY(2px);
+}
