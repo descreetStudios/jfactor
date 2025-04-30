@@ -1,102 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 a {
-	text-decoration: none;
- }
+  text-decoration: none;
+}
 
 @keyframes navbarOver {
-	from {
-		width: var(--target-width);
-	}
+  from {
+    width: var(--target-width);
+  }
 
-	to {
-		width: 15vw;
-	}
+  to {
+    width: 15vw;
+  }
 }
 
 @keyframes navbarLeave {
-	from {
-		width: var(--target-width);
-	}
+  from {
+    width: var(--target-width);
+  }
 
-	to {
-		width: var(--fitcontent-width);
-	}
+  to {
+    width: var(--fitcontent-width);
+  }
 }
 
 .navbar {
-	z-index: 1;
-	position: fixed;
-	border-radius: 16px;
-	-webkit-backdrop-filter: blur(6px);
-	backdrop-filter: blur(6px);
-	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-	transform: translate(0, -50%);
-	top: 50%;
-	border-radius: 25px;
-	float: left;
-	width: fit-content;
-	height: fit-content;
-	background: rgba(255, 255, 255, 0.06);
+  z-index: 1;
+  position: fixed;
+  border-radius: 16px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transform: translate(0, -50%);
+  top: 50%;
+  border-radius: 25px;
+  float: left;
+  width: fit-content;
+  height: fit-content;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .cell,
 .firstCell,
 .lastCell {
-	text-align: left;
-	display: flex;
-	justify-content: left;
-	padding: 1vh;
-	height: 5vh;
-	border-right: 2px solid transparent;
-	cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: left;
+  padding: 1vh;
+  height: 5vh;
+  border-right: 2px solid transparent;
+  cursor: pointer;
 }
 
 .cell:hover,
 .firstCell:hover,
 .lastCell:hover {
-	background: rgba(255, 255, 255, 0.1);;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .firstCell:hover {
-	border-top-right-radius: 25px;
-	border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
 }
 
 .lastCell:hover {
-	border-bottom-right-radius: 25px;
-	border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
 
 .navbarImage {
-	pointer-events: none;
-	height: 5vh;
-	aspect-ratio: 1/1;
-	margin-top: auto;
-	margin-bottom: auto;
+  pointer-events: none;
+  height: 5vh;
+  aspect-ratio: 1/1;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .navbarTitle {
-	font-family: 'Poppins', sans-serif;
-	pointer-events: none;
-	margin-top: auto;
-	margin-bottom: auto;
-	margin-left: 2vw;
-	white-space: nowrap;
-	overflow: hidden;
-	text-align: left;
-	color: white;
+  font-family: "Poppins", sans-serif;
+  pointer-events: none;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 2vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: left;
+  color: white;
 }
 
 .fade-enter-active {
-	transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .fade-leave-active {
-	transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .fade-enter,
 .fade-leave-to {
-	opacity: 0;
+  opacity: 0;
 }

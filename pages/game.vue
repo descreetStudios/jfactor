@@ -93,19 +93,51 @@
 
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
-						<img v-if="effects[button] > 0" :src="buffImg" alt="Buff"
+						<img v-if="effects[button].move > 0" :src="buffImg" alt="Buff"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
-						<img v-else-if="effects[button] < 0" :src="debuffImg" alt="Debuff"
+						<img v-else-if="effects[button].move < 0" :src="debuffImg" alt="Debuff"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
 						<!-- <img v-else-if="Array.isArray(effects[button])" :src="questionImg" alt="Question"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
-						<img v-else-if="effects[button]" :src="questionImg" alt="Question"
+						<img v-else-if="effects[button].type == 'question'" :src="questionImg" alt="Question"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
 					</template>
 
 				</div>
 			</div>
 		</client-only>
+	</div>
+
+	<!-- Questions -->
+	<div class="question-wrapper" v-if="showQuest">
+		<div class="carousel" v-if="!showResult">
+			<div class="question-text">
+				{{ currentQuestion.question }}
+			</div>
+
+			<div class="options">
+				<button v-for="(option, index) in currentQuestion.options" :key="index"
+					:disabled="selectedOption !== null" @click="selectOption(option)">
+					{{ option }}
+				</button>
+			</div>
+
+			<div class="feedback" v-if="selectedOption !== null">
+				<span v-if="isCorrect" class="rightAns">Corretto!</span>
+				<span v-else class="wrongAns">Sbagliato. Risposta corretta: {{ currentQuestion.answer }}</span>
+			</div>
+
+			<div class="nav-buttons">
+				<button @click="prevQuestion" :disabled="currentIndex == 0">Indietro</button>
+				<button @click="nextQuestion" :disabled="selectedOption === null">
+					{{ currentIndex === questions.length - 1 ? 'Vedi Risultato' : 'Avanti' }}
+				</button>
+			</div>
+		</div>
+
+		<div class="result" v-else>
+			Hai risposto correttamente a {{ correctCount }} su {{ questions.length }} domande!
+		</div>
 	</div>
 </template>
 
@@ -117,7 +149,7 @@ const MAXCELLS = 63; // Available cells
 //#region Imports
 import { ref, computed, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import { rollDice, diceResults } from '@/scripts/dice.js';
-import { generateEffects } from '@/scripts/game.js';
+import { generateEffects, questions } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
 
 import pieceImg from '@/assets/images/piece.png';
@@ -137,6 +169,15 @@ const rolling = ref(false);
 
 // Movement refs
 const position = ref(0);
+
+// Question refs
+const showQuest = ref(false);
+const currentIndex = ref(0);
+const selectedOption = ref(null);
+const correctCount = ref(0);
+const showResult = ref(false);
+const currentQuestion = computed(() => questions[currentIndex.value])
+const isCorrect = computed(() => selectedOption.value === currentQuestion.value.answer)
 
 // Spiral refs
 const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
@@ -167,7 +208,17 @@ function handleRoll() {
 
 //#region Movement system
 function checkEvents(pos) {
-	return effects.value[pos] || 0;
+	if (effects.value[pos].type === 'cell') {
+		return effects.value[pos].move || 0;
+	}
+	else if (effects.value[pos].type === 'question') {
+		console.log("sa:", effects.value[pos].quests);
+		return effects.value[pos].quests || 0;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 async function updatePawnPosition(pos) {
@@ -201,7 +252,9 @@ async function updateValues() {
 		await handleOvershoot(target);
 	}
 
-	await applyCellEffect();
+	do {
+		await applyCellEffect();
+	} while (position.value === checkEvents(position.value));
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -235,13 +288,23 @@ async function applyCellEffect() {
 	const effect = checkEvents(position.value);
 	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
 
-	console.log("is: ", !isNaN(effect));
 	if (!isNaN(effect)) {
 		const effectTarget = position.value + effect;
 		while (position.value !== effectTarget) {
 			await delay(500);
 			position.value += (position.value < effectTarget) ? 1 : -1;
 		}
+	}
+	else if (Array.isArray(effect)) {
+		showQuest.value = true;
+
+		const question = effect[currentIndex];
+
+		DEBUG && console.log(`Question: ${question}`);
+		alert(`Question: ${question}`);
+
+		// Process question
+		showQuest.value = false;
 	}
 }
 
@@ -275,8 +338,32 @@ watch(resultText, () => {
 });
 //#endregion
 
-//#region Debug
+//#region Questions
+function selectOption(option) {
+	selectedOption.value = option
+	if (option === currentQuestion.value.answer) {
+		correctCount.value++
+	}
+}
 
+function nextQuestion() {
+	if (currentIndex.value < questions.length - 1) {
+		currentIndex.value++
+		selectedOption.value = null
+	} else {
+		showResult.value = true
+	}
+}
+
+function prevQuestion() {
+	if (currentIndex.value > 0) {
+		currentIndex.value--
+		selectedOption.value = null
+	}
+}
+//#endregion
+
+//#region Debug
 // Debug menu 5 consecutive clicks
 const debugClick = () => {
 	clickCount.value++;
@@ -304,8 +391,13 @@ const toggleDebug = () => {
 async function tp() {
 	if (tpCell.value >= 1 && tpCell.value <= 63) {
 		position.value = tpCell.value;
-		await applyCellEffect();
-		if (position.value == MAXCELLS){
+
+		console.log(checkEvents(position.value));
+		do {
+			await applyCellEffect();
+		} while (checkEvents(position.value) !== 0);
+
+		if (position.value == MAXCELLS) {
 			handleWin();
 		}
 	}

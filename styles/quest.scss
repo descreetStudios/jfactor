@@ -1,25 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 html {
   overflow-y: scroll;
 }
 
-.page-wrapper {
-  font-family: 'Poppins', sans-serif;
-  min-height: 100vh;
-  background: #3e0d32;
+.question-wrapper {
+  font-family: "Poppins", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
-  overflow-x: hidden;
+  position: absolute;
+  backdrop-filter: blur(16px);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  top: 50vh;
+  left: 50vw;
+  width: 100%;
+  height: 100%;
 }
 
 .carousel {
   position: relative;
   max-width: 600px;
   width: 100%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.5);
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
@@ -81,7 +85,7 @@ html {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-//   transition: background 0.3s ease;
+  //   transition: background 0.3s ease;
 }
 
 .nav-buttons button:hover {
@@ -90,19 +94,23 @@ html {
 
 /* Right or wrong answer style */
 .rightAns {
-    color: green;
-    width: fit-content;
-    height: fit-content;
+  color: green;
+  width: fit-content;
+  height: fit-content;
 }
 
 .wrongAns {
-    color: red;
-    width: fit-content;
-    height: fit-content;
+  color: red;
+  width: fit-content;
+  height: fit-content;
 }
 
-
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
 }
