@@ -1,19 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-html {
-  overflow-y: scroll;
-}
-
-
 .page-wrapper {
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
-    background: #3e0d32;
-    display: flex;
-    justify-content: center;
-    overflow-y: scroll; /* Allow vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scroll */
-  }  
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: #3e0d32;
+  display: flex;
+  justify-content: center;
+  overflow-y: hidden;
+  /* Prevent vertical scroll */
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+}
 
 .content {
   position: relative;
@@ -82,6 +79,13 @@ p {
 
 /* Animations */
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
 }

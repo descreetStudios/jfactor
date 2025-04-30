@@ -78,6 +78,7 @@
 </template>
 
 <script setup>
+import { Body } from '#components';
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router'
 
@@ -161,11 +162,27 @@ function updateNavbarWidth() {
     }
 }
 
+const updateScrollBehavior = () => {
+    nextTick(() => {
+        const htmlElement = document.documentElement;
+        htmlElement.style.overflowX = "hidden"; // Disable lo scroll
+        if (route.name === "tutorial") {
+            htmlElement.style.overflowY = "scroll"; // Enable scroll
+        } else {
+            htmlElement.style.overflowY = "hidden"; // Disable lo scroll
+        }
+    });
+};
+
 watch(
     () => route.name,
     (newName) => {
+        updateScrollBehavior();
         navbarVisible.value = newName !== 'index' && !error.value;
         nextTick(() => {
+            setTimeout(() => {
+                transitionOpen();
+            }, 300);
             if (navbarVisible.value) {
                 updateNavbarWidth();
             }
@@ -203,13 +220,13 @@ const transitionClose = (page) => {
         }
         error.value = false;
         bypass.value = true;
-        transitionOpen();
     }, 1700);
 };
 //#endregion
 
 onMounted(() => {
     nextTick(() => {
+        updateScrollBehavior();
         updateNavbarWidth();
     });
     transitionOpen();
@@ -232,4 +249,8 @@ onMounted(() => {
 @import url('@/styles/navbar.scss');
 
 /*Debug*/
-//@import url('@/styles/debug.scss');</style>
+//@import url('@/styles/debug.scss');
+::-webkit-scrollbar {
+  width: 0px;
+}
+</style>
