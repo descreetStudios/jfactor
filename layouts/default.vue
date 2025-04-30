@@ -81,7 +81,6 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router'
 
-const navbarVisible = ref(false);
 const route = useRoute();
 const error = ref(false);
 const bypass = ref(false);
@@ -94,6 +93,7 @@ const backDrops = ref([]);
 const navbar = ref(null);
 const widthNavbar = ref(0);
 const showTitle = ref(false);
+const navbarVisible = ref(false);
 
 //#region Navbar system
 function navbarOver() {
@@ -104,7 +104,7 @@ function navbarOver() {
         if (navbar.value) {
             widthNavbar.value = navbar.value.scrollWidth;
             widthNavbar.value = navbar.value.scrollWidth;
-            if (widthNavbar.value >= 200) {
+            if (widthNavbar.value >= 100) {
                 showTitle.value = true;
                 clearInterval(check);
             }
@@ -119,7 +119,7 @@ function navbarLeave() {
     const check = setInterval(() => {
         if (navbar.value) {
             widthNavbar.value = navbar.value.scrollWidth;
-            if (widthNavbar.value <= 400) {
+            if (widthNavbar.value <= 200) {
                 showTitle.value = false;
                 clearInterval(check);
             }
@@ -204,7 +204,7 @@ const transitionClose = (page) => {
         error.value = false;
         bypass.value = true;
         transitionOpen();
-    }, 1500);
+    }, 1700);
 };
 //#endregion
 
