@@ -123,7 +123,7 @@ const MAXCELLS = 63; // Available cells
 //#region Imports
 import { ref, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import { rollDice, diceResults } from '@/scripts/dice.js';
-import { generateCellEffects } from '@/scripts/game.js';
+import { generateEffects } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
 
 import pieceImg from '@/assets/images/piece.png';
@@ -146,7 +146,7 @@ const position = ref(0);
 // Spiral refs
 const spiral = ref(generateSpiral(MAXCELLS-1, 8));
 const gridWrapper = ref(null);
-const cellEffects = ref(generateCellEffects(MAXCELLS));
+const cellEffects = ref(generateEffects(MAXCELLS));
 
 // Debug refs
 let showDebug = ref(false);
@@ -265,7 +265,7 @@ function resetGame() {
 	diceResults.r1 = null;
 	diceResults.r2 = null;
 	setDiceTransforms({ dice1: 'rotateX(0deg) rotateY(0deg)', dice2: 'rotateX(0deg) rotateY(0deg)' });
-	cellEffects.value = generateCellEffects();
+	cellEffects.value = generateEffects();
 	updatePawnPosition(position.value);
 }
 

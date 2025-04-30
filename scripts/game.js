@@ -1,41 +1,66 @@
-const questions = [
-	{
-		question: "q1",
-		answers: [
-			{ans1: "ans1", correct: true},
-			{ans2: "ans2", correct: false},
-			{ans3: "ans3", correct: false},
-			{ans4: "ans4", correct: false}
-		]
-	},
-	{
-		question: "q2",
-		answers: [
-			{ans1: "ans1", correct: false},
-			{ans2: "ans2", correct: false},
-			{ans3: "ans3", correct: true},
-			{ans4: "ans4", correct: false}
-		]
-	}
+const categories = [
+    "cell",         // Cell effect
+    "questions",    // [SPECIAL] Questions 
+    "challenge",    // [SPECIAL] Challenge
+    "death",        // [SPECIAL] Death
+    "bonus",        // [SPECIAL] Bonus
 ]
 
-export function generateCellEffects(totalCells = 63, maxEffects = 15, effectRange = 6)
+const weights = [
+    45,             // Weight for "cell"
+    20.5,           // Weight for "questions"
+    20.5,           // Weight for "challenge"
+    7,              // Weight for "death"
+    7               // Weight for "bonus"
+];
+
+function weightedRandomCategory(categories, weights) {
+    const totalWeight = weights.reduce((acc, val) => acc + val, 0);
+    let r = Math.random() * totalWeight;
+    for (let i = 0; i < categories.length; i++) {
+        if (r < weights[i]) return i;
+        r -= weights[i];
+    }
+    return categories.length - 1; // fallback
+}
+
+export function generateEffects(totalCells = 63)
 {
-	const effects = {}, excluded = new Set([1, totalCells]);
+//#region Global
+    // Global Settings
+    const alwaysExcludedCount = 2; // Cells that are always exluded (cell 1 and cell 63)
+    const maxEffects = 40;
 
-	while (Object.keys(effects).length < maxEffects) {
-		const cell = Math.floor(Math.random() * (totalCells - 2)) + 2;
-		if (excluded.has(cell)) continue;
+    // Global Vars
+    const availableCells = totalCells - alwaysExcludedCount;
+    const excluded = new Set([1, totalCells]); // Excluded cells + already used cells
+    const finalEffect = {};
+//#endregion
 
-		const move = Math.floor(Math.random() * (effectRange * 2 + 1)) - effectRange;
-		if (!move) continue;
+    // Cell effect Settings
+    const cellEffectRange = 6; // Max signed movement for cell effect
 
-		const target = cell + move;
-		if (target <= 1 || target >= totalCells || excluded.has(target)) continue;
+    for (let appliedEffects = 0; appliedEffects < maxEffects; ++appliedEffects) // While we haven't already applied effects to all possible cells
+    {
+        const chosenEffectIndex = weightedRandomCategory(categories, weights);
+        const chosenCategory = categories[chosenEffectIndex];
 
-		effects[cell] = move;
-		excluded.add(cell).add(target);
-	}
+        const cell = Math.floor(Math.random() * (availableCells)) + 2;
+        if (excluded.has(cell)) continue;
+    
+        if (chosenCategory === "cell")
+        {   
+            const move = Math.floor(Math.random() * (cellEffectRange * 2 + 1)) - cellEffectRange;
+            if (!move) continue;
 
-	return effects;
+            const target = cell + move;
+            if (target < 1 || target >= totalCells) continue;
+            
+            finalEffect[cell] = move;
+        }
+
+        excluded.add(cell);
+    }
+
+    return finalEffect;
 }
