@@ -2,39 +2,39 @@
 	<title>Untitled Plague Game - Game</title>
 	<!-- DebugMenu -->
 	<div v-show="showDebug" class="debugMenu">
-  <div class="debugHead">
-    <h1 class="debugTitle">DEBUG MENU</h1>
-    <div class="debugExit" @click="toggleDebug">
-      <span class="closeX">X</span>
-    </div>
-  </div>
-  <div class="debugBody">
-    <form>
-      <div class="formRow">
-        <span>Win game</span>
-        <button type="button" class="winButton" @click="winGame">Win Game</button>
-      </div>
-      <div class="formRow">
-        <span>Teleport to</span>
-        <input type="number" class="debugInput" v-model="tpCell" placeholder="Enter the number of cell">
-        <button type="button" class="debugButton" @click="tp">Submit</button>
-      </div>
-      <div class="formRow">
-        <span>Forward movement:</span>
-        <input type="number" class="debugInput" v-model="forward" placeholder="Enter the number of cells">
-        <button type="button" class="debugButton" @click="debugMove">Submit</button>
-      </div>
-      <div class="formRow">
-        <span>Backward movement:</span>
-        <input type="number" class="debugInput" v-model="backward" placeholder="Enter the number of cells">
-        <button type="button" class="debugButton" @click="debugMove">Submit</button>
-      </div>
-    </form>
-  </div>
-</div>
+		<div class="debugHead">
+			<h1 class="debugTitle">DEBUG MENU</h1>
+			<div class="debugExit" @click="toggleDebug">
+				<span class="closeX">X</span>
+			</div>
+		</div>
+		<div class="debugBody">
+			<form>
+				<div class="formRow">
+					<span>Win game</span>
+					<button type="button" class="winButton" @click="winGame">Win Game</button>
+				</div>
+				<div class="formRow">
+					<span>Teleport to</span>
+					<input type="number" class="debugInput" v-model="tpCell" placeholder="Enter the number of cell">
+					<button type="button" class="debugButton" @click="tp">Submit</button>
+				</div>
+				<div class="formRow">
+					<span>Forward movement:</span>
+					<input type="number" class="debugInput" v-model="forward" placeholder="Enter the number of cells">
+					<button type="button" class="debugButton" @click="debugMove">Submit</button>
+				</div>
+				<div class="formRow">
+					<span>Backward movement:</span>
+					<input type="number" class="debugInput" v-model="backward" placeholder="Enter the number of cells">
+					<button type="button" class="debugButton" @click="debugMove">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
 	<!-- Debug Button -->
-	 <button @click="debugClick">Debug</button>
+	<button @click="debugClick">Debug</button>
 
 	<!-- Challenge Button -->
 	<NuxtLink to="./challenge">
@@ -102,10 +102,14 @@
 					</div>
 
 					<!-- Effects -->
-					<template v-if="button && cellEffects[button]">
-						<img v-if="cellEffects[button] > 0" :src="buffImg" alt="Buff"
+					<template v-if="button && effects[button]">
+						<img v-if="effects[button] > 0" :src="buffImg" alt="Buff"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
-						<img v-else-if="cellEffects[button] < 0" :src="debuffImg" alt="Debuff"
+						<img v-else-if="effects[button] < 0" :src="debuffImg" alt="Debuff"
+							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+						<!-- <img v-else-if="Array.isArray(effects[button])" :src="questionImg" alt="Question"
+							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
+						<img v-else-if="effects[button]" :src="questionImg" alt="Question"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
 					</template>
 
@@ -129,6 +133,7 @@ import { generateSpiral } from '@/scripts/grid.js';
 import pieceImg from '@/assets/images/piece.png';
 import buffImg from '@/assets/images/buff.png';
 import debuffImg from '@/assets/images/debuff.png';
+import questionImg from '@/assets/images/question.png';
 
 const { proxy } = getCurrentInstance();
 //#endregion
@@ -144,9 +149,9 @@ const rolling = ref(false);
 const position = ref(0);
 
 // Spiral refs
-const spiral = ref(generateSpiral(MAXCELLS-1, 8));
+const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
 const gridWrapper = ref(null);
-const cellEffects = ref(generateEffects(MAXCELLS));
+const effects = ref(generateEffects(MAXCELLS));
 
 // Debug refs
 let showDebug = ref(false);
@@ -159,22 +164,22 @@ const tpCell = ref(0);
 
 //#region Dice system
 function setDiceTransforms({ dice1, dice2 }) {
-  dice1Transform.value = dice1;
-  dice2Transform.value = dice2;
+	dice1Transform.value = dice1;
+	dice2Transform.value = dice2;
 }
 
 function setResultText(text) {
-  resultText.value = text;
+	resultText.value = text;
 }
 
 function handleRoll() {
-  rollDice(rolling, setResultText, setDiceTransforms);
+	rollDice(rolling, setResultText, setDiceTransforms);
 }
 //#endregion
 
 //#region Movement system
 function checkEvents(pos) {
-	return cellEffects.value[pos] || 0;
+	return effects.value[pos] || 0;
 }
 
 async function updatePawnPosition(pos) {
@@ -238,14 +243,19 @@ async function handleOvershoot(target) {
 }
 
 async function applyCellEffect() {
+	// Get effect in current position
 	const effect = checkEvents(position.value);
 	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
 
-	const effectTarget = position.value + effect;
-	while (position.value !== effectTarget) {
-		await delay(500);
-		position.value += (position.value < effectTarget) ? 1 : -1;
+	console.log("is: ", !isNaN(effect));
+	if (!isNaN(effect)) {
+		const effectTarget = position.value + effect;
+		while (position.value !== effectTarget) {
+			await delay(500);
+			position.value += (position.value < effectTarget) ? 1 : -1;
+		}
 	}
+
 }
 
 function handleWin() {
@@ -265,7 +275,7 @@ function resetGame() {
 	diceResults.r1 = null;
 	diceResults.r2 = null;
 	setDiceTransforms({ dice1: 'rotateX(0deg) rotateY(0deg)', dice2: 'rotateX(0deg) rotateY(0deg)' });
-	cellEffects.value = generateEffects();
+	effects.value = generateEffects();
 	updatePawnPosition(position.value);
 }
 
@@ -280,24 +290,24 @@ watch(resultText, () => {
 
 //#region Debug menu
 const debugClick = () => {
-  clickCount.value++;
+	clickCount.value++;
 
-  if (clickTimeout) {
-    clearTimeout(clickTimeout);
-  }
+	if (clickTimeout) {
+		clearTimeout(clickTimeout);
+	}
 
-  clickTimeout = setTimeout(() => {
-    clickCount.value = 0;
-  }, 500);
+	clickTimeout = setTimeout(() => {
+		clickCount.value = 0;
+	}, 500);
 
-  if (clickCount.value === 5) {
-    toggleDebug();
-    clickCount.value = 0;
-  }
+	if (clickCount.value === 5) {
+		toggleDebug();
+		clickCount.value = 0;
+	}
 };
 
 const toggleDebug = () => {
-  showDebug.value = !showDebug.value;
+	showDebug.value = !showDebug.value;
 };
 
 async function debugMove() {
