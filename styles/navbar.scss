@@ -25,13 +25,16 @@ a {
 .navbar {
 	z-index: 1;
 	position: fixed;
+	border-radius: 16px;
+	backdrop-filter: blur(6px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 	transform: translate(0, -50%);
 	top: 50%;
 	border-radius: 25px;
 	float: left;
 	width: fit-content;
 	height: fit-content;
-	background-color: rgb(64, 62, 70);	
+	background: rgba(255, 255, 255, 0.06);
 }
 
 .cell,
@@ -49,7 +52,7 @@ a {
 .cell:hover,
 .firstCell:hover,
 .lastCell:hover {
-	background-color: blue;
+	background: rgba(255, 255, 255, 0.2);;
 }
 
 .firstCell:hover {
