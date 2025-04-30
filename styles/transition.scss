@@ -1,5 +1,5 @@
 .left, .right {
-    position: absolute;
+    position: fixed;
     z-index: 5;
     width: 50vw;
     height: 100vh;
@@ -28,7 +28,7 @@
 
 @keyframes rightIn {
 	from {
-		width: 1vw;
+		width: 0vw;
 	}
 
 	to {
@@ -42,7 +42,7 @@
 	}
 
 	to {
-		transform: translateX(-98%);
+		transform: translateX(-100%);
 	}
 }
 
@@ -52,6 +52,6 @@
 	}
 
 	to {
-		width: 1vw;
+		width: 0vw;
 	}
 }

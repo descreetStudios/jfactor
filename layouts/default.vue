@@ -101,10 +101,13 @@ function navbarOver() {
     navbar.value.style.setProperty('--target-width', `${widthNavbar.value}px`);
     navbar.value.style.animation = 'navbarOver 1s forwards';
     const check = setInterval(() => {
-        widthNavbar.value = navbar.value.scrollWidth;
-        if (widthNavbar.value >= 200) {
-            showTitle.value = true;
-            clearInterval(check);
+        if (navbar.value) {
+            widthNavbar.value = navbar.value.scrollWidth;
+            widthNavbar.value = navbar.value.scrollWidth;
+            if (widthNavbar.value >= 200) {
+                showTitle.value = true;
+                clearInterval(check);
+            }
         }
     }, 100);
 };
@@ -114,10 +117,12 @@ function navbarLeave() {
     navbar.value.style.setProperty('--target-width', `${widthNavbar.value}px`);
     navbar.value.style.animation = 'navbarLeave 1s forwards';
     const check = setInterval(() => {
-        widthNavbar.value = navbar.value.scrollWidth;
-        if (widthNavbar.value <= 400) {
-            showTitle.value = false;
-            clearInterval(check);
+        if (navbar.value) {
+            widthNavbar.value = navbar.value.scrollWidth;
+            if (widthNavbar.value <= 400) {
+                showTitle.value = false;
+                clearInterval(check);
+            }
         }
     }, 100);
 };
@@ -157,9 +162,9 @@ function updateNavbarWidth() {
 }
 
 watch(
-    () => route.name, 
+    () => route.name,
     (newName) => {
-        navbarVisible.value = newName !== 'index' && !error.value; 
+        navbarVisible.value = newName !== 'index' && !error.value;
         nextTick(() => {
             if (navbarVisible.value) {
                 updateNavbarWidth();
@@ -205,7 +210,7 @@ const transitionClose = (page) => {
 
 onMounted(() => {
     nextTick(() => {
-            updateNavbarWidth();
+        updateNavbarWidth();
     });
     transitionOpen();
     makeItRain();
@@ -224,7 +229,7 @@ onMounted(() => {
 @import url('@/styles/title.scss');
 @import url('@/styles/bg.scss');
 @import url('@/styles/transition.scss');
-@import url('@/styles/menuBar.scss');
+@import url('@/styles/navbar.scss');
 
 /*Debug*/
 //@import url('@/styles/debug.scss');</style>
