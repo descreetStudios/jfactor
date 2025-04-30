@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+html {
+  overflow-y: scroll;
+}
+
+.page-wrapper {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: #3e0d32;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  overflow-x: hidden;
+}
+
+.carousel {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-align: center;
+}
+
+.question-text {
+  font-size: 1.5rem;
+  color: #fbb6ce;
+  margin-bottom: 20px;
+}
+
+.options button {
+  background: transparent;
+  border: 2px solid #fbb6ce;
+  color: #fbb6ce;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  margin: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.options button:hover:not(:disabled) {
+  background: #fbb6ce;
+  color: #3e0d32;
+}
+
+.options button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.result {
+  font-size: 1.8rem;
+  color: #ffb8d1;
+  margin-top: 30px;
+  animation: flicker 2s infinite ease-in-out;
+}
+
+.nav-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-buttons button {
+  background: #fbb6ce;
+  border: none;
+  color: #3e0d32;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+//   transition: background 0.3s ease;
+}
+
+.nav-buttons button:hover {
+  background: #ffffff;
+}
+
+/* Right or wrong answer style */
+.rightAns {
+    color: green;
+    width: fit-content;
+    height: fit-content;
+}
+
+.wrongAns {
+    color: red;
+    width: fit-content;
+    height: fit-content;
+}
+
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
