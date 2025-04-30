@@ -1,6 +1,6 @@
 <template>
 	<title>Untitled Plague Game - Game</title>
-	<!-- DebugMenu -->
+	<!-- DebugMenu container -->
 	<div v-show="showDebug" class="debugMenu">
 		<div class="debugHead">
 			<h1 class="debugTitle">DEBUG MENU</h1>
@@ -26,9 +26,9 @@
 	<!-- Debug Button -->
 	<button @click="debugClick">Debug</button>
 
-	<!-- Challenge Button -->
-	<NuxtLink to="./challenge">
-		<button>Challenge</button>
+	<!-- Quest Button -->
+	<NuxtLink to="./quest">
+		<button>Quest</button>
 	</NuxtLink>
 
 	<!-- Dice Container -->
@@ -115,7 +115,7 @@ const DEBUG = true;
 const MAXCELLS = 63; // Available cells
 
 //#region Imports
-import { ref, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
+import { ref, computed, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import { rollDice, diceResults } from '@/scripts/dice.js';
 import { generateEffects } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
@@ -147,8 +147,6 @@ const effects = ref(generateEffects(MAXCELLS));
 let showDebug = ref(false);
 const clickCount = ref(0);
 let clickTimeout = null;
-const forward = ref(0);
-const backward = ref(0);
 const tpCell = ref(0);
 //#endregion
 
@@ -245,7 +243,6 @@ async function applyCellEffect() {
 			position.value += (position.value < effectTarget) ? 1 : -1;
 		}
 	}
-
 }
 
 function handleWin() {
@@ -330,8 +327,8 @@ onMounted(() => {
 @import url('@/styles/grid.scss');
 @import url('@/styles/pawn.scss');
 @import url('@/styles/dice.scss');
-@import url('@/styles/debug.scss');
-
+@import url('@/styles/quest.scss');
+@import url('@/styles/debugMenu.scss');
 /* DEBUG
 @import url('@/styles/debug.scss');
 */

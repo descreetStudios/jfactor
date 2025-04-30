@@ -91,6 +91,6 @@
   </script>
   
 <style >
-@import url('@/styles/challenge.scss');
+@import url('@/styles/quest.scss');
 </style>
   
