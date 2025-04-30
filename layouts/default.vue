@@ -164,12 +164,14 @@ function updateNavbarWidth() {
 
 const updateScrollBehavior = () => {
     nextTick(() => {
-        const htmlElement = document.documentElement;
-        htmlElement.style.overflowX = "hidden"; // Disable lo scroll
-        if (route.name === "tutorial") {
-            htmlElement.style.overflowY = "scroll"; // Enable scroll
-        } else {
-            htmlElement.style.overflowY = "hidden"; // Disable lo scroll
+        if (typeof document !== "undefined") {
+            const htmlElement = document.documentElement;
+            htmlElement.style.overflowX = "hidden"; // Disable lo scroll
+            if (route.name === "tutorial") {
+                htmlElement.style.overflowY = "scroll"; // Enable scroll
+            } else {
+                htmlElement.style.overflowY = "hidden"; // Disable lo scroll
+            }
         }
     });
 };
@@ -251,6 +253,6 @@ onMounted(() => {
 /*Debug*/
 //@import url('@/styles/debug.scss');
 ::-webkit-scrollbar {
-  width: 0px;
+    width: 0px;
 }
 </style>
