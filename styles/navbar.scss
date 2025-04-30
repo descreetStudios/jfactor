@@ -24,7 +24,7 @@ a {
 
 .navbar {
 	z-index: 1;
-	position: absolute;
+	position: fixed;
 	transform: translate(0, -50%);
 	top: 50%;
 	border-radius: 25px;
