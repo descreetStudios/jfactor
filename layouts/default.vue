@@ -26,7 +26,7 @@
                     You are launching the game on an unsupported resolution
                     <img src="@/assets/images/alert.png" alt="ALERT!" class="alert" style="height: 4rem; ">
                 </span>
-                <button type="button" class="playButton" ref="button" @click="transitionClose(1)">
+                <button type="button" class="playButton" ref="button" @click="transitionClose(5)">
                     <span>OK</span>
                 </button>
             </div>
@@ -38,7 +38,6 @@
         <div v-if="!navbarVisible && !error" class="title">
             <img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
             <div class="buttons">
-
                 <button type="button" class="playButton" ref="button" @click="transitionClose(2)">
                     <span>PLAY</span>
                 </button>
@@ -55,19 +54,19 @@
         <!-- Navbar -->
         <div v-if="navbarVisible && !error" class="navbar" ref="navbar" @mouseenter="navbarOver"
             @mouseleave="navbarLeave">
-            <div class="firstCell" @click="transitionClose(1)">
+            <div class="firstCell" @click="transitionClose(1)" :class="{ disabled: currentPage === 1 }">
                 <img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
                 <transition name="fade">
                     <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
                 </transition>
             </div>
-            <div class="cell" @click="transitionClose(3)">
+            <div class="cell" @click="transitionClose(3)" :class="{ disabled: currentPage === 3 }">
                 <img class="navbarImage" src="@/assets/images/newsButton.png" alt="Tutorial">
                 <transition name="fade">
                     <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">TUTORIAL</h2>
                 </transition>
             </div>
-            <div class="lastCell" @click="transitionClose(4)">
+            <div class="lastCell" @click="transitionClose(4)" :class="{ disabled: currentPage === 4 }">
                 <img class="navbarImage" src="@/assets/images/teamButton.png" alt="Credits">
                 <transition name="fade">
                     <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
@@ -78,10 +77,10 @@
 </template>
 
 <script setup>
-import { Body } from '#components';
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router'
 
+const currentPage = ref(1);
 const route = useRoute();
 const error = ref(false);
 const bypass = ref(false);
@@ -189,11 +188,25 @@ watch(
                 updateNavbarWidth();
             }
         });
+        switch(newName) {
+        case 'index':
+            currentPage.value = 1;
+            break;
+        case 'tutorial':
+            currentPage.value = 3;
+            break;
+        case 'credits':
+            currentPage.value = 4;
+            break;
+        default:
+            currentPage.value = 1;
+    }
     },
     { immediate: true }
 );
 
 //#region Transitions
+
 const transitionOpen = () => {
     if (left.value && right.value) {
         left.value.style.animation = 'leftOut 1s forwards';
@@ -218,6 +231,9 @@ const transitionClose = (page) => {
                 break;
             case 4:
                 navigateTo('./credits');
+                break;
+            case 5:
+                transitionOpen();
                 break;
         }
         error.value = false;
@@ -254,5 +270,9 @@ onMounted(() => {
 //@import url('@/styles/debug.scss');
 ::-webkit-scrollbar {
     width: 0px;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }
 </style>
