@@ -41,24 +41,39 @@
           you start in the middle of the board (plague-afflicted town) and have to get to the exit of the spiral (countryside).
         </p>
         <p>
-          The game loop essentially consists of throwing two dice, and moving forward as many times as the number the dice roll resulted in.
-          If you land on a special cell, you might be set back or launched forward a certain number of steps, or something else might happen to your piece.
+          The game loop essentially consists of throwing the dice, and moving forward as many times as the number the dice roll resulted in.
+          If you land on a special cell, you might be set back or moved forward a certain number of steps, or something else might happen to your piece.
         </p>
       </section>
 
       <section id="cellTypes" class="section-block">
         <h2>Cell Types</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          On your journey through the town, these are the different kinds of cells you can find:
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <strong> - Movement Cells</strong>
+            <br>
+            Either move you forward or back by a certain number of cells. Simple enough.
+            <br>
+          <strong> - Question Cells</strong>
+            <br>
+            When landing on a question cell, you are tasked with answering a set of questions about the game's themes:
+            If manage to prove your knowledge, you'll move forward by how many questions you got right.
+            If you're just a gullible peasant, you'll be set back.
+            Make sure to brush up on your medieval knowledge.
+            <br>
+          <strong> - Death Cells</strong>
+            <br>
+            Pretty self-explanatory, brings you back to the starting cell.
+            <br>
+          <strong> - Bonus Cells</strong>
+            <br>
+            These cells can cancel a set back or death effect, allowing you to stay firmly in place and keep on moving forward.  
+            <br>
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          
         </p>
       </section>
     </div>
