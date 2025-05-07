@@ -2,8 +2,9 @@
   <title>Untitled Plague Game - Tutorial</title>
   <div class="page-wrapper">
     <div class="content">
+      <img src="@/assets/images/logo.png" alt="logo" class="logo-img" />
       <!-- yap sesh -->
-      <h1 class="credits-title">UNTITLED PLAGUE GAME</h1>
+      <h1 class="tutorial-title">TUTORIAL</h1>
 
       <nav class="section-nav">
         <a href="#lore">Lore</a>
