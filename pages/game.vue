@@ -207,16 +207,18 @@ function handleRoll() {
 //#endregion
 
 //#region Movement system
-function checkEvents(pos) {
-	if (effects.value[pos].type === 'cell') {
+function getEventType(pos) {
+	return effects.value[pos].type;
+}
+
+function getEffect(pos) {
+	if (getEventType(pos) === 'cell') {
 		return effects.value[pos].move || 0;
 	}
-	else if (effects.value[pos].type === 'question') {
-		console.log("sa:", effects.value[pos].quests);
+	else if (getEventType(pos) === 'question') {
 		return effects.value[pos].quests || 0;
 	}
-	else
-	{
+	else {
 		return 0;
 	}
 }
@@ -254,7 +256,7 @@ async function updateValues() {
 
 	do {
 		await applyCellEffect();
-	} while (position.value === checkEvents(position.value));
+	} while (getEventType(position.value) === 'cell');
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -285,25 +287,27 @@ async function handleOvershoot(target) {
 
 async function applyCellEffect() {
 	// Get effect in current position
-	const effect = checkEvents(position.value);
-	DEBUG && console.log(`Cell Effect @${position.value}: ${effect}`);
+	const eventType = getEventType(position.value);
+	const effect = getEffect(position.value);
+	DEBUG && console.log(`Event type @${position.value}: ${eventType}`);
+	DEBUG && console.log(`Effect @${position.value}: ${effect}`);
 
-	if (!isNaN(effect)) {
+	if (eventType == 'cell') {
 		const effectTarget = position.value + effect;
 		while (position.value !== effectTarget) {
 			await delay(500);
 			position.value += (position.value < effectTarget) ? 1 : -1;
 		}
 	}
-	else if (Array.isArray(effect)) {
+	else if (eventType == 'question') {
 		showQuest.value = true;
 
 		const question = effect[currentIndex];
 
 		DEBUG && console.log(`Question: ${question}`);
-		alert(`Question: ${question}`);
 
-		// Process question
+		// TODO: Process question
+
 		showQuest.value = false;
 	}
 }
@@ -392,10 +396,10 @@ async function tp() {
 	if (tpCell.value >= 1 && tpCell.value <= 63) {
 		position.value = tpCell.value;
 
-		console.log(checkEvents(position.value));
 		do {
 			await applyCellEffect();
-		} while (checkEvents(position.value) !== 0);
+		} while (getEventType(position.value) !== 'empty'); // TODO: add a checker var 
+		// 	for when you are doing a question to avoid loops
 
 		if (position.value == MAXCELLS) {
 			handleWin();
