@@ -186,7 +186,6 @@ watch(
             }, 300);
             if (navbarVisible.value) {
                 updateNavbarWidth();
-                navbarLeave();
             }
         });
         switch (newName) {
