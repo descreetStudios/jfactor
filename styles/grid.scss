@@ -1,6 +1,11 @@
 body {
 	overflow-y: hidden;
 	background-color: rgb(35, 36, 44);
+	background-image: url('../assets/images/gameBackground.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position-x: center;
+	background-attachment: fixed;
 }
 
 * {
@@ -12,7 +17,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 95vh;
+	height: 96vh;
 	position: relative;
 }
 
@@ -20,9 +25,9 @@ body {
 	display: grid;
 	grid-template-columns: repeat(8, 50px);
 	grid-template-rows: repeat(8, 50px);
-	gap: 60px;
+	gap: 55px;
+	scale: 0.70;
 	position: relative;
-	left: 11px;
 }
 
 .button {
@@ -54,28 +59,28 @@ body {
 
 /* Common padding for buttons */
 .button-padding-x {
-	padding: 0px 20px;
+	padding: 0px 18px;
 }
 
 .button-padding-y {
-	padding: 20px 0px;
+	padding: 18px 0px;
 }
 
 /* Common relative positioning */
 .button-left-adjust {
 	position: relative;
-	right: 40px;
+	right: 36px;
 }
 
 .button-top-adjust {
 	position: relative;
-	bottom: 40px;
+	bottom: 36px;
 }
 
 // Starting cell special styles
 .button-0 {
-	width: 153px;
-	height: 180px;
+	width: 150px;
+	height: 175px;
 	bottom: 65px;
 	right: 43px;
 	background-image: url('../assets/images/cells/startCell.png');
@@ -98,7 +103,7 @@ body {
 }
 
 .button-10, .button-26, .button-50 {
-	top: -61px;
+	top: -56px;
 	height: 85px;
 }
 
