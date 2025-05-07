@@ -42,6 +42,10 @@ body {
 	width: 65px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
+	// background-image: url("@/assets/images/cells/startCell.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .button:hover {

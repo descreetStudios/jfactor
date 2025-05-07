@@ -26,8 +26,8 @@ const categories = [
 const weights = [
     45,             // Weight for "cell"
     30,             // Weight for "questions"
-    12.5,             // Weight for "death"
-    12.5              // Weight for "bonus"
+    10,             // Weight for "death"
+    15              // Weight for "bonus"
 ];
 
 function weightedRandomCategory(categories, weights) {
@@ -45,7 +45,7 @@ export function generateEffects(totalCells = 63)
 //#region Global
     // Global Settings
     const alwaysExcludedCount = 2; // Cells that are always exluded (cell 1 and cell 63)
-    const maxEffects = 40;
+    const maxEffects = 35;
 
     // Global Vars
     let appliedEffects = 0; // Number of effects already applied
@@ -97,6 +97,12 @@ export function generateEffects(totalCells = 63)
             }
 
             finalEffect[cell] = { type: "question", quests };
+        }
+        else if (chosenCategory === "death") {
+            finalEffect[cell] = { type: "death"};
+        }
+        else if (chosenCategory === "bonus") {
+            finalEffect[cell] = { type: "bonus"};
         }
 
         excludedCells.add(cell);
