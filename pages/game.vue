@@ -101,6 +101,10 @@
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
 						<img v-else-if="effects[button].type == 'question'" :src="questionImg" alt="Question"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+						<img v-else-if="effects[button].type == 'death'" :src="deathImg" alt="Death"
+							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+						<img v-else-if="effects[button].type == 'bonus'" :src="bonusImg" alt="Bonus"
+							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
 					</template>
 
 				</div>
@@ -156,6 +160,8 @@ import pieceImg from '@/assets/images/piece.png';
 import buffImg from '@/assets/images/buff.png';
 import debuffImg from '@/assets/images/debuff.png';
 import questionImg from '@/assets/images/question.png';
+import deathImg from '@/assets/images/death.png';
+import bonusImg from '@/assets/images/bonus.png';
 
 const { proxy } = getCurrentInstance();
 //#endregion
@@ -218,6 +224,9 @@ function getEffect(pos) {
 	else if (getEventType(pos) === 'question') {
 		return effects.value[pos].quests || 0;
 	}
+	else if (getEventType(pos) === 'bonus') {
+
+	}
 	else {
 		return 0;
 	}
@@ -256,7 +265,7 @@ async function updateValues() {
 
 	do {
 		await applyCellEffect();
-	} while (getEventType(position.value) === 'cell');
+	} while (getEventType(position.value) !== 'empty');
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -292,14 +301,14 @@ async function applyCellEffect() {
 	DEBUG && console.log(`Event type @${position.value}: ${eventType}`);
 	DEBUG && console.log(`Effect @${position.value}: ${effect}`);
 
-	if (eventType == 'cell') {
+	if (eventType === 'cell') {
 		const effectTarget = position.value + effect;
 		while (position.value !== effectTarget) {
 			await delay(500);
 			position.value += (position.value < effectTarget) ? 1 : -1;
 		}
 	}
-	else if (eventType == 'question') {
+	else if (eventType === 'question') {
 		showQuest.value = true;
 
 		const question = effect[currentIndex];
@@ -309,6 +318,10 @@ async function applyCellEffect() {
 		// TODO: Process question
 
 		showQuest.value = false;
+	}
+	else if (eventType === 'death') {
+		console.log ("Sei morto");
+		position.value = 0;
 	}
 }
 
