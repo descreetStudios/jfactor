@@ -69,7 +69,7 @@
             <div class="lastCell" @click="transitionClose(4)" :class="{ disabled: currentPage === 4 }">
                 <img class="navbarImage" src="@/assets/images/teamButton.png" alt="Credits">
                 <transition name="fade">
-                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">ABOUT US</h2>
+                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">CREDITS</h2>
                 </transition>
             </div>
         </div>
@@ -126,6 +126,13 @@ function navbarLeave() {
         }
     }, 100);
 };
+
+function updateNavbarWidth() {
+    if (navbar.value) {
+        widthNavbar.value = navbar.value.scrollWidth;
+        navbar.value.style.setProperty('--fitcontent-width', `${widthNavbar.value}px`);
+    }
+}
 //#endregion
 
 const makeItRain = () => {
@@ -154,13 +161,6 @@ const makeItRain = () => {
     }
 };
 
-function updateNavbarWidth() {
-    if (navbar.value) {
-        widthNavbar.value = navbar.value.scrollWidth;
-        navbar.value.style.setProperty('--fitcontent-width', `${widthNavbar.value}px`);
-    }
-}
-
 const updateScrollBehavior = () => {
     nextTick(() => {
         if (typeof document !== "undefined") {
@@ -186,21 +186,25 @@ watch(
             }, 300);
             if (navbarVisible.value) {
                 updateNavbarWidth();
+                navbarLeave();
             }
         });
-        switch(newName) {
-        case 'index':
-            currentPage.value = 1;
-            break;
-        case 'tutorial':
-            currentPage.value = 3;
-            break;
-        case 'credits':
-            currentPage.value = 4;
-            break;
-        default:
-            currentPage.value = 1;
-    }
+        switch (newName) {
+            case 'index':
+                currentPage.value = 1;
+                break;
+            case 'game':
+                currentPage.value = 2;
+                break;
+            case 'tutorial':
+                currentPage.value = 3;
+                break;
+            case 'credits':
+                currentPage.value = 4;
+                break;
+            default:
+                currentPage.value = 1;
+        }
     },
     { immediate: true }
 );
@@ -271,6 +275,7 @@ onMounted(() => {
 ::-webkit-scrollbar {
     width: 0px;
 }
+
 .disabled {
     pointer-events: none;
     opacity: 0.5;
