@@ -30,12 +30,14 @@
 }
 
 .credits-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	gap: 20px;
+	scale: 1.1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
 }
 
 .credit-card {
+	flex: 1 1 180px;
 	background: rgba(255, 255, 255, 0.08);
 	-webkit-backdrop-filter: blur(8px);
 	backdrop-filter: blur(8px);

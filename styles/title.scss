@@ -16,6 +16,7 @@
 	margin: 0;
 	padding: 0;
 	outline: none;
+	-webkit-user-select: none;
 	user-select: none;
 }
 
@@ -185,5 +186,4 @@
 	z-index: 2;
 	color: white;
 	text-align: center;
-	padding-top: 20vh;
 }

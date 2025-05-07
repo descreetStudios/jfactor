@@ -25,7 +25,7 @@
   padding: 40px 20px;
 }
 
-.credits-title {
+.tutorial-title {
   font-size: 3rem;
   margin-bottom: 30px;
   color: #fbb6ce;
@@ -55,6 +55,7 @@
   background: rgba(255, 255, 255, 0.06);
   padding: 30px;
   border-radius: 16px;
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
@@ -72,8 +73,22 @@
   text-align: left;
 }
 
+.logo-img {
+	-webkit-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	-ms-user-drag: none;
+    width: 400px;
+    height: auto;
+    justify-content: flex;
+    margin: 0 auto; 
+    text-indent: -9999px;
+    animation: shake 5.0s infinite;
+}  
+
 /* Make text selectable only on this page */
 p {
+  -webkit-user-select: text;
   user-select: text;
 }
 

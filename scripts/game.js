@@ -19,17 +19,15 @@ export const questions = [
 const categories = [
     "cell",         // Cell effect
     "question",     // [SPECIAL] Question
-    "challenge",    // [SPECIAL] Challenge
     "death",        // [SPECIAL] Death
     "bonus",        // [SPECIAL] Bonus
 ]
 
 const weights = [
-    30,             // Weight for "cell"
-    21,             // Weight for "questions"
-    20,             // Weight for "challenge"
-    7,              // Weight for "death"
-    7               // Weight for "bonus"
+    45,             // Weight for "cell"
+    30,             // Weight for "questions"
+    12.5,             // Weight for "death"
+    12.5              // Weight for "bonus"
 ];
 
 function weightedRandomCategory(categories, weights) {
@@ -65,6 +63,11 @@ export function generateEffects(totalCells = 63)
     // Cell effect Settings
     const cellEffectRange = 6; // Max signed movement for cell effect
 
+
+    for (let i = 1; i < totalCells; ++i) {
+        finalEffect[i] = { type: "empty"};
+    }
+
     while (appliedEffects < maxEffects) // While we haven't already applied effects to all possible cells
     {
         // Choose weighted effect category
@@ -72,6 +75,7 @@ export function generateEffects(totalCells = 63)
         const chosenCategory = categories[chosenEffectIndex];
 
         const cell = Math.floor(Math.random() * (availableCells)) + 2;
+
         if (excludedCells.has(cell)) continue;
 
         if (chosenCategory === "cell") {
