@@ -116,7 +116,7 @@
 	<div class="question-wrapper" v-if="showQuest">
 		<div class="carousel" v-if="!showResult">
 			<div class="question-text">
-				{{ currentQuestion.question }}
+				{{ currentQuestion }}
 			</div>
 
 			<div class="options">
@@ -132,9 +132,8 @@
 			</div>
 
 			<div class="nav-buttons">
-				<button @click="prevQuestion" :disabled="currentIndex == 0">Indietro</button>
 				<button @click="nextQuestion" :disabled="selectedOption === null">
-					{{ currentIndex === questions.length - 1 ? 'Vedi Risultato' : 'Avanti' }}
+					{{ currentQuestIndex === questions.length - 1 ? 'Vedi Risultato' : 'Avanti' }}
 				</button>
 			</div>
 		</div>
@@ -153,7 +152,7 @@ const MAXCELLS = 63; // Available cells
 //#region Imports
 import { ref, computed, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import { rollDice, diceResults } from '@/scripts/dice.js';
-import { generateEffects, questions } from '@/scripts/game.js';
+import { generateEffects } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
 
 import pieceImg from '@/assets/images/piece.png';
@@ -173,25 +172,26 @@ const dice2Transform = ref('rotateX(0deg) rotateY(0deg)');
 const resultText = ref('');
 const rolling = ref(false);
 
-// Movement refs
-const position = ref(0);
-
-// Question refs
-const showQuest = ref(false);
-const currentIndex = ref(0);
-const selectedOption = ref(null);
-const correctCount = ref(0);
-const showResult = ref(false);
-const currentQuestion = computed(() => questions[currentIndex.value])
-const isCorrect = computed(() => selectedOption.value === currentQuestion.value.answer)
-
 // Spiral refs
 const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
 const gridWrapper = ref(null);
 const effects = ref(generateEffects(MAXCELLS));
 
+// Movement refs
+const position = ref(0);
+
+// Question refs
+const questions = ref(effects);
+let showQuest = ref(false);
+let currentQuestIndex = ref(0);
+const selectedOption = ref(null);
+const correctCount = ref(0);
+const showResult = ref(false);
+const currentQuestion = computed(() => questions.value[position.value].quests[[currentQuestIndex.value]])
+const isCorrect = computed(() => selectedOption.value === currentQuestion.value.answer)
+
 // Debug refs
-let showDebug = ref(false);
+let showDebug = ref(true);
 const clickCount = ref(0);
 let clickTimeout = null;
 const tpCell = ref(0);
@@ -299,7 +299,7 @@ async function applyCellEffect() {
 	const eventType = getEventType(position.value);
 	const effect = getEffect(position.value);
 	DEBUG && console.log(`Event type @${position.value}: ${eventType}`);
-	DEBUG && console.log(`Effect @${position.value}: ${effect}`);
+	DEBUG && console.log(`Effect @${position.value}:`, effect);
 
 	if (eventType === 'cell') {
 		const effectTarget = position.value + effect;
@@ -311,13 +311,14 @@ async function applyCellEffect() {
 	else if (eventType === 'question') {
 		showQuest.value = true;
 
-		const question = effect[currentIndex];
+		const question = effect[currentQuestIndex.value];
 
-		DEBUG && console.log(`Question: ${effect}`);
+		DEBUG && console.log(`Current Question:`, currentQuestion.question);
+		DEBUG && console.log(`Question:`, question);
 
 		// TODO: Process question
 
-		showQuest.value = false;
+		//showQuest.value = false;
 	}
 	else if (eventType === 'death') {
 		console.log ("Sei morto");
@@ -364,18 +365,11 @@ function selectOption(option) {
 }
 
 function nextQuestion() {
-	if (currentIndex.value < questions.length - 1) {
-		currentIndex.value++
+	if (currentQuestIndex.value < questions.length - 1) {
+		currentQuestIndex.value++
 		selectedOption.value = null
 	} else {
 		showResult.value = true
-	}
-}
-
-function prevQuestion() {
-	if (currentIndex.value > 0) {
-		currentIndex.value--
-		selectedOption.value = null
 	}
 }
 //#endregion
