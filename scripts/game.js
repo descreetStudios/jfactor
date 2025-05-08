@@ -112,7 +112,7 @@ export function generateEffects(totalCells = 63)
     }
 
     finalEffect[0] = { type : "start"};
-    finalEffect[totalCells + 1] = { type : "final"};
+    finalEffect[totalCells] = { type : "final"};
 
 	// Question pool setup outside while loop (only once)
 	let shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
