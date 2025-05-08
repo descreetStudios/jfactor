@@ -1,10 +1,10 @@
 <template>
     <!-- Transition -->
     <div ref="left" class="left">
-        <img src="@/assets/images/portone.jpg">
+        <img src="@/assets/images/left.png">
     </div>
     <div ref="right" class="right">
-        <img src="@/assets/images/portone.jpg">
+        <img src="@/assets/images/right.png">
     </div>
 
     <div v-if="error && !bypass">

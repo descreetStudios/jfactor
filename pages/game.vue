@@ -84,6 +84,8 @@
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
 					@click="handleClick(button)" style="position: relative;">
 
+					<!-- Cell number -->
+					<h1 class="cellNumber">{{ button !== null ? button : '' }}</h1>
 					
 					<!-- Pawn -->
 					<div v-if="button === position" class="pawnContainer">
@@ -97,7 +99,7 @@
 						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal" 
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
-						<!-- Normal -->
+						<!-- Final -->
 						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final" 
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
