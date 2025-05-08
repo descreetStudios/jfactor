@@ -84,27 +84,35 @@
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
 					@click="handleClick(button)" style="position: relative;">
 
-					{{ button !== null ? button : '' }}
-
+					
 					<!-- Pawn -->
 					<div v-if="button === position" class="pawnContainer">
 						<img :src="pieceImg" alt="Pawn" class="pawnImg" />
 					</div>
 
+					
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
+						<!-- Normal -->
+						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal" 
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
+
+						<!-- Normal -->
+						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final" 
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
+
 						<img v-if="effects[button].move > 0" :src="buffImg" alt="Buff"
-							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 						<img v-else-if="effects[button].move < 0" :src="debuffImg" alt="Debuff"
-							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 						<!-- <img v-else-if="Array.isArray(effects[button])" :src="questionImg" alt="Question"
 							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
 						<img v-else-if="effects[button].type == 'question'" :src="questionImg" alt="Question"
-							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 						<img v-else-if="effects[button].type == 'death'" :src="deathImg" alt="Death"
-							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 						<img v-else-if="effects[button].type == 'bonus'" :src="bonusImg" alt="Bonus"
-							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" />
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 					</template>
 
 				</div>
@@ -157,11 +165,13 @@ import { generateEffects, questions } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
 
 import pieceImg from '@/assets/images/piece.png';
-import buffImg from '@/assets/images/buff.png';
-import debuffImg from '@/assets/images/debuff.png';
-import questionImg from '@/assets/images/question.png';
-import deathImg from '@/assets/images/death.png';
-import bonusImg from '@/assets/images/bonus.png';
+import finalImg from '@/assets/images/cells/finalCell.png';
+import normalImg from '@/assets/images/cells/cell1.png';
+import buffImg from '@/assets/images/cells/buffCell.png';
+import debuffImg from '@/assets/images/cells/debuffCell.png';
+import questionImg from '@/assets/images/cells/questionCell.png';
+import deathImg from '@/assets/images/cells/deathCell.png';
+import bonusImg from '@/assets/images/cells/bonusCell.png';
 
 const { proxy } = getCurrentInstance();
 //#endregion

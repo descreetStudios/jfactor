@@ -31,25 +31,34 @@ body {
 }
 
 .button {
+	// visibility: hidden;
+	background-color: transparent;
 	display: flex;
 	position: relative;
 	align-items: center;
 	justify-content: center;
-	background-color: lightgray;
-	border: 1px solid #000;
+	// background-color: lightgray;
+	// border: 1px solid #000;
 	font-size: 16px;
 	height: 65px;
 	width: 65px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-	// background-image: url("@/assets/images/cells/startCell.png");
-	background-size: cover;
+	// background-image: url("@/assets/images/cells/cell1.png");
+	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
-.button:hover {
-	background-color: #ddd;
+.button .img {
+	visibility: hidden;
+    position: absolute;  /* Posiziona l'immagine fuori dal flusso del layout */
+    top: -50px;          /* Regola la posizione per far uscire l'immagine dal contenitore */
+    left: -50px;         /* Regola la posizione per far uscire l'immagine dal contenitore */
+    width: 100px;        /* Imposta la dimensione dell'immagine, maggiore di quella del bottone */
+    height: auto;        /* Mantiene le proporzioni dell'immagine */
+    z-index: -1;         /* L'immagine può andare dietro al contenuto del bottone, se necessario */
+    object-fit:contain;   /* L'immagine copre l'area, ma puoi usare contain se vuoi che si adatti senza distorcere */
 }
 
 .button-null {

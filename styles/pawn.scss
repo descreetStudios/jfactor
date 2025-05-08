@@ -3,7 +3,9 @@
 }
 
 .button-0 .pawnContainer {
+	visibility: visible;
 	bottom: 5px;
+	z-index: 2;
 }
 
 .pawnImg {

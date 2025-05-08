@@ -68,6 +68,8 @@ export function generateEffects(totalCells = 63)
         finalEffect[i] = { type: "empty"};
     }
 
+    finalEffect[63] = { type : "final"};
+
     while (appliedEffects < maxEffects) // While we haven't already applied effects to all possible cells
     {
         // Choose weighted effect category
