@@ -265,7 +265,7 @@ async function updateValues() {
 
 	do {
 		await applyCellEffect();
-	} while (getEventType(position.value) !== 'empty');
+	} while (!showQuest && getEventType(position.value) !== 'empty');
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -313,7 +313,7 @@ async function applyCellEffect() {
 
 		const question = effect[currentIndex];
 
-		DEBUG && console.log(`Question: ${question}`);
+		DEBUG && console.log(`Question: ${effect}`);
 
 		// TODO: Process question
 
@@ -411,7 +411,7 @@ async function tp() {
 
 		do {
 			await applyCellEffect();
-		} while (getEventType(position.value) !== 'empty'); // TODO: add a checker var 
+		} while (!showQuest && getEventType(position.value) !== 'empty'); // TODO: add a checker var 
 		// 	for when you are doing a question to avoid loops
 
 		if (position.value == MAXCELLS) {

@@ -35,7 +35,7 @@
 import { ref, computed } from 'vue'
 
 // TODO: Inserire domande vere
-const questions = [
+const questionsITA = [
   //1 domanda
 {
   question: 'In che anno arriva la peste a Firenze?',
@@ -291,6 +291,272 @@ answer: 'Si oscurò' },
   answer: 'Crescita del pensiero umanistico'
 },
 
+]
+
+const questionsENG = [
+  //1 question
+  {
+    question: 'In which year did the plague arrive in Florence?',
+    options: ['1248', '1350', '1348', '1340'],
+    answer: '1348'
+  },
+  //2 question
+  {
+    question: 'Which of these types of plague does not exist?',
+    options: ['Black plague', 'Septicaemic plague', 'Neurological plague', 'Bubonic plague'],
+    answer: 'Neurological plague'
+  },
+  //3 question
+  {
+    question: 'Which city was the most populated during the 14th century?',
+    options: ['Paris', 'Venice', 'Milan', 'Florence'],
+    answer: 'Paris'
+  },
+  //4 question
+  {
+    question: 'How many days did the characters in the Decameron actually spend in the villa?',
+    options: ['10', '12', '14', '13'],
+    answer: '14'
+  },
+  //5 question
+  {
+    question: 'How many deaths did the plague cause in Florence?',
+    options: ['5000', 'About 50% of the population', 'Over 300,000', 'Less than 1000'],
+    answer: 'About 50% of the population'
+  },
+  //6 question
+  {
+    question: 'How many young people were there in the Decameron villa?',
+    options: ['8', '10', '12', '9'],
+    answer: '10'
+  },
+  //7 question
+  {
+    question: 'Where did Boccaccio settle as a child?',
+    options: ['Florence', 'Milan', 'Palermo', 'Naples'],
+    answer: 'Naples'
+  },
+  //8 question
+  {
+    question: 'What restrictions did the authorities impose after the arrival of the plague?',
+    options: ['Quarantine', 'Go out only at night', 'Go out only during the day', 'Flagellate through the city'],
+    answer: 'Quarantine'
+  },
+  //9 question
+  {
+    question: 'Who was blamed for spreading the plague?',
+    options: ['The Spaniards', 'The Neapolitans', 'The Hungarians', 'The Jews'],
+    answer: 'The Jews'
+  },
+  //10 question
+  {
+    question: 'Where was Boccaccio born?',
+    options: ['Avignon', 'Naples', 'Milan', 'Uncertain'],
+    answer: 'Uncertain'
+  },
+  //11 question
+  {
+    question: 'In which year was Boccaccio born?',
+    options: ['1311', '1312', '1313', '1310'],
+    answer: '1313'
+  },
+  //12 question
+  {
+    question: 'In which year did the plague begin to weaken?',
+    options: ['1351', '1348', '1352', '1360'],
+    answer: '1351'
+  },
+  //13 question
+  {
+    question: 'In which century did the poetic movement of humanism emerge?',
+    options: ['12th', '11th', '17th', '15th'],
+    answer: '15th'
+  },
+  //14 question
+  {
+    question: 'What happened between 1315 and 1317?',
+    options: ['Demographic crisis', 'Economic crisis', 'Power crisis', 'Agricultural crisis'],
+    answer: 'Agricultural crisis'
+  },
+  //15 question
+  {
+    question: 'Which university was founded in 1088?',
+    options: ['University of Pavia', 'University of Bologna', 'University of Milan', 'University of Florence'],
+    answer: 'University of Bologna'
+  },
+  //16 question
+  {
+    question: 'In which year was the papal seat moved to Avignon?',
+    options: ['1310', '1340', '1307', '1309'],
+    answer: '1309'
+  },
+  //17 question
+  {
+    question: 'In which year did the Avignon Papacy end?',
+    options: ['1380', '1377', '1367', '1370'],
+    answer: '1377'
+  },
+  //18 question
+  {
+    question: 'When did the Hundred Years\' War begin?',
+    options: ['1337', '1340', '1333', '1335'],
+    answer: '1337'
+  },
+  //19 question
+  {
+    question: 'When was the Decameron completed?',
+    options: ['1350', '1343', '1353', '1363'],
+    answer: '1353'
+  },
+  //20 question
+  {
+    question: 'Where did Boccaccio die?',
+    options: ['Verona', 'Florence', 'Naples', 'Certaldo'],
+    answer: 'Certaldo'
+  },
+  //21 question
+  {
+    question: 'What are lazarettos?',
+    options: [
+      'Isolation facilities for people with contagious diseases',
+      'Religious structures',
+      'Large cities with many sick people',
+      'Meeting places for scholars'
+    ],
+    answer: 'Isolation facilities for people with contagious diseases'
+  },
+  //22 question
+  {
+    question: 'Which animal was mistakenly exterminated because it was believed to be responsible for the Black Death?',
+    options: ['The cat', 'The dog', 'The tiger', 'The horse'],
+    answer: 'The cat'
+  },
+  //23 question
+  {
+    question: 'What was the main cause of the spread of the Black Death?',
+    options: ['Pollution', 'Fleas on rats', 'Rotten food', 'Medieval medicine'],
+    answer: 'Fleas on rats'
+  },
+  //24 question
+  {
+    question: 'What was the geographical origin of the Black Death before it reached Europe?',
+    options: ['Africa', 'Central Asia', 'North America', 'Oceania'],
+    answer: 'Central Asia'
+  },
+  //25 question
+  {
+    question: 'What economic change was caused by the population reduction due to the plague?',
+    options: ['Increase in workers\' wages', 'Collapse of trade', 'Abolition of land ownership', 'Creation of new cities'],
+    answer: 'Increase in workers\' wages'
+  },
+  //26 question
+  {
+    question: 'According to beliefs at the time, how did the plague spread?',
+    options: ['Through water contact', 'Through bad smells', 'Through the Spaniards', 'By the Pope\'s will'],
+    answer: 'Through bad smells'
+  },
+  //27 question
+  {
+    question: 'Which social group was hit hardest by the economic consequences of the Black Death?',
+    options: ['Peasants', 'Merchants', 'Nobles', 'Artisans'],
+    answer: 'Peasants'
+  },
+  //28 question
+  {
+    question: 'What are jacqueries?',
+    options: ['Defensive structures', 'Mercenary armies', 'Zones for sick people', 'Peasant uprisings'],
+    answer: 'Peasant uprisings'
+  },
+  //29 question
+  {
+    question: 'Who were the Ciompi?',
+    options: ['Carpenters', 'Wool workers', 'Silk workers', 'Farmers'],
+    answer: 'Wool workers'
+  },
+  //30 question
+  {
+    question: 'When did the Hundred Years\' War end?',
+    options: ['1443', '1453', '1437', '1441'],
+    answer: '1453'
+  },
+  //31 question
+  {
+    question: 'Who won the Hundred Years\' War?',
+    options: ['England', 'Italy', 'Spain', 'France'],
+    answer: 'France'
+  },
+  //32 question
+  {
+    question: 'Who were the flagellants?',
+    options: ['They whipped themselves in public', 'They ran through the city', 'They were plague victims', 'They fled'],
+    answer: 'They whipped themselves in public'
+  },
+  //33 question
+  {
+    question: 'Who was the King of England at the start of the Hundred Years\' War?',
+    options: ['Edward III', 'Richard II', 'Henry V', 'John II'],
+    answer: 'Edward III'
+  },
+  //34 question
+  {
+    question: 'Which city was NOT one of the largest in Europe in the 14th century?',
+    options: ['London', 'Naples', 'Berlin', 'Paris'],
+    answer: 'Berlin'
+  },
+  //35 question
+  {
+    question: 'Which historical figure is associated with the end of the Hundred Years\' War?',
+    options: ['Joan of Arc', 'Frederick II', 'Charlemagne', 'Cosimo de\' Medici'],
+    answer: 'Joan of Arc'
+  },
+  //36 question
+  {
+    question: 'Which of these was NOT a measure adopted against the plague?',
+    options: ['Lazarettos', 'Ban on trade', 'Extermination of bees', 'Use of masks'],
+    answer: 'Extermination of bees'
+  },
+  //37 question
+  {
+    question: 'Which of these was NOT a consequence of the Black Death?',
+    options: ['Social mobility', 'Crisis of feudalism', 'Demographic increase', 'Labor demand'],
+    answer: 'Demographic increase'
+  },
+  //38 question
+  {
+    question: 'What happened to the European population in the 14th century?',
+    options: ['Growth', 'Stagnation', 'Sharp decline', 'Urbanization'],
+    answer: 'Sharp decline'
+  },
+  //39 question
+  {
+    question: 'Who were the beccamorti?',
+    options: ['Those who collected the bodies', 'Doctors', 'Priests', 'Officials'],
+    answer: 'Those who collected the bodies'
+  },
+  //40 question
+  {
+    question: 'What did the yellow flag on a house mean?',
+    options: ['Contaminated', 'Doctors present', 'Wealthy family', 'Abandoned house'],
+    answer: 'Contaminated'
+  },
+  //41 question
+  {
+    question: 'Why did the plague spread quickly in ports?',
+    options: ['Through maritime trade', 'Through poverty', 'Through sewers', 'Through sick sailors'],
+    answer: 'Through maritime trade'
+  },
+  //42 question
+  {
+    question: 'What was the role of bells during the plague?',
+    options: ['To signal deaths', 'To call gatherings', 'To drive away spirits', 'To recognize the cured'],
+    answer: 'To signal deaths'
+  },
+  //43 question
+  {
+    question: 'What led to the agricultural crisis of 1315-1317?',
+    options: ['Relentless rain', 'War', 'Strikes', 'Inflation'],
+    answer: 'Relentless rain'
+  }
 ]
 
 const currentIndex = ref(0)
