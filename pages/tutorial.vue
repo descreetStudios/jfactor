@@ -77,6 +77,12 @@
           
         </p>
       </section>
+      <div class="slidesContainer">
+        <iframe class="slides" loading="lazy" 
+          src="https://www.canva.com/design/DAGlSPe64ks/iE2VhdL-8mJ7dlPPUyGJIA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen" frameborder="0">
+        </iframe>
+</div>
+
     </div>
   </div>
 </template>

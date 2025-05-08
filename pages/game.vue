@@ -339,7 +339,7 @@ async function applyCellEffect() {
 	}
 	else if (eventType === 'death') {
 		console.log ("Sei morto");
-		position.value = 1;
+		position.value = 0;
 	}
 }
 
