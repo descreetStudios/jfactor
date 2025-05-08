@@ -2,7 +2,7 @@ body {
 	overflow-y: hidden;
 	background-color: rgb(35, 36, 44);
 	background-image: url('../assets/images/gameBackground.png');
-	background-size: cover;
+	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-position-x: center;
 	background-attachment: fixed;
@@ -26,7 +26,7 @@ body {
 	grid-template-columns: repeat(8, 50px);
 	grid-template-rows: repeat(8, 50px);
 	gap: 55px;
-	scale: 0.80;
+	scale: 0.8;
 	position: relative;
 }
 
