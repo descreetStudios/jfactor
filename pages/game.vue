@@ -92,11 +92,11 @@
 						<img :src="pieceImg" alt="Pawn" class="pawnImg" />
 					</div>
 
-					
+
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
 						<!-- Normal -->
-						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal" 
+						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<!-- Final -->
@@ -381,7 +381,7 @@ function selectOption(option) {
 	}
 }
 
-function nextQuestion() {
+async function nextQuestion() {
 	if (currentQuestIndex.value < questionsLength - 1) {
 		currentQuestIndex.value++;
 		selectedOption.value = null;
@@ -394,6 +394,15 @@ function nextQuestion() {
 		setTimeout(() => {
 			showQuest.value = false;
 		}, 5000);
+
+		if (target > MAXCELLS) {
+			await handleOvershoot(target);
+		}
+		
+		while (position.value !== target) {
+			await delay(500);
+			position.value += (position.value < target) ? 1 : -1;
+		}
 	}
 }
 //#endregion
