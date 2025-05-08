@@ -86,12 +86,11 @@
 
 					<!-- Cell number -->
 					<h1 class="cellNumber">{{ button !== null ? button : '' }}</h1>
-					
+
 					<!-- Pawn -->
 					<div v-if="button === position" class="pawnContainer">
 						<img :src="pieceImg" alt="Pawn" class="pawnImg" />
 					</div>
-
 
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
@@ -100,7 +99,7 @@
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<!-- Final -->
-						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final" 
+						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<img v-if="effects[button].move > 0" :src="buffImg" alt="Buff"
@@ -145,6 +144,9 @@
 				<button @click="nextQuestion" :disabled="selectedOption === null">
 					{{ currentQuestIndex === questionsLength - 1 ? 'Vedi Risultato' : 'Avanti' }}
 				</button>
+				<p class="questIndex">
+					{{ currentQuestIndex + 1 }} / {{ questionsLength }}
+				</p>
 			</div>
 		</div>
 
@@ -321,9 +323,14 @@ async function applyCellEffect() {
 
 	if (eventType === 'cell') {
 		const effectTarget = position.value + effect;
-		while (position.value !== effectTarget) {
+		for (let i = 0; i < Math.abs(effect); i++) {
 			await delay(500);
-			position.value += (position.value < effectTarget) ? 1 : -1;
+			if (position.value > 0) {
+				position.value += (position.value < effectTarget) ? 1 : -1;
+			}
+			else {
+				position.value = 0;
+			}
 		}
 	}
 	else if (eventType === 'question') {
@@ -334,11 +341,9 @@ async function applyCellEffect() {
 		DEBUG && console.log('Length:', getLength(effect));
 		DEBUG && console.log(`Question:`, question);
 		DEBUG && console.log(`Correct questions:`, correctCount.value);
-
-		// TODO: Process question
 	}
 	else if (eventType === 'death') {
-		console.log ("Sei morto");
+		console.log("Sei morto");
 		position.value = 0;
 	}
 }
@@ -388,21 +393,40 @@ async function nextQuestion() {
 	} else {
 		showResult.value = true;
 
-		let target = correctCount.value * 2 - questionsLength;
-		DEBUG && console.log(`Target movement:`, target);
+		let movement = correctCount.value * 2 - questionsLength;
+		let target = position.value + movement;
 
-		setTimeout(() => {
+		DEBUG && console.log(`Target movement:`, movement);
+		DEBUG && console.log(`Target cell:`, target);
+
+		// Wait 5 seconds to show the result
+		setTimeout(async () => {
 			showQuest.value = false;
-		}, 5000);
 
-		if (target > MAXCELLS) {
-			await handleOvershoot(target);
-		}
-		
-		while (position.value !== target) {
-			await delay(500);
-			position.value += (position.value < target) ? 1 : -1;
-		}
+			// Delay before starting movement
+			await delay(100);
+
+			// Handle overshoot
+			if (target > MAXCELLS) {
+				await handleOvershoot(target);
+			}
+
+			// Animate movement
+			for (let i = 0; i < Math.abs(movement); i++) {
+				await delay(500);
+				if (position.value > 0) {
+					position.value += (position.value < target) ? 1 : -1;
+				} else {
+					position.value = 0;
+				}
+			}
+
+			// Reset state
+			correctCount.value = 0;
+			currentQuestIndex.value = 0;
+			selectedOption.value = null;
+			showResult.value = false;
+		}, 5000); // Delay for result visibility
 	}
 }
 //#endregion
@@ -437,9 +461,9 @@ async function tp() {
 		position.value = tpCell.value;
 
 		do {
+			console.log("skdgj:", showQuest.value);
 			await applyCellEffect();
-		} while (!showQuest && getEventType(position.value) !== 'empty'); // TODO: add a checker var 
-		// 	for when you are doing a question to avoid loops
+		} while (!showQuest.value && getEventType(position.value) !== 'empty');
 
 		if (position.value == MAXCELLS) {
 			handleWin();
