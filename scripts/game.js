@@ -93,7 +93,6 @@ export function generateEffects(totalCells = 63)
     const maxEffects = 35;
 
     // Global Vars
-    let appliedQuestions = 0; // Number of used questions, it will clear when all (quests - minQuest) is <= 0
     let appliedEffects = 0; // Number of effects already applied
     const availableCells = totalCells - alwaysExcludedCount;
     const categoryCounts = [0, 0, 0, 0, 0]; // Track how many times each category is applied
@@ -151,7 +150,6 @@ export function generateEffects(totalCells = 63)
 		
 				quests[i] = shuffledQuestions[questionIndex];
 				questionIndex++;
-				appliedQuestions++;
 			}
 		
 			finalEffect[cell] = { type: "question", quests };
