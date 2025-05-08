@@ -26,48 +26,25 @@ body {
 	grid-template-columns: repeat(8, 50px);
 	grid-template-rows: repeat(8, 50px);
 	gap: 55px;
-	scale: 0.8;
+	scale: 0.80;
 	position: relative;
 }
 
 .button {
-	// visibility: hidden;
 	background-color: transparent;
 	display: flex;
 	position: relative;
 	align-items: center;
 	justify-content: center;
-	// background-color: lightgray;
-	// border: 1px solid #000;
 	font-size: 16px;
 	height: 65px;
 	width: 65px;
 	cursor: pointer;
-	transition: background-color 0.3s ease;
-	// background-image: url("@/assets/images/cells/cell1.png");
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
-.button .img {
-	visibility: hidden;
-    position: absolute;  /* Posiziona l'immagine fuori dal flusso del layout */
-    top: -50px;          /* Regola la posizione per far uscire l'immagine dal contenitore */
-    left: -50px;         /* Regola la posizione per far uscire l'immagine dal contenitore */
-    width: 100px;        /* Imposta la dimensione dell'immagine, maggiore di quella del bottone */
-    height: auto;        /* Mantiene le proporzioni dell'immagine */
-    z-index: -1;         /* L'immagine può andare dietro al contenuto del bottone, se necessario */
-    object-fit:contain;   /* L'immagine copre l'area, ma puoi usare contain se vuoi che si adatti senza distorcere */
-}
-
-.button-null {
-	background-color: rgb(0, 255, 89);
-	cursor: default;
-	padding: 25px;
-	position: relative;
-	top: -23px;
-	left: -20px;
+.button h1 {
+	z-index: 1;
+	color: white;
 }
 
 /* Common padding for buttons */

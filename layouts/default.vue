@@ -1,12 +1,13 @@
 <template>
+    
     <!-- Transition -->
     <div ref="left" class="left">
-        <img src="@/assets/images/portone.jpg">
+        <img src="@/assets/images/left.png">
     </div>
     <div ref="right" class="right">
-        <img src="@/assets/images/portone.jpg">
+        <img src="@/assets/images/right.png">
     </div>
-
+    
     <div v-if="error && !bypass">
         <!-- Particles -->
         <div>
@@ -17,7 +18,7 @@
                 <div v-for="(backDrop, index) in backDrops" :key="index" v-html="backDrop"></div>
             </div>
         </div>
-
+        
         <div class="title">
             <img class="titleImage" src="@/assets/images/logo.png" alt="UPG">
             <div class="buttons">
@@ -33,6 +34,10 @@
         </div>
     </div>
     <div v-else>
+
+
+    <!-- Background Music -->
+    <bgMusic />
         <NuxtPage />
         <!-- Buttons and Title -->
         <div v-if="!navbarVisible && !error" class="title">
@@ -41,7 +46,7 @@
                 <button type="button" class="playButton" ref="button" @click="transitionClose(2)">
                     <span>PLAY</span>
                 </button>
-
+                
                 <button type="button" ref="button" @click="transitionClose(3)">
                     <span>TUTORIAL</span>
                 </button>
@@ -77,6 +82,11 @@
 </template>
 
 <script setup>
+// for background music
+import bgMusic from '../components/bgMusic.vue';
+
+let clickSound
+
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router'
 
@@ -218,6 +228,11 @@ const transitionOpen = () => {
 };
 
 const transitionClose = (page) => {
+    // Play the click sound
+    clickSound.play().catch(err => {
+        console.warn('Autoplay blocked:', err)
+    })
+    
     left.value.style.animation = "leftIn 1s forwards";
     right.value.style.animation = "rightIn 1s forwards";
 
@@ -246,6 +261,15 @@ const transitionClose = (page) => {
 //#endregion
 
 onMounted(() => {
+    // For click sound
+    clickSound = new Audio('/audio/click.mp3')
+
+    const playClickSound = () => {
+        clickSound.play().catch(err => {
+        console.warn('Autoplay blocked:', err)
+    })
+    }
+
     nextTick(() => {
         updateScrollBehavior();
         updateNavbarWidth();

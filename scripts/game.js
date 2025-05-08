@@ -103,9 +103,6 @@ export function generateEffects(totalCells = 63)
     // Question effect Settings
     const minQuestions = 3, maxQuestions = 6;
 
-    // Question effect Vars
-    const usedQuestions = new Set(); // TODO: Already used questions
-
     // Cell effect Settings
     const cellEffectRange = 6; // Max signed movement for cell effect
 
@@ -114,7 +111,8 @@ export function generateEffects(totalCells = 63)
         finalEffect[i] = { type: "empty"};
     }
 
-    finalEffect[63] = { type : "final"};
+    finalEffect[0] = { type : "start"};
+    finalEffect[totalCells] = { type : "final"};
 
 	// Question pool setup outside while loop (only once)
 	let shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());

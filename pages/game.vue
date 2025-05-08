@@ -84,7 +84,9 @@
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
 					@click="handleClick(button)" style="position: relative;">
 
-
+					<!-- Cell number -->
+					<h1 class="cellNumber">{{ button !== null ? button : '' }}</h1>
+					
 					<!-- Pawn -->
 					<div v-if="button === position" class="pawnContainer">
 						<img :src="pieceImg" alt="Pawn" class="pawnImg" />
@@ -97,8 +99,8 @@
 						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
-						<!-- Normal -->
-						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final"
+						<!-- Final -->
+						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final" 
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<img v-if="effects[button].move > 0" :src="buffImg" alt="Buff"
@@ -336,8 +338,8 @@ async function applyCellEffect() {
 		// TODO: Process question
 	}
 	else if (eventType === 'death') {
-		console.log("Sei morto");
-		position.value = 1;
+		console.log ("Sei morto");
+		position.value = 0;
 	}
 }
 
