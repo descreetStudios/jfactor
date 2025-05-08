@@ -124,7 +124,7 @@
 	<div class="question-wrapper" v-if="showQuest">
 		<div class="carousel" v-if="!showResult">
 			<div class="question-text">
-				{{ currentQuestion }}
+				{{ currentQuestion.question }}
 			</div>
 
 			<div class="options">
@@ -141,13 +141,13 @@
 
 			<div class="nav-buttons">
 				<button @click="nextQuestion" :disabled="selectedOption === null">
-					{{ currentQuestIndex === questions.length - 1 ? 'Vedi Risultato' : 'Avanti' }}
+					{{ currentQuestIndex === questionsLength - 1 ? 'Vedi Risultato' : 'Avanti' }}
 				</button>
 			</div>
 		</div>
 
 		<div class="result" v-else>
-			Hai risposto correttamente a {{ correctCount }} su {{ questions.length }} domande!
+			Hai risposto correttamente a {{ correctCount }} su {{ questionsLength }} domande!
 		</div>
 	</div>
 </template>
@@ -156,6 +156,11 @@
 // Settings
 const DEBUG = true;
 const MAXCELLS = 63; // Available cells
+
+// Utils
+const getLength = (proxy) => {
+	return Object.keys(proxy).length;
+};
 
 //#region Imports
 import { ref, computed, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
@@ -192,6 +197,7 @@ const position = ref(0);
 
 // Question refs
 const questions = ref(effects);
+let questionsLength = ref(0);
 let showQuest = ref(false);
 let currentQuestIndex = ref(0);
 const selectedOption = ref(null);
@@ -320,15 +326,14 @@ async function applyCellEffect() {
 	}
 	else if (eventType === 'question') {
 		showQuest.value = true;
-
+		questionsLength = getLength(effect);
 		const question = effect[currentQuestIndex.value];
 
-		DEBUG && console.log(`Current Question:`, currentQuestion.question);
+		DEBUG && console.log('Length:', getLength(effect));
 		DEBUG && console.log(`Question:`, question);
+		DEBUG && console.log(`Correct questions:`, correctCount.value);
 
 		// TODO: Process question
-
-		//showQuest.value = false;
 	}
 	else if (eventType === 'death') {
 		console.log ("Sei morto");
@@ -375,11 +380,18 @@ function selectOption(option) {
 }
 
 function nextQuestion() {
-	if (currentQuestIndex.value < questions.length - 1) {
-		currentQuestIndex.value++
-		selectedOption.value = null
+	if (currentQuestIndex.value < questionsLength - 1) {
+		currentQuestIndex.value++;
+		selectedOption.value = null;
 	} else {
-		showResult.value = true
+		showResult.value = true;
+
+		let target = correctCount.value * 2 - questionsLength;
+		DEBUG && console.log(`Target movement:`, target);
+
+		setTimeout(() => {
+			showQuest.value = false;
+		}, 5000);
 	}
 }
 //#endregion
