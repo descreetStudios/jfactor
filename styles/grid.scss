@@ -92,9 +92,10 @@ body {
 
 // Starting cell special styles
 .button-0 {
+	scale: 0.95;
 	width: 150px;
-	height: 175px;
-	bottom: 65px;
+	height: 180px;
+	bottom: 70px;
 	right: 43px;
 	background-image: url('../assets/images/cells/startCell.png');
 	background-size: cover;

@@ -84,21 +84,21 @@
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
 					@click="handleClick(button)" style="position: relative;">
 
-					
+
 					<!-- Pawn -->
 					<div v-if="button === position" class="pawnContainer">
 						<img :src="pieceImg" alt="Pawn" class="pawnImg" />
 					</div>
 
-					
+
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
 						<!-- Normal -->
-						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal" 
+						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<!-- Normal -->
-						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final" 
+						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<img v-if="effects[button].move > 0" :src="buffImg" alt="Buff"
@@ -336,7 +336,7 @@ async function applyCellEffect() {
 		// TODO: Process question
 	}
 	else if (eventType === 'death') {
-		console.log ("Sei morto");
+		console.log("Sei morto");
 		position.value = 1;
 	}
 }
@@ -379,7 +379,7 @@ function selectOption(option) {
 	}
 }
 
-function nextQuestion() {
+async function nextQuestion() {
 	if (currentQuestIndex.value < questionsLength - 1) {
 		currentQuestIndex.value++;
 		selectedOption.value = null;
@@ -392,6 +392,15 @@ function nextQuestion() {
 		setTimeout(() => {
 			showQuest.value = false;
 		}, 5000);
+
+		if (target > MAXCELLS) {
+			await handleOvershoot(target);
+		}
+		
+		while (position.value !== target) {
+			await delay(500);
+			position.value += (position.value < target) ? 1 : -1;
+		}
 	}
 }
 //#endregion
