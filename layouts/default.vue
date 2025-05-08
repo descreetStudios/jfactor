@@ -85,6 +85,8 @@
 // for background music
 import bgMusic from '../components/bgMusic.vue';
 
+let clickSound
+
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router'
 
@@ -226,6 +228,11 @@ const transitionOpen = () => {
 };
 
 const transitionClose = (page) => {
+    // Play the click sound
+    clickSound.play().catch(err => {
+        console.warn('Autoplay blocked:', err)
+    })
+    
     left.value.style.animation = "leftIn 1s forwards";
     right.value.style.animation = "rightIn 1s forwards";
 
@@ -254,6 +261,15 @@ const transitionClose = (page) => {
 //#endregion
 
 onMounted(() => {
+    // For click sound
+    clickSound = new Audio('/audio/click.mp3')
+
+    const playClickSound = () => {
+        clickSound.play().catch(err => {
+        console.warn('Autoplay blocked:', err)
+    })
+    }
+
     nextTick(() => {
         updateScrollBehavior();
         updateNavbarWidth();
