@@ -3,14 +3,14 @@
 .debugMenu {
   position: absolute;
   top: 5%;
-  left: 5%;
-  width: 20%;
+  left: 1%;
+  width: 17%;
   height: auto;
   background: rgba(20, 20, 40, 0.9);
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
-  z-index: 7;
+  z-index: 2;
   padding: 20px;
   animation: fadeIn 0.5s ease;
   border: 2px solid #fbb6ce;
@@ -22,7 +22,7 @@
 }
 
 .debugHead {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: #fbb6ce;
   text-align: center;
   margin-bottom: 10px;
@@ -71,14 +71,15 @@
 }
 
 .formRow {
+  display: flex;
+  align-items: center;  
   margin: 10px 0;
 }
 
 .formRow span {
-  float: left;
   color: #fbb6ce;
   font-size: 1.2rem;
-  width: 50%;
+  width: 30%;
 }
 
 .formRow input {

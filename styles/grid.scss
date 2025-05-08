@@ -50,26 +50,6 @@ body {
 	background-position: center;
 }
 
-.button .img {
-	visibility: hidden;
-    position: absolute;  /* Posiziona l'immagine fuori dal flusso del layout */
-    top: -50px;          /* Regola la posizione per far uscire l'immagine dal contenitore */
-    left: -50px;         /* Regola la posizione per far uscire l'immagine dal contenitore */
-    width: 100px;        /* Imposta la dimensione dell'immagine, maggiore di quella del bottone */
-    height: auto;        /* Mantiene le proporzioni dell'immagine */
-    z-index: -1;         /* L'immagine può andare dietro al contenuto del bottone, se necessario */
-    object-fit:contain;   /* L'immagine copre l'area, ma puoi usare contain se vuoi che si adatti senza distorcere */
-}
-
-.button-null {
-	background-color: rgb(0, 255, 89);
-	cursor: default;
-	padding: 25px;
-	position: relative;
-	top: -23px;
-	left: -20px;
-}
-
 /* Common padding for buttons */
 .button-padding-x {
 	padding: 0px 18px;

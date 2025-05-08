@@ -97,7 +97,7 @@
 						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal" 
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
-						<!-- Normal -->
+						<!-- Final -->
 						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final" 
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
@@ -337,7 +337,7 @@ async function applyCellEffect() {
 	}
 	else if (eventType === 'death') {
 		console.log ("Sei morto");
-		position.value = 1;
+		position.value = 0;
 	}
 }
 
