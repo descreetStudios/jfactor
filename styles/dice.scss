@@ -16,12 +16,22 @@
 	width: fit-content;
 }
 
+.diceContainer img{
+	visibility: visible;
+	width: 150%;
+	height: 150%;
+	position: absolute;
+	transform: translate(0, 0);
+
+}
+
 /* Contenitore dei dadi con effetto 3D */
 .dice-container {
 	display: flex;
 	gap: 50px;
 	perspective: 800px;
 	margin-bottom: 20px;
+	margin-top: 20px;
 }
 
 .dice-container.clickable {
