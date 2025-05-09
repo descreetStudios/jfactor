@@ -26,11 +26,6 @@
 	<!-- Debug Button -->
 	<button @click="debugClick">Debug</button>
 
-	<!-- Quest Button -->
-	<NuxtLink to="./quest">
-		<button>Quest</button>
-	</NuxtLink>
-
 	<!-- Dice Container -->
 	<div class="diceContainer">
 		<img src="@/assets/images/diceBackground.png" alt="diceBackground">
