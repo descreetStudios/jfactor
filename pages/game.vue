@@ -285,7 +285,7 @@ async function updateValues() {
 
 	do {
 		await applyCellEffect();
-	} while (!showQuest && getEventType(position.value) !== 'empty');
+	} while (!showQuest.value && getEventType(position.value) !== 'empty');
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -399,34 +399,47 @@ async function nextQuestion() {
 		DEBUG && console.log(`Target movement:`, movement);
 		DEBUG && console.log(`Target cell:`, target);
 
+		await delay(3600);
+
 		// Wait 5 seconds to show the result
-		setTimeout(async () => {
-			showQuest.value = false;
+		showQuest.value = false;
+		rolling.value = true;
 
-			// Delay before starting movement
-			await delay(100);
+		// Reset state
+		showResult.value = false;
+		selectedOption.value = null;
+		correctCount.value = 0;
+		currentQuestIndex.value = 0;
 
-			// Handle overshoot
-			if (target > MAXCELLS) {
-				await handleOvershoot(target);
+		// Delay before starting movement
+		await delay(100);
+
+		// Handle overshoot
+		if (target > MAXCELLS) {
+			await handleOvershoot(target);
+		}
+
+		// Animate movement
+		for (let i = 0; i < Math.abs(movement); i++) {
+			await delay(500);
+			if (position.value > 0) {
+				position.value += (position.value < target) ? 1 : -1;
+			} else {
+				position.value = 0;
 			}
+		}
 
-			// Animate movement
-			for (let i = 0; i < Math.abs(movement); i++) {
-				await delay(500);
-				if (position.value > 0) {
-					position.value += (position.value < target) ? 1 : -1;
-				} else {
-					position.value = 0;
-				}
-			}
+		do {
+			await applyCellEffect();
+		} while (!showQuest.value && getEventType(position.value) !== 'empty');
 
-			// Reset state
-			correctCount.value = 0;
-			currentQuestIndex.value = 0;
-			selectedOption.value = null;
-			showResult.value = false;
-		}, 5000); // Delay for result visibility
+		if (position.value === MAXCELLS) {
+			handleWin();
+		}
+
+		updatePawnPosition(position.value);
+		rolling.value = false;
+
 	}
 }
 //#endregion
