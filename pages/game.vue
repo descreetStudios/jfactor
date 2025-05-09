@@ -33,6 +33,7 @@
 
 	<!-- Dice Container -->
 	<div class="diceContainer">
+		<img src="@/assets/images/diceBackground.png" alt="diceBackground">
 		<div class="dice-container clickable" @click="handleRoll" :disabled="rolling">
 			<!-- Dice 1 and 2 scenes -->
 			<div class="scene" v-for="(transform, index) in [dice1Transform, dice2Transform]" :key="index">
@@ -73,7 +74,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="result" v-if="resultText">{{ resultText }}</div>
+		<!-- <div class="result" v-if="resultText">{{ resultText }}</div> -->
 	</div>
 
 	<!-- Grid -->

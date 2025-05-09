@@ -8,6 +8,7 @@
         <img src="@/assets/images/right.png">
     </div>
     
+    
     <div v-if="error && !bypass">
         <!-- Particles -->
         <div>
@@ -34,10 +35,9 @@
         </div>
     </div>
     <div v-else>
-
-
-    <!-- Background Music -->
-    <bgMusic />
+        
+        
+        
         <NuxtPage />
         <!-- Buttons and Title -->
         <div v-if="!navbarVisible && !error" class="title">
@@ -50,7 +50,7 @@
                 <button type="button" ref="button" @click="transitionClose(3)">
                     <span>TUTORIAL</span>
                 </button>
-
+                
                 <button type="button" ref="button" @click="transitionClose(4)">
                     <span>CREDITS</span>
                 </button>
@@ -58,27 +58,29 @@
         </div>
         <!-- Navbar -->
         <div v-if="navbarVisible && !error" class="navbar" ref="navbar" @mouseenter="navbarOver"
-            @mouseleave="navbarLeave">
-            <div class="firstCell" @click="transitionClose(1)" :class="{ disabled: currentPage === 1 }">
-                <img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
-                <transition name="fade">
-                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
-                </transition>
-            </div>
-            <div class="cell" @click="transitionClose(3)" :class="{ disabled: currentPage === 3 }">
-                <img class="navbarImage" src="@/assets/images/newsButton.png" alt="Tutorial">
-                <transition name="fade">
-                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">TUTORIAL</h2>
-                </transition>
-            </div>
-            <div class="lastCell" @click="transitionClose(4)" :class="{ disabled: currentPage === 4 }">
-                <img class="navbarImage" src="@/assets/images/teamButton.png" alt="Credits">
-                <transition name="fade">
-                    <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">CREDITS</h2>
-                </transition>
-            </div>
+        @mouseleave="navbarLeave">
+        <div class="firstCell" @click="transitionClose(1)" :class="{ disabled: currentPage === 1 }">
+            <img class="navbarImage" src="@/assets/images/homeButton.png" alt="Home">
+            <transition name="fade">
+                <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">HOME</h2>
+            </transition>
+        </div>
+        <div class="cell" @click="transitionClose(3)" :class="{ disabled: currentPage === 3 }">
+            <img class="navbarImage" src="@/assets/images/newsButton.png" alt="Tutorial">
+            <transition name="fade">
+                <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">TUTORIAL</h2>
+            </transition>
+        </div>
+        <div class="lastCell" @click="transitionClose(4)" :class="{ disabled: currentPage === 4 }">
+            <img class="navbarImage" src="@/assets/images/teamButton.png" alt="Credits">
+            <transition name="fade">
+                <h2 v-if="showTitle" class="navbarTitle" ref="navbarTitle">CREDITS</h2>
+            </transition>
         </div>
     </div>
+</div>
+<!-- Background Music -->
+<bgMusic />
 </template>
 
 <script setup>
