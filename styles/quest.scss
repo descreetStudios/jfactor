@@ -29,12 +29,18 @@ html {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   color: #fff;
   text-align: center;
+
 }
 
 .question-text {
   font-size: 1.5rem;
   color: #fbb6ce;
   margin-bottom: 20px;
+}
+
+.questIndex{
+  margin-right: 0px;
+  margin-left: auto;
 }
 
 .options button {
@@ -71,13 +77,24 @@ html {
   animation: flicker 2s infinite ease-in-out;
 }
 
-.nav-buttons {
+.nav-buttons-wrapper {
+  min-height: 35px;
   margin-top: 20px;
+  position: relative;
+}
+
+.nav-buttons {
+  position: absolute;
   display: flex;
   justify-content: center;
+  width: 100%;
+  height: fit-content;
+  top: 0;
+  left: 0;
 }
 
 .nav-buttons button {
+  z-index: 2;
   background: #fbb6ce;
   border: none;
   color: #3e0d32;

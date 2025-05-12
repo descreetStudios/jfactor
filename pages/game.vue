@@ -136,13 +136,17 @@
 				<span v-else class="wrongAns">Sbagliato. Risposta corretta: {{ currentQuestion.answer }}</span>
 			</div>
 
-			<div class="nav-buttons">
-				<button @click="nextQuestion" :disabled="selectedOption === null">
-					{{ currentQuestIndex === questionsLength - 1 ? 'Vedi Risultato' : 'Avanti' }}
-				</button>
-				<p class="questIndex">
-					{{ currentQuestIndex + 1 }} / {{ questionsLength }}
-				</p>
+			<div class="nav-buttons-wrapper">
+				<div class="nav-buttons">
+					<button @click="nextQuestion" :disabled="selectedOption === null">
+						{{ currentQuestIndex === questionsLength - 1 ? 'Vedi Risultato' : 'Avanti' }}
+					</button>
+				</div>
+				<div class="nav-buttons">
+					<p class="questIndex">
+						{{ currentQuestIndex + 1 }} / {{ questionsLength }}
+					</p>
+				</div>
 			</div>
 		</div>
 
