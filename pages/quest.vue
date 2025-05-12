@@ -35,138 +35,97 @@
 import { ref, computed } from 'vue'
 
 // TODO: Inserire domande vere
+
 const questionsITA = [
   //1 domanda
-{
-  question: 'In che anno arriva la peste a Firenze?',
+{ question: 'In che anno arriva la peste a Firenze?',
   options: ['1248', '1350', '1348', '1340'],
-  answer: '1348'
-},
+  answer: '1348' },
 //2 domanda 
-{
-  question: 'Quale di queste tipologie di peste non esiste?',
+{ question: 'Quale di queste tipologie di peste non esiste?',
   options: ['Peste nera', 'Peste setticemica', 'Peste neurologica', 'Peste bubbonica'],
-  answer: 'Peste neurologica'
-},
+  answer: 'Peste neurologica' },
 //3 domanda 
-{
-  question: 'Qual è la città più popolata negli anni del XIV secolo?',
+{ question: 'Qual è la città più popolata negli anni del XIV secolo?',
   options: ['Parigi', 'Venezia', 'Milano', 'Firenze'],
-  answer: 'Parigi'
-},
+  answer: 'Parigi' },
 //4 domanda
-{
-  question: 'Quanti sono realmente i giorni che i ragazzi del Decameron hanno passato nella villa?',
+{ question: 'Quanti sono realmente i giorni che i ragazzi del Decameron hanno passato nella villa?',
   options: ['10', '12', '14', '13'],
-  answer: '14'
-},
+  answer: '14' },
 //5 domanda
-{
-  question: 'Quanti morti ha causato la peste a Firenze?',
+{ question: 'Quanti morti ha causato la peste a Firenze?',
   options: ['5000', 'Circa il 50% della popolazione', 'Oltre 300.000', 'Meno di 1000'],
-  answer: 'Circa il 50% della popolazione'
-},
+  answer: 'Circa il 50% della popolazione' },
 //6 domanda
-{
-  question: 'Quanti sono i ragazzi nella villa del Decameron?',
+{ question: 'Quanti sono i ragazzi nella villa del Decameron?',
   options: ['8', '10', '12', '9'],
-  answer: '10'
-},
+  answer: '10' },
 //7 domanda
-{
-  question: 'Boccaccio da piccolo in che città si stabilisce?',
+{ question: 'Boccaccio da piccolo in che città si stabilisce?',
   options: ['Firenze', 'Milano', 'Palermo', 'Napoli'],
-  answer: 'Napoli'
-},
+  answer: 'Napoli' },
 //8 domanda
-{
-  question: 'Le autorità che restrizione misero dopo l\'arrivo della peste?',
+{ question: 'Le autorità che restrizione misero dopo l\'arrivo della peste?',
   options: ['Quarantena', 'Uscire solo di sera', 'Uscire solo di giorno', 'Flagellarsi per la città'],
-  answer: 'Quarantena'
-},
+  answer: 'Quarantena' },
 //9 domanda
-{
-  question: 'Chi furono incolpati per la diffusione della peste?',
+{ question: 'Chi furono incolpati per la diffusione della peste?',
   options: ['Gli spagnoli', 'I napoletani', 'Gli ungheresi', 'Gli ebrei'],
-  answer: 'Gli ebrei'
-},
+  answer: 'Gli ebrei' },
 //10 domanda
-{
-  question: 'Dove nasce Boccaccio?',
+{ question: 'Dove nasce Boccaccio?',
   options: ['Avignone', 'Napoli', 'Milano', 'Non è sicuro'],
-  answer: 'Non è sicuro'
-},
+  answer: 'Non è sicuro' },
 //11 domanda
-{
-  question: 'In che anno nasce Boccaccio?',
+{ question: 'In che anno nasce Boccaccio?',
   options: ['1311', '1312', '1313', '1310'],
-  answer: '1313'
-},
+  answer: '1313' },
 //12 domanda
-{
-  question: 'In che anno la peste inizia ad indebolirsi?',
+{ question: 'In che anno la peste inizia ad indebolirsi?',
   options: ['1351', '1348', '1352', '1360'],
-  answer: '1351'
-},
+  answer: '1351' },
 //13 domanda
-{
-  question: 'In che secolo si afferma la corrente poetica dell\'umanesimo?',
+{ question: 'In che secolo si afferma la corrente poetica dell\'umanesimo?',
   options: ['XII', 'XI', 'XVII', 'XV'],
-  answer: 'XV'
-},
+  answer: 'XV' },
 //14 domanda
-{
-  question: 'Cosa accade tra il 1315 e il 1317?',
+{ question: 'Cosa accade tra il 1315 e il 1317?',
   options: ['Crisi demografica', 'Crisi economica', 'Crisi di potere', 'Crisi agricola'],
-  answer: 'Crisi agricola'
-},
+  answer: 'Crisi agricola' },
 //15 domanda
-{
-  question: 'Quale università fu fondata nel 1088?',
+{ question: 'Quale università fu fondata nel 1088?',
   options: ['Università di Pavia', 'Università di Bologna', 'Università di Milano', 'Università di Firenze'],
-  answer: 'Università di Bologna'
-},
+  answer: 'Università di Bologna' },
 //16 domanda
-{
-  question: 'In che anno la sede papale fu spostata ad Avignone?',
+{ question: 'In che anno la sede papale fu spostata ad Avignone?',
   options: ['1310', '1340', '1307', '1309'],
-  answer: '1309'
-},
+  answer: '1309' },
 //17 domanda
-{
-  question: 'In che anno finisce la cattività avignonese?',
+{ question: 'In che anno finisce la cattività avignonese?',
   options: ['1380', '1377', '1367', '1370'],
-  answer: '1377'
-},
+  answer: '1377' },
 //18 domanda
-{
-  question: 'Quando inizia la guerra dei Cent\'anni?',
+{ question: 'Quando inizia la guerra dei Cent\'anni?',
   options: ['1337', '1340', '1333', '1335'],
-  answer: '1337'
-},
+  answer: '1337' },
 //19 domanda
-{
-  question: 'Quando venne concluso il Decameron?',
+{ question: 'Quando venne concluso il Decameron?',
   options: ['1350', '1343', '1353', '1363'],
-  answer: '1353'
-},
+  answer: '1353' },
 //20 domanda
-{
-  question: 'Dove muore Boccaccio?',
+{ question: 'Dove muore Boccaccio?',
   options: ['Verona', 'Firenze', 'Napoli', 'Certaldo'],
-  answer: 'Certaldo'
-},
+  answer: 'Certaldo' },
 //21 domanda
-{
-  question: 'Cosa sono i lazzaretti?',
+{ question: 'Cosa sono i lazzaretti?',
   options: [
     'Strutture di isolamento per persone affette da malattie contagiose',
     'Strutture religiose',
     'Grandi città con tanti malati',
     'Luogo di incontro per studiosi'
   ],
-  answer: 'Strutture di isolamento per persone affette da malattie contagiose'
-},
+  answer: 'Strutture di isolamento per persone affette da malattie contagiose' },
 //22 domanda
 { question: 'Quale animale venne erroneamente sterminato perché si pensava fosse responsabile della Peste Nera?',
   options: ['Il gatto', 'Il cane', 'La tigre', 'Il cavallo'], 
@@ -178,11 +137,9 @@ const questionsITA = [
 //24 domanda
 { question: 'Quale fu l\'origine geografica della Peste Nera prima di arrivare in Europa?', 
   options: ['Africa', 'Asia centrale', 'America del Nord', 'Oceania'], 
-  answer: 'Asia centrale'
-},
+  answer: 'Asia centrale' },
 //25 domanda
-{ 
-  question: 'Quale cambiamento economico fu causato dalla riduzione della popolazione dovuta alla peste?', 
+{ question: 'Quale cambiamento economico fu causato dalla riduzione della popolazione dovuta alla peste?', 
   options: ['Aumento dei salari per i lavoratori', 'Crollo del commercio', 'Abolizione della proprietà terriera', 'Creazione di nuove città'], 
   answer: 'Aumento dei salari per i lavoratori' },
 //26 domanda 
@@ -190,12 +147,9 @@ const questionsITA = [
   options: ['Per il contatto di acqua', ' Per il cattivo odore', 'Per via degli spagnoli','Per volere del papa'], 
   answer: 'Per il cattivo odore' },
 //27 domanda 
-{
-  question: 'Quale gruppo sociale fu colpito più duramente dalle conseguenze economiche della Peste Nera?',
+{ question: 'Quale gruppo sociale fu colpito più duramente dalle conseguenze economiche della Peste Nera?',
   options: ['Contadini', 'Mercanti', 'Nobili', 'Artigiani'],
-  answer: 'Contadini'
-},
-
+  answer: 'Contadini' },
 //28 domanda
 { question: 'Che cosa sono le jacqueries?', 
 options: ['Strutture difensive', 'Eserciti di mercenari', 'Zone per malati', 'Insurrezioni contadine'], 
@@ -285,12 +239,9 @@ answer: 'Fuori città' },
 options: ['Si oscurò', 'Si fermò', 'Divenne allegra', 'Si concentrò sul paesaggio'], 
 answer: 'Si oscurò' },
 //50 domanda
-{
-  question: 'Quale cambiamento culturale fu favorito dalla Peste Nera?',
+{ question: 'Quale cambiamento culturale fu favorito dalla Peste Nera?',
   options: ['Declino della fede religiosa', 'Maggiore diffusione dell\'arte funeraria', 'Crescita del pensiero umanistico', 'Espansione dei monasteri'],
-  answer: 'Crescita del pensiero umanistico'
-},
-
+  answer: 'Crescita del pensiero umanistico' }
 ]
 
 const questionsENG = [
