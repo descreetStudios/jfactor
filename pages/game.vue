@@ -215,6 +215,9 @@ const showResult = ref(false);
 const currentQuestion = computed(() => questions.value[position.value].quests[[currentQuestIndex.value]])
 const isCorrect = computed(() => selectedOption.value === currentQuestion.value.answer)
 
+// Bonus refs
+let playerBonusCount = ref(0);
+
 // Debug refs
 let showDebug = ref(true);
 const clickCount = ref(0);
@@ -248,9 +251,6 @@ function getEffect(pos) {
 	}
 	else if (getEventType(pos) === 'question') {
 		return effects.value[pos].quests || 0;
-	}
-	else if (getEventType(pos) === 'bonus') {
-
 	}
 	else {
 		return 0;
@@ -290,7 +290,7 @@ async function updateValues() {
 
 	do {
 		await applyCellEffect();
-	} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
+	} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -348,8 +348,17 @@ async function applyCellEffect() {
 		DEBUG && console.log(`Correct questions:`, correctCount.value);
 	}
 	else if (eventType === 'death') {
-		console.log("Sei morto");
-		position.value = 0;
+		if (playerBonusCount.value > 0) {
+			alert("Hai scampato la morte!");
+			playerBonusCount.value -= 1;
+		}
+		else {
+			alert("Sei morto!");
+			position.value = 0;
+		}
+	}
+	else if (eventType === 'bonus') {
+		playerBonusCount.value += 1;
 	}
 }
 
@@ -436,7 +445,7 @@ async function nextQuestion() {
 
 		do {
 			await applyCellEffect();
-		} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
+		} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
 
 		if (position.value === MAXCELLS) {
 			handleWin();
@@ -479,9 +488,8 @@ async function tp() {
 		position.value = tpCell.value;
 
 		do {
-			console.log("skdgj:", showQuest.value);
 			await applyCellEffect();
-		} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
+		} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
 
 		if (position.value == MAXCELLS) {
 			handleWin();
