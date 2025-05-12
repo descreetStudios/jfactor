@@ -125,10 +125,10 @@
   margin: 0;
 }
 
-/* Make text selectable only on this page */
+/* Make text not selectable on this page */
 p {
-  -webkit-user-select: text;
-  user-select: text;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Animations */

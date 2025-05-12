@@ -281,7 +281,7 @@ async function updateValues() {
 
 	do {
 		await applyCellEffect();
-	} while (!showQuest.value && getEventType(position.value) !== 'empty');
+	} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -427,7 +427,7 @@ async function nextQuestion() {
 
 		do {
 			await applyCellEffect();
-		} while (!showQuest.value && getEventType(position.value) !== 'empty');
+		} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
 
 		if (position.value === MAXCELLS) {
 			handleWin();
@@ -472,7 +472,7 @@ async function tp() {
 		do {
 			console.log("skdgj:", showQuest.value);
 			await applyCellEffect();
-		} while (!showQuest.value && getEventType(position.value) !== 'empty');
+		} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
 
 		if (position.value == MAXCELLS) {
 			handleWin();
