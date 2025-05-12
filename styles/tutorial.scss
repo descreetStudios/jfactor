@@ -25,9 +25,22 @@
   padding: 40px 20px;
 }
 
+.language-button{
+  background-color: transparent;
+  border: none;
+  width: 3vw;
+  height: auto;
+}
+
+.language-button img{
+  width: 3vw;
+  height: auto;
+}
+
+
 .tutorial-title {
   font-size: 3rem;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   color: #fbb6ce;
   animation: flicker 2s infinite ease-in-out;
 }
