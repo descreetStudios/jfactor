@@ -26,6 +26,14 @@
 	<!-- Debug Button -->
 	<button @click="debugClick">Debug</button>
 
+	<!-- Static Info Cell -->
+	<div class="staticInfoCellWrapper">
+		<img src="@/assets/images/diceBackground.png" alt="background">
+		<div class="staticInfoCell">
+			Static Info Cell
+		</div>
+	</div>
+
 	<!-- Dice Container -->
 	<div class="diceContainer">
 		<img src="@/assets/images/diceBackground.png" alt="diceBackground">
@@ -136,16 +144,19 @@
 				<span v-else class="wrongAns">Sbagliato. Risposta corretta: {{ currentQuestion.answer }}</span>
 			</div>
 
-			<div class="nav-buttons">
-				<button @click="nextQuestion" :disabled="selectedOption === null">
-					{{ currentQuestIndex === questionsLength - 1 ? 'Vedi Risultato' : 'Avanti' }}
-				</button>
-				<p class="questIndex">
-					{{ currentQuestIndex + 1 }} / {{ questionsLength }}
-				</p>
+			<div class="nav-buttons-wrapper">
+				<div class="nav-buttons">
+					<button @click="nextQuestion" :disabled="selectedOption === null">
+						{{ currentQuestIndex === questionsLength - 1 ? 'Vedi Risultato' : 'Avanti' }}
+					</button>
+				</div>
+				<div class="nav-buttons">
+					<p class="questIndex">
+						{{ currentQuestIndex + 1 }} / {{ questionsLength }}
+					</p>
+				</div>
 			</div>
 		</div>
-
 		<div class="result" v-else>
 			Hai risposto correttamente a {{ correctCount }} su {{ questionsLength }} domande!
 		</div>
@@ -191,6 +202,7 @@ const rolling = ref(false);
 const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
 const gridWrapper = ref(null);
 const effects = ref(generateEffects(MAXCELLS));
+const showInfoCell = ref(false);
 
 // Movement refs
 const position = ref(0);
@@ -205,6 +217,9 @@ const correctCount = ref(0);
 const showResult = ref(false);
 const currentQuestion = computed(() => questions.value[position.value].quests[[currentQuestIndex.value]])
 const isCorrect = computed(() => selectedOption.value === currentQuestion.value.answer)
+
+// Bonus refs
+let playerBonusCount = ref(0);
 
 // Debug refs
 let showDebug = ref(true);
@@ -239,9 +254,6 @@ function getEffect(pos) {
 	}
 	else if (getEventType(pos) === 'question') {
 		return effects.value[pos].quests || 0;
-	}
-	else if (getEventType(pos) === 'bonus') {
-
 	}
 	else {
 		return 0;
@@ -281,7 +293,7 @@ async function updateValues() {
 
 	do {
 		await applyCellEffect();
-	} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
+	} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -339,8 +351,17 @@ async function applyCellEffect() {
 		DEBUG && console.log(`Correct questions:`, correctCount.value);
 	}
 	else if (eventType === 'death') {
-		console.log("Sei morto");
-		position.value = 0;
+		if (playerBonusCount.value > 0) {
+			alert("Hai scampato la morte!");
+			playerBonusCount.value -= 1;
+		}
+		else {
+			alert("Sei morto!");
+			position.value = 0;
+		}
+	}
+	else if (eventType === 'bonus') {
+		playerBonusCount.value += 1;
 	}
 }
 
@@ -427,7 +448,7 @@ async function nextQuestion() {
 
 		do {
 			await applyCellEffect();
-		} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
+		} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
 
 		if (position.value === MAXCELLS) {
 			handleWin();
@@ -470,9 +491,8 @@ async function tp() {
 		position.value = tpCell.value;
 
 		do {
-			console.log("skdgj:", showQuest.value);
 			await applyCellEffect();
-		} while (!showQuest.value && !['empty', 'start'].includes(getEventType(position.value)));
+		} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
 
 		if (position.value == MAXCELLS) {
 			handleWin();
@@ -483,6 +503,7 @@ async function tp() {
 // Debug cells number
 const handleClick = (button) => {
 	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
+	showInfoCell.value = true;
 };
 //#endregion
 
@@ -497,6 +518,7 @@ onMounted(() => {
 @import url('@/styles/pawn.scss');
 @import url('@/styles/dice.scss');
 @import url('@/styles/quest.scss');
+@import url('@/styles/infoCell.scss');
 @import url('@/styles/debugMenu.scss');
 /* DEBUG
 @import url('@/styles/debug.scss');
