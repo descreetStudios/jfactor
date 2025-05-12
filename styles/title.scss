@@ -102,7 +102,7 @@
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
-	//margin-top: 4vh;
+	margin-bottom: 7vh;
 	gap: 2rem;
 	align-items: center;
 	overflow: visible;
@@ -110,6 +110,8 @@
 
 .buttons button {
 	font-size: 2.5rem;
+	line-height: 3em;
+	
  	font-family: 'Jersey 10', sans-serif;
 	width: 15vw;
 	height: fit-content;
@@ -173,12 +175,11 @@
 	display: inline-block;
 	font-size: 2.5vw;
 	animation: shakeScale 0.8s ease-in-out infinite;
-	line-height: 3.5em;
+	line-height: 2em;
 }
 
 .buttons .playButton span {
 	font-size: 3vw;
-	line-height: 2em;
 }
 
 .content {
