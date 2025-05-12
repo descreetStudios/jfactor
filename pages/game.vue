@@ -27,8 +27,11 @@
 	<button @click="debugClick">Debug</button>
 
 	<!-- Static Info Cell -->
-	<div class="staticInfoCell">
-		Static Info Cell
+	<div class="staticInfoCellWrapper">
+		<img src="@/assets/images/diceBackground.png" alt="background">
+		<div class="staticInfoCell">
+			Static Info Cell
+		</div>
 	</div>
 
 	<!-- Dice Container -->
