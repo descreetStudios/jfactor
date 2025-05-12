@@ -21,10 +21,10 @@
 }
 
 @font-face {
-	font-family: 'Hardpixel';
-	src: url('~/assets/fonts/Hardpixel.otf') format('opentype');
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'Jersey 10';
+  src: url('@/assets/fonts/Jersey10-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
@@ -110,7 +110,7 @@
 
 .buttons button {
 	font-size: 2.5rem;
-	font-family: 'Hardpixel', sans-serif;
+ 	font-family: 'Jersey 10', sans-serif;
 	width: 15vw;
 	height: fit-content;
 	overflow: visible;
@@ -171,7 +171,7 @@
 
 .buttons button span {
 	display: inline-block;
-	font-size: 2vw;
+	font-size: 2.5vw;
 	animation: shakeScale 0.8s ease-in-out infinite;
 	line-height: 3.5em;
 }
