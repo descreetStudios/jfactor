@@ -6,14 +6,14 @@
   left: 1%;
   width: 17%;
   height: auto;
-  background: rgba(20, 20, 40, 0.9);
+  background: rgba(30, 20, 10, 0.9);
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   z-index: 2;
   padding: 20px;
   animation: fadeIn 0.5s ease;
-  border: 2px solid #fbb6ce;
+  border: 2px solid #d2b48c;
 }
 
 @keyframes fadeIn {
@@ -23,10 +23,10 @@
 
 .debugHead {
   font-size: 1.25rem;
-  color: #fbb6ce;
+  color: #d2b48c;
   text-align: center;
   margin-bottom: 10px;
-  text-shadow: 0 0 10px #fbb6ce, 0 0 20px #ff00ff;
+  text-shadow: 0 0 10px #d2b48c, 0 0 20px #8b4513;
 }
 
 .debugExit {
@@ -49,19 +49,16 @@
 
 .closeX {
   font-size: 1.5rem;
-  color: #ff0000;
+  color: #8b0000;
   text-shadow: 
-    0 0 5px #ff0000, 
-    0 0 10px #ff0000, 
-    0 0 15px #ff4d4d, 
-    0 0 20px #ff4d4d, 
-    0 0 25px #ff4d4d;
+    0 0 4px #8b0000,
+    0 0 8px #8b0000;
   cursor: pointer;
 }
 
 .debugBody {
   font-size: 1rem;
-  color: white;
+  color: #f5deb3;
   text-align: left;
 }
 
@@ -77,16 +74,16 @@
 }
 
 .formRow span {
-  color: #fbb6ce;
+  color: #d2b48c;
   font-size: 1.2rem;
   width: 30%;
 }
 
 .formRow input {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid #fbb6ce;
+  border: 1px solid #d2b48c;
   border-radius: 8px;
-  color: #fbb6ce;
+  color: #d2b48c;
   padding: 10px;
   width: 15%;
   text-align: center;
@@ -106,7 +103,7 @@
   background: rgba(255, 255, 255, 0.2);
   border: none;
   border-radius: 8px;
-  color: #fbb6ce;
+  color: #d2b48c;
   padding: 10px 15px;
   font-size: 1rem;
   cursor: pointer;

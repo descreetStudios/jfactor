@@ -26,6 +26,11 @@
 	<!-- Debug Button -->
 	<button @click="debugClick">Debug</button>
 
+	<!-- Static Info Cell -->
+	<div class="staticInfoCell">
+		Static Info Cell
+	</div>
+
 	<!-- Dice Container -->
 	<div class="diceContainer">
 		<img src="@/assets/images/diceBackground.png" alt="diceBackground">
@@ -149,7 +154,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="result" v-else>
 			Hai risposto correttamente a {{ correctCount }} su {{ questionsLength }} domande!
 		</div>
@@ -195,6 +199,7 @@ const rolling = ref(false);
 const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
 const gridWrapper = ref(null);
 const effects = ref(generateEffects(MAXCELLS));
+const showInfoCell = ref(false);
 
 // Movement refs
 const position = ref(0);
@@ -487,6 +492,7 @@ async function tp() {
 // Debug cells number
 const handleClick = (button) => {
 	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
+	showInfoCell.value = true;
 };
 //#endregion
 
@@ -501,6 +507,7 @@ onMounted(() => {
 @import url('@/styles/pawn.scss');
 @import url('@/styles/dice.scss');
 @import url('@/styles/quest.scss');
+@import url('@/styles/infoCell.scss');
 @import url('@/styles/debugMenu.scss');
 /* DEBUG
 @import url('@/styles/debug.scss');
