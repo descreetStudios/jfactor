@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+.notification-wrapper {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(16px);
+  animation: flicker 2s infinite ease-in-out;
+}
+
+.notification-box {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+  min-width: 300px;
+  padding: 20px 30px;
+  color: #fff;
+  text-align: center;
+}
+
+.notification-text {
+  font-size: 1.8rem;
+  color: #ffb8d1;
+  font-weight: 600;
+  background: none;
+  margin: 0;
+}
+
+.notification-alt-text {
+  font-size: 1.4rem;
+  color: #ffb8d1;
+  font-weight: normal;
+  background: none;
+  margin-top: 10px;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
