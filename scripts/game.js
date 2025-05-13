@@ -106,7 +106,7 @@ export const questions = [
     answer: 'Aumento dei salari per i lavoratori' },
   //26 domanda 
   { question: 'Secondo le credenze del tempo la peste si diffonde anche per cosa?', 
-    options: ['Per il contatto di acqua', ' Per il cattivo odore', 'Per via degli spagnoli','Per volere del papa'], 
+    options: ['Per il contatto di acqua', 'Per il cattivo odore', 'Per via degli spagnoli','Per volere del papa'], 
     answer: 'Per il cattivo odore' },
   //27 domanda 
   { question: 'Quale gruppo sociale fu colpito più duramente dalle conseguenze economiche della Peste Nera?',
@@ -130,7 +130,7 @@ export const questions = [
   answer: 'Francia' },
   //32 domanda
   { question: 'Chi erano i flagellanti?', 
-  options: ['Si frustavano in pubblico', 'Correva per la città', 'Malati di peste', 'Fuggivano'], 
+  options: ['Si frustavano in pubblico', 'Correvano per la città', 'Malati di peste', 'Fuggivano'], 
   answer: 'Si frustavano in pubblico' },
   //33 domanda
   { question: 'Chi era il sovrano d\'Inghilterra all\'inizio della Guerra dei Cent\'anni?', 
@@ -173,7 +173,7 @@ export const questions = [
   options: ['Segnalare morti', 'Chiamare a raccolta', 'Allontanare spiriti', 'Riconoscere i guariti'], 
   answer: 'Segnalare morti' },
   //43 domanda
-  { question: 'Cosa portò alla crisi agricola del 1315-1317?', 
+  { question: 'Quale fu la causa della crisi agricola del 1315-1317?', 
   options: ['Piogge incessanti', 'Guerra', 'Scioperi', 'Inflazione'], 
   answer: 'Piogge incessanti' },
   // 44 domanda
