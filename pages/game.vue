@@ -24,7 +24,7 @@
 	</div>
 
 	<!-- Debug Button (Bat) -->
-	<div class="batButton"  @click="debugClick">
+	<div class="batButton" @click="debugClick">
 		<div class="bat"></div>
 	</div>
 
@@ -176,6 +176,14 @@
 			Hai risposto correttamente a {{ correctCount }} su {{ questionsLength }} domande!
 		</div>
 	</div>
+
+	<!-- Notification Box -->
+	<div v-if="notificationVisible" class="notification-wrapper">
+		<div class="notification-box">
+			<span class="notification-text">{{ notificationMessage }}</span>
+			<span class="notification-alt-text">{{ notificationAltMessage }}</span>
+		</div>
+	</div>
 </template>
 
 <script setup>
@@ -258,6 +266,14 @@ const isCorrect = computed(() => selectedOption.value === currentQuestion.value.
 
 // Bonus refs
 let playerBonusCount = ref(0);
+let hasPlayerAlreadyTakenBonus = ref(false);
+let hasPlayerAlreadyTriedDeath = ref(false);
+
+// Cell notifier refs
+let notificationMessage = ref("You're now walking in the city (Undefined behaviour or undefined cell)");
+let notificationAltMessage = ref("You've hit a cell (Undefined behaviour or undefined cell)");
+let notificationVisible = ref(false);
+const notificationDelay = 3500;
 
 // Debug refs
 let showDebug = ref(true);
@@ -282,6 +298,22 @@ function handleRoll() {
 //#endregion
 
 //#region Movement system
+
+// Cell effect for consecutive cells
+async function cellEffect() {
+	do {
+		await applyCellEffect();
+
+		// If question is not asked,
+		// you are not in any of the listed cells,
+		// you haven't already taken the bonus and
+		// you haven't already tried dying,
+		// cycle again
+	} while (!showQuest.value &&
+	!['empty', 'start', 'final'].includes(getEventType(position.value)) &&
+		hasPlayerAlreadyTakenBonus.value === false && hasPlayerAlreadyTriedDeath.value == false);
+}
+
 function getEventType(pos) {
 	return effects.value[pos].type;
 }
@@ -329,9 +361,7 @@ async function updateValues() {
 		await handleOvershoot(target);
 	}
 
-	do {
-		await applyCellEffect();
-	} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
+	await cellEffect();
 
 	if (position.value === MAXCELLS) {
 		handleWin();
@@ -360,7 +390,54 @@ async function handleOvershoot(target) {
 	}
 }
 
+async function notifyCell(type, deathMessage = "", altDeathMessage = "", movement) {
+	notificationMessage.value = "You're now walking in the city (Undefined behaviour or undefined cell)";
+	notificationAltMessage.value = "You've hit a cell (Undefined behaviour or undefined cell)";
+	if (type === undefined) return;
+
+	if (type === 'question') {
+		notificationMessage.value = "Un viandante ti pone delle domande!";
+		notificationAltMessage.value = "Rispondi alle seguenti domande:";
+	}
+	if (type === 'death') {
+		if (deathMessage === "" && altDeathMessage === "") {
+			notificationMessage.value = "La peste ha avuto la meglio!";
+			notificationAltMessage.value = "Sei morto, ricomincia da capo.";
+		}
+		else {
+			notificationMessage.value = deathMessage;
+			notificationAltMessage.value = altDeathMessage;
+		}
+	}
+	if (type === 'bonus') {
+		notificationMessage.value = "Hai trovato delle erbe curative per strada!";
+		notificationAltMessage.value = `Puoi evitare la morte per ${playerBonusCount.value} volte.`;
+	}
+	if (type === 'cell') {
+		if (movement > 0) {
+			notificationMessage.value = "[Vai avanti]";
+			notificationAltMessage.value = (movement === 1 ? `Avanza di 1 casella` : `Avanza di ${movement} caselle`);
+		}
+		else {
+			notificationMessage.value = "[Turna ndre]";
+			notificationAltMessage.value = (movement === -1 ? `Retrocedi di 1 casella` : `Retrocedi di ${movement * -1} caselle`);
+		}
+	}
+	if (type === 'win') {
+		notificationMessage.value = "Sei uscito dal lazzaretto!";
+		notificationAltMessage.value = "Hai vinto!";
+	}
+
+	notificationVisible.value = true;
+	await delay(notificationDelay);
+	notificationVisible.value = false;
+}
+
 async function applyCellEffect() {
+	// Reset this value
+	hasPlayerAlreadyTakenBonus.value = false;
+	hasPlayerAlreadyTriedDeath.value = false;
+
 	// Get effect in current position
 	const eventType = getEventType(position.value);
 	const effect = getEffect(position.value);
@@ -369,6 +446,8 @@ async function applyCellEffect() {
 
 	if (eventType === 'cell') {
 		const effectTarget = position.value + effect;
+		await (notifyCell(eventType, "", "", effectTarget - position.value));
+
 		for (let i = 0; i < Math.abs(effect); i++) {
 			await delay(500);
 			if (position.value > 0) {
@@ -380,6 +459,9 @@ async function applyCellEffect() {
 		}
 	}
 	else if (eventType === 'question') {
+
+		await (notifyCell(eventType));
+
 		showQuest.value = true;
 		questionsLength = getLength(effect);
 		const question = effect[currentQuestIndex.value];
@@ -390,22 +472,30 @@ async function applyCellEffect() {
 	}
 	else if (eventType === 'death') {
 		if (playerBonusCount.value > 0) {
-			alert("Hai scampato la morte!");
 			playerBonusCount.value -= 1;
+			if (playerBonusCount.value === 1) {
+				await (notifyCell(eventType, "Hai scampato la morte!", `Ti rimane 1 erba medicinale.`));
+			}
+			else {
+				await (notifyCell(eventType, "Hai scampato la morte!", `Ti rimangono ${playerBonusCount.value} erbe medicinali.`));
+			}
 		}
 		else {
-			alert("Sei morto!");
+			await (notifyCell(eventType));
 			position.value = 0;
 		}
+		hasPlayerAlreadyTriedDeath.value = true;
 	}
 	else if (eventType === 'bonus') {
 		playerBonusCount.value += 1;
+		hasPlayerAlreadyTakenBonus.value = true;
+		await (notifyCell(eventType));
 	}
 }
 
 function handleWin() {
 	setTimeout(() => {
-		alert('🎉 You won! Resetting the game...');
+		notifyCell('win');
 		resetGame();
 	}, 500);
 }
@@ -484,9 +574,7 @@ async function nextQuestion() {
 			}
 		}
 
-		do {
-			await applyCellEffect();
-		} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
+		await cellEffect();
 
 		if (position.value === MAXCELLS) {
 			handleWin();
@@ -533,9 +621,7 @@ async function tp() {
 	if (tpCell.value >= 1 && tpCell.value <= 63) {
 		position.value = tpCell.value;
 
-		do {
-			await applyCellEffect();
-		} while (!showQuest.value && !['empty', 'start', 'bonus', 'death'].includes(getEventType(position.value)));
+		await cellEffect();
 
 		if (position.value == MAXCELLS) {
 			handleWin();
@@ -616,6 +702,8 @@ onMounted(() => {
 @import url('@/styles/bat.scss');
 @import url('@/styles/infoCell.scss');
 @import url('@/styles/debugMenu.scss');
+@import url('@/styles/notification.scss');
+
 /* DEBUG
 @import url('@/styles/debug.scss');
 */
