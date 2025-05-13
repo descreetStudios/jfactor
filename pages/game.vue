@@ -4,7 +4,7 @@
 	<div v-show="showDebug" class="debugMenu">
 		<div class="debugHead">
 			<h1 class="debugTitle">DEBUG MENU</h1>
-			<div class="debugExit" @click="toggleDebug">
+			<div class="debugExit" @click="deactivateDebug">
 				<span class="closeX">X</span>
 			</div>
 		</div>
@@ -23,8 +23,11 @@
 		</div>
 	</div>
 
-	<!-- Debug Button -->
-	<button @click="debugClick">Debug</button>
+	<!-- Debug Button (Bat) -->
+	<div class="batButton"  @click="debugClick">
+		<div class="bat"></div>
+	</div>
+
 
 	<!-- Static Info Cell -->
 	<div class="staticInfoCellWrapper">
@@ -89,7 +92,7 @@
 					@click="handleClick(button)" style="position: relative;">
 
 					<!-- Cell number -->
-					<h1 class="cellNumber">{{ button !== null ? button : '' }}</h1>
+					<h1 class="cellNumber" v-if="button !== null && button !== 0">{{ button }}</h1>
 
 					<!-- Pawn -->
 					<div v-if="button === position" class="pawnContainer">
@@ -513,15 +516,20 @@ const debugClick = () => {
 	}, 500);
 
 	if (clickCount.value === 5) {
-		toggleDebug();
+		activeDebug();
 		clickCount.value = 0;
 	}
 };
 
-// Debug menu on/off
-const toggleDebug = () => {
-	showDebug.value = !showDebug.value;
+// Debug menu on
+const activeDebug = () => {
+	showDebug.value = true;
 };
+
+// Debug menu off
+const deactivateDebug = () => {
+	showDebug.value = false;
+}
 
 // Teleport pawn
 async function tp() {
@@ -593,6 +601,7 @@ onMounted(() => {
 @import url('@/styles/pawn.scss');
 @import url('@/styles/dice.scss');
 @import url('@/styles/quest.scss');
+@import url('@/styles/bat.scss');
 @import url('@/styles/infoCell.scss');
 @import url('@/styles/debugMenu.scss');
 /* DEBUG
