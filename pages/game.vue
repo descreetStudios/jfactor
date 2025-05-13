@@ -98,7 +98,11 @@
 
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
-						<!-- Normal -->
+						
+						<!-- Normal 
+							TODO: caricare l'immagine con getImageSrc()
+							TODO: fare in modo che l'immagine possa essere cell1, cell2, ... casualmente 
+						-->
 						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
@@ -106,19 +110,30 @@
 						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
-						<img v-if="effects[button].move > 0" :src="buffImg" alt="Buff"
+						<!-- Show Buff Image if move is positive -->
+						<img v-if="effects[button].move > 0" :src="getCellImageSrc(button, 'buff')" alt="Buff"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-						<img v-else-if="effects[button].move < 0" :src="debuffImg" alt="Debuff"
+
+						<!-- Show Debuff Image if move is negative -->
+						<img v-if="effects[button].move < 0" :src="getCellImageSrc(button, 'debuff')" alt="Debuff"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+
+						<!-- Show Question Image if there's a question effect -->
+						<img v-if="effects[button].type === 'question'" :src="getCellImageSrc(button, 'question')" alt="Question"
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+							
 						<!-- <img v-else-if="Array.isArray(effects[button])" :src="questionImg" alt="Question"
-							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
-						<img v-else-if="effects[button].type == 'question'" :src="questionImg" alt="Question"
+						style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
+
+						<!-- Show Death Image if there's a death effect -->
+						<img v-if="effects[button].type === 'death'" :src="getCellImageSrc(button, 'death')" alt="Death"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-						<img v-else-if="effects[button].type == 'death'" :src="deathImg" alt="Death"
+
+						<!-- Show Bonus Image if there are stars for bonus -->
+						<img v-if="effects[button].type === 'bonus'" :src="getCellImageSrc(button, 'buff')" alt="Bonus"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-						<img v-else-if="effects[button].type == 'bonus'" :src="bonusImg" alt="Bonus"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-					</template>
+
+						</template>
 
 				</div>
 			</div>
@@ -187,6 +202,29 @@ import debuffImg from '@/assets/images/cells/debuffCell.png';
 import questionImg from '@/assets/images/cells/questionCell.png';
 import deathImg from '@/assets/images/cells/deathCell.png';
 import bonusImg from '@/assets/images/cells/bonusCell.png';
+
+// Import horizontal and vertical cells
+import buffCellHorizontal from '@/assets/images/cells/buffCellHorizontal.png';
+import buffCellVertical from '@/assets/images/cells/buffCellVertical.png';
+import debuffCellHorizontal from '@/assets/images/cells/debuffCellHorizontal.png';
+import debuffCellVertical from '@/assets/images/cells/debuffCellVertical.png';
+import deathCellHorizontal from '@/assets/images/cells/deathCellHorizontal.png';
+import deathCellVertical from '@/assets/images/cells/deathCellVertical.png';
+import bonusCellVertical from '@/assets/images/cells/bonusCellVertical.png';
+import bonusCellHorizontal from '@/assets/images/cells/buffCellHorizontal.png';
+import questionCellVertical from '@/assets/images/cells/questionCellVertical.png';
+import questionCellHorizontal from '@/assets/images/cells/questionCellHorizontal.png';
+
+import Cell1Vertical from '@/assets/images/cells/Cell1Vertical.png';
+import Cell1Horizontal from '@/assets/images/cells/Cell1Horizontal.png';
+import Cell2Vertical from '@/assets/images/cells/Cell2Vertical.png';
+import Cell2Horizontal from '@/assets/images/cells/Cell2Horizontal.png';
+import Cell3Vertical from '@/assets/images/cells/Cell3Vertical.png';
+import Cell3Horizontal from '@/assets/images/cells/Cell3Horizontal.png';
+import Cell4Vertical from '@/assets/images/cells/Cell4Vertical.png';
+import Cell4Horizontal from '@/assets/images/cells/Cell4Horizontal.png';
+import Cell5Vertical from '@/assets/images/cells/Cell5Vertical.png';
+import Cell5Horizontal from '@/assets/images/cells/Cell5Horizontal.png';
 
 const { proxy } = getCurrentInstance();
 //#endregion
@@ -506,6 +544,43 @@ const handleClick = (button) => {
 	showInfoCell.value = true;
 };
 //#endregion
+
+
+// Horizontal or Vertical or spanish
+const horizontalCells = [
+	3, 4, 7, 8, 9, 13, 14, 15, 16, 21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 36, 43, 44, 45, 46, 47, 48, 49, 57, 58, 59, 60, 61, 62
+]
+
+const isHorizontal = (index) => horizontalCells.includes(index);
+
+const getCellImageSrc = (cellNumber, type) => {
+	const horizontal = isHorizontal(cellNumber);
+	switch (type) {
+		case 'buff':
+			return horizontal ? buffCellHorizontal : buffCellVertical;
+		case 'debuff':
+			return horizontal ? debuffCellHorizontal : debuffCellVertical;
+		case 'death':
+			return horizontal ? deathCellHorizontal : deathCellVertical;
+		case 'bonus':
+			return horizontal ? bonusCellHorizontal : bonusCellVertical;
+		case 'question':
+			return horizontal ? questionCellHorizontal : questionCellVertical;
+		case 'cell1':
+			return horizontal ? cell1Horizontal : cell1Vertical;
+		case 'cell2':
+			return horizontal ? cell2Horizontal : cell2Vertical;
+		case 'cell3':
+			return horizontal ? cell3Horizontal : cell3Vertical;
+		case 'cell4':
+			return horizontal ? cell4Horizontal : cell4Vertical;
+		case 'cell5':
+			return horizontal ? cell5Horizontal : cell5Vertical;
+		default:
+			return '';
+	}
+};
+
 
 onMounted(() => {
 	updatePawnPosition(position.value);
