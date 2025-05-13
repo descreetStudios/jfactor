@@ -10,7 +10,7 @@ $b: #202020;
 /* 1 */
 $c: #fff;
 /* 1 */
-$size: 1;
+$size: 1.2;
 /* 2 */
 $speed: .5s;
 /* 3 */
@@ -23,21 +23,29 @@ $speed: .5s;
 .batButton {
 	position: absolute;
 	z-index: 1;
-	top: 1%;
-	left: 1%;
+	transform: scaleX(-1);
+	top: 6%;
+	left: 48%;
 	width: 60px;
 	height: 60px;
+	cursor: pointer;
+	scale: ($size);
 }
 
 /* Bat */
 .bat {
 	width: 1px;
 	height: 1px;
-	transform: scale($size);
+	opacity: 0.3;
+	transition: opacity 1s ease-in-out;
 	position: absolute;
 	top: 1%;
 	left: 1%;
 	animation: $speed bat steps(1) infinite;
+}
+
+.batButton:hover .bat {
+	opacity: 1;
 }
 
 /* Bat animation */
