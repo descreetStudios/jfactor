@@ -20,14 +20,23 @@ $speed: .5s;
 	margin: 0;
 }
 
+.batButton {
+	position: absolute;
+	z-index: 1;
+	top: 1%;
+	left: 1%;
+	width: 60px;
+	height: 60px;
+}
+
 /* Bat */
 .bat {
 	width: 1px;
 	height: 1px;
 	transform: scale($size);
-	position: fixed;
-	top: 2vh * $size;
-	left: 2vw * $size;
+	position: absolute;
+	top: 1%;
+	left: 1%;
 	animation: $speed bat steps(1) infinite;
 }
 
