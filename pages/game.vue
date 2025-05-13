@@ -101,27 +101,40 @@
 
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
-						<!-- Normal -->
-						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal"
+						
+						<!-- Normal  
+						-->
+						<img v-if="effects[button].type == 'empty'" :src="getCellImageSrc(button, 'empty')" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<!-- Final -->
 						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
-						<img v-if="effects[button].move > 0" :src="buffImg" alt="Buff"
+						<!-- Show Buff Image if move is positive -->
+						<img v-if="effects[button].move > 0" :src="getCellImageSrc(button, 'buff')" alt="Buff"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-						<img v-else-if="effects[button].move < 0" :src="debuffImg" alt="Debuff"
+
+						<!-- Show Debuff Image if move is negative -->
+						<img v-if="effects[button].move < 0" :src="getCellImageSrc(button, 'debuff')" alt="Debuff"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+
+						<!-- Show Question Image if there's a question effect -->
+						<img v-if="effects[button].type === 'question'" :src="getCellImageSrc(button, 'question')" alt="Question"
+							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+							
 						<!-- <img v-else-if="Array.isArray(effects[button])" :src="questionImg" alt="Question"
-							style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
-						<img v-else-if="effects[button].type == 'question'" :src="questionImg" alt="Question"
+						style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
+
+						<!-- Show Death Image if there's a death effect -->
+						<img v-if="effects[button].type === 'death'" :src="getCellImageSrc(button, 'death')" alt="Death"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-						<img v-else-if="effects[button].type == 'death'" :src="deathImg" alt="Death"
+
+						<!-- Show Bonus Image if there are stars for bonus -->
+						<img v-if="effects[button].type === 'bonus'" :src="getCellImageSrc(button, 'buff')" alt="Bonus"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-						<img v-else-if="effects[button].type == 'bonus'" :src="bonusImg" alt="Bonus"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-					</template>
+
+						</template>
 
 				</div>
 			</div>
@@ -198,6 +211,29 @@ import debuffImg from '@/assets/images/cells/debuffCell.png';
 import questionImg from '@/assets/images/cells/questionCell.png';
 import deathImg from '@/assets/images/cells/deathCell.png';
 import bonusImg from '@/assets/images/cells/bonusCell.png';
+
+// Import horizontal and vertical cells
+import buffCellHorizontal from '@/assets/images/cells/buffCellHorizontal.png';
+import buffCellVertical from '@/assets/images/cells/buffCellVertical.png';
+import debuffCellHorizontal from '@/assets/images/cells/debuffCellHorizontal.png';
+import debuffCellVertical from '@/assets/images/cells/debuffCellVertical.png';
+import deathCellHorizontal from '@/assets/images/cells/deathCellHorizontal.png';
+import deathCellVertical from '@/assets/images/cells/deathCellVertical.png';
+import bonusCellVertical from '@/assets/images/cells/bonusCellVertical.png';
+import bonusCellHorizontal from '@/assets/images/cells/buffCellHorizontal.png';
+import questionCellVertical from '@/assets/images/cells/questionCellVertical.png';
+import questionCellHorizontal from '@/assets/images/cells/questionCellHorizontal.png';
+
+import cell1Vertical from '@/assets/images/cells/Cell1Vertical.png';
+import cell1Horizontal from '@/assets/images/cells/Cell1Horizontal.png';
+import cell2Vertical from '@/assets/images/cells/Cell2Vertical.png';
+import cell2Horizontal from '@/assets/images/cells/Cell2Horizontal.png';
+import cell3Vertical from '@/assets/images/cells/Cell3Vertical.png';
+import cell3Horizontal from '@/assets/images/cells/Cell3Horizontal.png';
+import cell4Vertical from '@/assets/images/cells/Cell4Vertical.png';
+import cell4Horizontal from '@/assets/images/cells/Cell4Horizontal.png';
+import cell5Vertical from '@/assets/images/cells/Cell5Vertical.png';
+import cell5Horizontal from '@/assets/images/cells/Cell5Horizontal.png';
 
 const { proxy } = getCurrentInstance();
 //#endregion
@@ -600,6 +636,58 @@ const handleClick = (button) => {
 	showInfoCell.value = true;
 };
 //#endregion
+
+
+// Horizontal or Vertical or spanish
+const horizontalCells = [
+	3, 4, 7, 8, 9, 13, 14, 15, 16, 21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 36, 43, 44, 45, 46, 47, 48, 49, 57, 58, 59, 60, 61, 62
+]
+
+const isHorizontal = (index) => horizontalCells.includes(index);
+
+// Stores the image chosen for the empty cell so that it isn't randomized on every render
+const emptyCellImageMap = new Map();
+
+const getCellImageSrc = (cellNumber, type) => {
+	const horizontal = isHorizontal(cellNumber);
+
+	// For random selection of normal cells, assign once and store
+	if (type === 'empty') {
+		// Only get a random image if the cell doesn't already have one
+		if (!emptyCellImageMap.has(cellNumber)) {
+			const randomCell = Math.floor(Math.random() * 5) + 1; // Random number between 1 and 5
+			emptyCellImageMap.set(cellNumber, `cell${randomCell}`);
+		}
+		type = emptyCellImageMap.get(cellNumber);
+	}
+
+	switch (type) {
+		case 'buff':
+			return horizontal ? buffCellHorizontal : buffCellVertical;
+		case 'debuff':
+			return horizontal ? debuffCellHorizontal : debuffCellVertical;
+		case 'death':
+			return horizontal ? deathCellHorizontal : deathCellVertical;
+		case 'bonus':
+			return horizontal ? bonusCellHorizontal : bonusCellVertical;
+		case 'question':
+			return horizontal ? questionCellHorizontal : questionCellVertical;
+		case 'cell1':
+			return horizontal ? cell1Horizontal : cell1Vertical;
+		case 'cell2':
+			return horizontal ? cell2Horizontal : cell2Vertical;
+		case 'cell3':
+			return horizontal ? cell3Horizontal : cell3Vertical;
+		case 'cell4':
+			return horizontal ? cell4Horizontal : cell4Vertical;
+		case 'cell5':
+			return horizontal ? cell5Horizontal : cell5Vertical;
+		default:
+			return '';
+	}
+};
+
+
 
 onMounted(() => {
 	updatePawnPosition(position.value);
