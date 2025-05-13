@@ -89,7 +89,7 @@
 					@click="handleClick(button)" style="position: relative;">
 
 					<!-- Cell number -->
-					<h1 class="cellNumber">{{ button !== null ? button : '' }}</h1>
+					<h1 class="cellNumber" v-if="button !== null && button !== 0">{{ button }}</h1>
 
 					<!-- Pawn -->
 					<div v-if="button === position" class="pawnContainer">
