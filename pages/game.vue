@@ -559,14 +559,20 @@ const horizontalCells = [
 
 const isHorizontal = (index) => horizontalCells.includes(index);
 
+// Stores the image chosen for the empty cell so that it isn't randomized on every render
+const emptyCellImageMap = new Map();
+
 const getCellImageSrc = (cellNumber, type) => {
 	const horizontal = isHorizontal(cellNumber);
 
-	// For random selection of normal cells
+	// For random selection of normal cells, assign once and store
 	if (type === 'empty') {
-		// Randomly pick an image from 'cell1' to 'cell5'
-		const randomCell = Math.floor(Math.random() * 5) + 1; // Random number between 1 and 5
-		type = `cell${randomCell}`;
+		// Only get a random image if the cell doesn't already have one
+		if (!emptyCellImageMap.has(cellNumber)) {
+			const randomCell = Math.floor(Math.random() * 5) + 1; // Random number between 1 and 5
+			emptyCellImageMap.set(cellNumber, `cell${randomCell}`);
+		}
+		type = emptyCellImageMap.get(cellNumber);
 	}
 
 	switch (type) {
