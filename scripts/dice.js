@@ -49,7 +49,7 @@ export function rollDice(rolling, setResultText, setDiceTransforms) {
 	});
 
 	setTimeout(() => {
-		setResultText(`Hai ottenuto ${r1} e ${r2} (Somma: ${r1 + r2})`);
+		setResultText(`${r1} + ${r2} = ${r1 + r2}`);
 
 		// Applicare l'effetto di rimbalzo
 		scenes.forEach((scene) => {

@@ -29,11 +29,11 @@
 	</div>
 
 
-	<!-- Static Info Cell -->
+	<!-- Static Info Cell (Dice result display) -->
 	<div class="staticInfoCellWrapper">
 		<img src="@/assets/images/diceBackground.png" alt="background">
 		<div class="staticInfoCell">
-			Static Info Cell
+			{{ resultText }}
 		</div>
 	</div>
 
@@ -102,8 +102,7 @@
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
 						
-						<!-- Normal  
-						-->
+						<!-- Normal  -->
 						<img v-if="effects[button].type == 'empty'" :src="getCellImageSrc(button, 'empty')" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
