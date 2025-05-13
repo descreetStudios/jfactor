@@ -102,11 +102,9 @@
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
 						
-						<!-- Normal 
-							TODO: caricare l'immagine con getImageSrc()
-							TODO: fare in modo che l'immagine possa essere cell1, cell2, ... casualmente 
+						<!-- Normal  
 						-->
-						<img v-if="effects[button].type == 'empty'" :src="normalImg" alt="normal"
+						<img v-if="effects[button].type == 'empty'" :src="getCellImageSrc(button, 'empty')" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
 
 						<!-- Final -->
@@ -218,16 +216,16 @@ import bonusCellHorizontal from '@/assets/images/cells/buffCellHorizontal.png';
 import questionCellVertical from '@/assets/images/cells/questionCellVertical.png';
 import questionCellHorizontal from '@/assets/images/cells/questionCellHorizontal.png';
 
-import Cell1Vertical from '@/assets/images/cells/Cell1Vertical.png';
-import Cell1Horizontal from '@/assets/images/cells/Cell1Horizontal.png';
-import Cell2Vertical from '@/assets/images/cells/Cell2Vertical.png';
-import Cell2Horizontal from '@/assets/images/cells/Cell2Horizontal.png';
-import Cell3Vertical from '@/assets/images/cells/Cell3Vertical.png';
-import Cell3Horizontal from '@/assets/images/cells/Cell3Horizontal.png';
-import Cell4Vertical from '@/assets/images/cells/Cell4Vertical.png';
-import Cell4Horizontal from '@/assets/images/cells/Cell4Horizontal.png';
-import Cell5Vertical from '@/assets/images/cells/Cell5Vertical.png';
-import Cell5Horizontal from '@/assets/images/cells/Cell5Horizontal.png';
+import cell1Vertical from '@/assets/images/cells/Cell1Vertical.png';
+import cell1Horizontal from '@/assets/images/cells/Cell1Horizontal.png';
+import cell2Vertical from '@/assets/images/cells/Cell2Vertical.png';
+import cell2Horizontal from '@/assets/images/cells/Cell2Horizontal.png';
+import cell3Vertical from '@/assets/images/cells/Cell3Vertical.png';
+import cell3Horizontal from '@/assets/images/cells/Cell3Horizontal.png';
+import cell4Vertical from '@/assets/images/cells/Cell4Vertical.png';
+import cell4Horizontal from '@/assets/images/cells/Cell4Horizontal.png';
+import cell5Vertical from '@/assets/images/cells/Cell5Vertical.png';
+import cell5Horizontal from '@/assets/images/cells/Cell5Horizontal.png';
 
 const { proxy } = getCurrentInstance();
 //#endregion
@@ -563,6 +561,14 @@ const isHorizontal = (index) => horizontalCells.includes(index);
 
 const getCellImageSrc = (cellNumber, type) => {
 	const horizontal = isHorizontal(cellNumber);
+
+	// For random selection of normal cells
+	if (type === 'empty') {
+		// Randomly pick an image from 'cell1' to 'cell5'
+		const randomCell = Math.floor(Math.random() * 5) + 1; // Random number between 1 and 5
+		type = `cell${randomCell}`;
+	}
+
 	switch (type) {
 		case 'buff':
 			return horizontal ? buffCellHorizontal : buffCellVertical;
@@ -588,6 +594,7 @@ const getCellImageSrc = (cellNumber, type) => {
 			return '';
 	}
 };
+
 
 
 onMounted(() => {
