@@ -1,36 +1,46 @@
 /* Used for result font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+/* Sidebar */
+.sidebar {
+	position: absolute;
+	transform: translate(0, -50%);
+	top: 50%;
+	left: 78%;
+	width: 375px;
+	height: fit-content;
+	z-index: 1;
+	user-select: none;
+}
 
 /* Contenitore generale centrato */
 .diceContainer {
+	position: relative;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: absolute;
-	z-index: 1;
-	transform: translate(0, -50%);
-	top: 70%;
-	left: 80%;
-	height: fit-content;
-	width: fit-content;
+	flex-direction: column;
+	height: 270px;
+	width: 100%;
+	margin-top: 20px;
 }
 
-.diceContainer img{
+.diceContainer img {
+	position: relative;
 	visibility: visible;
-	width: 150%;
-	height: 150%;
-	position: absolute;
-	transform: translate(0, 0);
+	width: 100%;
+	height: 100%;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
 /* Contenitore dei dadi con effetto 3D */
 .dice-container {
+	position: absolute;
 	display: flex;
 	gap: 50px;
 	perspective: 800px;
-	margin-bottom: 20px;
-	margin-top: 20px;
+	margin-bottom: 65px;
 }
 
 .dice-container.clickable {
@@ -41,6 +51,21 @@
 .dice-container.clickable:hover {
 	transform: scale(1.05);
 	filter: drop-shadow(0 0 10px rgba(0, 136, 255, 0.6));
+}
+
+/* Risultato */
+.diceResult {
+	position: absolute;
+	width: 100%;
+	height: fit-content;
+	bottom: 20px;
+	font-family: "Jersey 10", sans-serif;
+	color: #d2b48c;
+	text-shadow: 1px 1px 2px #000000;
+	user-select: none;
+	text-shadow: rgba(0, 136, 255, 0.6);
+	text-align: center;
+	font-size: calc(3px + 3vw);
 }
 
 /* Ogni scene con la propria prospettiva interna */
@@ -67,7 +92,7 @@
 	width: 100px;
 	height: 100px;
 	background: #fff;
-	background: url('@/assets/images/dice/wood.jpeg') center/cover no-repeat;
+	background: url("@/assets/images/dice/wood.jpeg") center/cover no-repeat;
 	border: 2px solid #333;
 	box-sizing: border-box;
 }
@@ -160,66 +185,27 @@
 }
 
 @keyframes bounce {
-	0%   { transform: scale(1); }
-	30%  { transform: scale(1.15); }
-	50%  { transform: scale(0.95); }
-	70%  { transform: scale(1.05); }
-	100% { transform: scale(1); }
+	0% {
+		transform: scale(1);
+	}
+	30% {
+		transform: scale(1.15);
+	}
+	50% {
+		transform: scale(0.95);
+	}
+	70% {
+		transform: scale(1.05);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 
-/* Risultato */
-.diceResultWrapper {
-    position: absolute;
-    left: 77%;
-    top: 18%;
-    width: 375px;
-    height: 35%;
-    background-color: transparent;
-    border-radius: 40px;
-    z-index: 2;
-    color: #f5f1e9;
-    user-select: none;
-    margin: 0;
-    display: flex;
-    justify-content: center;  
-    align-items: center;      
-    overflow: hidden;  
-}
-
-.diceResult {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 0 20px;  /* Reduce padding for more space */
-    font-family: 'Jersey 10', sans-serif;
-    color: #d2b48c;
-    text-shadow: 1px 1px 2px #000000;
-    overflow-wrap: break-word;
-    user-select: none;
-    text-shadow: rgba(0, 136, 255, 0.6);
-
-    /* Make text responsive to fill the container */
-    font-size: calc(10px + 5vw);  /* Dynamic font size based on viewport width */
-    text-align: center;  /* Center the text */
-    line-height: 1.2; /* Adjust line height for readability */
-    white-space: normal;  /* Allow the text to wrap inside the container */
-    display: flex;       /* Enable Flexbox for the text */
-    justify-content: center; /* Horizontally center text within */
-    align-items: center; /* Vertically center text within */
-    font-size: calc(5px + 5vw);  /* Dynamic font size based on viewport width */
-}
-
-.diceResultWrapper img {
-    visibility: visible;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    object-fit:fill;  /* Ensure the image covers the area */
-}
 
 @font-face {
-  font-family: 'Jersey 10';
-  src: url('@/assets/fonts/Jersey10-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+	font-family: "Jersey 10";
+	src: url("@/assets/fonts/Jersey10-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
 }
