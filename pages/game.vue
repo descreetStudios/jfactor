@@ -467,7 +467,7 @@ async function applyCellEffect() {
 		await (notifyCell(eventType));
 
 		showQuest.value = true;
-		questionsLength.value = getLength(effect);
+		questionsLength = getLength(effect);
 		const question = effect[currentQuestIndex.value];
 
 		DEBUG && console.log('Length:', getLength(effect));
