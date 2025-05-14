@@ -25,40 +25,40 @@
 
 @keyframes leftIn {
 	from {
-		width: 0vw;
+		transform: translateX(-100%);
 	}
 
 	to {
-		width: 50vw;
+		transform: translateX(0);
 	}
 }
 
 @keyframes rightIn {
 	from {
-		width: 0vw;
+		transform: translateX(100%);
 	}
 
 	to {
-		width: 50vw;
+		transform: translateX(0);
 	}
 }
 
 @keyframes leftOut {
 	from {
-		width: 50vw;
+		transform: translateX(0);
 	}
 
 	to {
-		width: 0vw;
+		transform: translateX(-100%);
 	}
 }
 
 @keyframes rightOut {
 	from {
-		width: 50vw;
+		transform: translateX(0);
 	}
 
 	to {
-		width: 0vw;
+		transform: translateX(100%);
 	}
 }

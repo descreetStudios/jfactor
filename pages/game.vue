@@ -29,59 +29,64 @@
 		<div class="bat"></div>
 	</div>
 
-
-	<!-- Dice result display -->
-	<div class="diceResultWrapper">
-		<img src="@/assets/images/diceBackground.png" alt="background">
-		<div class="diceResult">
-			{{ resultText }}
+	<!-- Sidebar -->
+	<div class="sidebar">
+		<!-- Cell Info -->
+		<div class="cellInfoWrapper">
+			<img src="@/assets/images/diceBackground.png" alt="background">
+			<div class="cellInfo">
+				Cell Info
+			</div>
 		</div>
-	</div>
 
-	<!-- Dice Container -->
-	<div class="diceContainer">
-		<img src="@/assets/images/diceBackground.png" alt="diceBackground">
-		<div class="dice-container clickable" @click="handleRoll" :disabled="rolling">
-			<!-- Dice 1 and 2 scenes -->
-			<div class="scene" v-for="(transform, index) in [dice1Transform, dice2Transform]" :key="index">
-				<div class="cube" :style="{ transform }">
-					<div class="cube__face cube__face--front">
-						<div class="pip center"></div>
-					</div>
-					<div class="cube__face cube__face--back">
-						<div class="pip top-left"></div>
-						<div class="pip top-right"></div>
-						<div class="pip middle-left"></div>
-						<div class="pip middle-right"></div>
-						<div class="pip bottom-left"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<div class="cube__face cube__face--right">
-						<div class="pip top-left"></div>
-						<div class="pip center"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<div class="cube__face cube__face--left">
-						<div class="pip top-left"></div>
-						<div class="pip top-right"></div>
-						<div class="pip bottom-left"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<div class="cube__face cube__face--top">
-						<div class="pip top-left"></div>
-						<div class="pip bottom-right"></div>
-					</div>
-					<div class="cube__face cube__face--bottom">
-						<div class="pip top-left"></div>
-						<div class="pip top-right"></div>
-						<div class="pip center"></div>
-						<div class="pip bottom-left"></div>
-						<div class="pip bottom-right"></div>
+		<!-- Dice Container -->
+		<div class="diceContainer">
+			<img src="@/assets/images/diceBackground.png" alt="diceBackground">
+			<div class="dice-container clickable" @click="handleRoll" :disabled="rolling">
+				<!-- Dice 1 and 2 scenes -->
+				<div class="scene" v-for="(transform, index) in [dice1Transform, dice2Transform]" :key="index">
+					<div class="cube" :style="{ transform }">
+						<div class="cube__face cube__face--front">
+							<div class="pip center"></div>
+						</div>
+						<div class="cube__face cube__face--back">
+							<div class="pip top-left"></div>
+							<div class="pip top-right"></div>
+							<div class="pip middle-left"></div>
+							<div class="pip middle-right"></div>
+							<div class="pip bottom-left"></div>
+							<div class="pip bottom-right"></div>
+						</div>
+						<div class="cube__face cube__face--right">
+							<div class="pip top-left"></div>
+							<div class="pip center"></div>
+							<div class="pip bottom-right"></div>
+						</div>
+						<div class="cube__face cube__face--left">
+							<div class="pip top-left"></div>
+							<div class="pip top-right"></div>
+							<div class="pip bottom-left"></div>
+							<div class="pip bottom-right"></div>
+						</div>
+						<div class="cube__face cube__face--top">
+							<div class="pip top-left"></div>
+							<div class="pip bottom-right"></div>
+						</div>
+						<div class="cube__face cube__face--bottom">
+							<div class="pip top-left"></div>
+							<div class="pip top-right"></div>
+							<div class="pip center"></div>
+							<div class="pip bottom-left"></div>
+							<div class="pip bottom-right"></div>
+						</div>
 					</div>
 				</div>
 			</div>
+			<div class="diceResult" v-if="resultText">{{ resultText }}</div>
+			<div class="diceResult" v-if="!resultText && roll">Roll the dice!</div>
+			<div class="diceResult" v-if="!resultText && !roll">Rolling...</div>
+
 		</div>
-		<!-- <div class="result" v-if="resultText">{{ resultText }}</div> -->
 	</div>
 
 	<!-- Grid -->
@@ -242,6 +247,7 @@ const dice1Transform = ref('rotateX(0deg) rotateY(0deg)');
 const dice2Transform = ref('rotateX(0deg) rotateY(0deg)');
 const resultText = ref('');
 const rolling = ref(false);
+const roll = ref(true);
 
 // Spiral refs
 const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
@@ -291,6 +297,9 @@ function setResultText(text) {
 }
 
 function handleRoll() {
+	if (roll.value) {
+		roll.value = false;
+	}
 	rollDice(rolling, setResultText, setDiceTransforms);
 }
 //#endregion
@@ -299,7 +308,7 @@ function handleRoll() {
 
 // Cell effect for consecutive cells
 async function cellEffect() {
-	await(delay(400));
+	await (delay(400));
 	do {
 		await applyCellEffect();
 
@@ -495,6 +504,9 @@ async function applyCellEffect() {
 		hasPlayerAlreadyTakenBonus.value = true;
 		await (notifyCell(eventType));
 	}
+
+	resultText.value = false;
+	roll.value = true;
 }
 
 function handleWin() {
@@ -707,7 +719,7 @@ onMounted(() => {
 @import url('@/styles/dice.scss');
 @import url('@/styles/quest.scss');
 @import url('@/styles/bat.scss');
-@import url('@/styles/infoCell.scss');
+@import url('@/styles/cellInfo.scss');
 @import url('@/styles/debugMenu.scss');
 @import url('@/styles/notification.scss');
 
