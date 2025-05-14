@@ -11,7 +11,7 @@
       <img :src="creditsTitle" alt="Credits" class="credits-img" />
       <div class="credits-grid">
         <div v-for="person in people" :key="person.name" class="credit-card">
-            <NuxtLink :to="person.link">
+            <NuxtLink :to="person.link" target="_blank">
               <img :src="person.icon" alt="no pfp :(" class="icon-img" />
             <h2>{{ person.name }}</h2>
             </NuxtLink>
