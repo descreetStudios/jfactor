@@ -1,5 +1,6 @@
 <template>
 	<title>Untitled Plague Game - Game</title>
+
 	<!-- DebugMenu container -->
 	<div v-show="showDebug" class="debugMenu">
 		<div class="debugHead">
@@ -89,7 +90,7 @@
 			<div class="spiral-grid">
 				<div v-for="(button, index) in spiral" :key="index"
 					:class="['button', button === null ? 'button-null' : 'button-' + button]" :ref="'cell-' + button"
-					@click="handleClick(button)" style="position: relative;">
+					@click="handleClick(button)">
 
 					<!-- Cell number -->
 					<h1 class="cellNumber" v-if="button !== null && button !== 0">{{ button }}</h1>
@@ -101,7 +102,7 @@
 
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
-						
+
 						<!-- Normal  -->
 						<img v-if="effects[button].type == 'empty'" :src="getCellImageSrc(button, 'empty')" alt="normal"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
@@ -119,11 +120,9 @@
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 
 						<!-- Show Question Image if there's a question effect -->
-						<img v-if="effects[button].type === 'question'" :src="getCellImageSrc(button, 'question')" alt="Question"
+						<img v-if="effects[button].type === 'question'" :src="getCellImageSrc(button, 'question')"
+							alt="Question"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-							
-						<!-- <img v-else-if="Array.isArray(effects[button])" :src="questionImg" alt="Question"
-						style="width: 20px; height: 20px; position: absolute; top: 5px; right: 5px; pointer-events: none;" /> -->
 
 						<!-- Show Death Image if there's a death effect -->
 						<img v-if="effects[button].type === 'death'" :src="getCellImageSrc(button, 'death')" alt="Death"
@@ -133,8 +132,7 @@
 						<img v-if="effects[button].type === 'bonus'" :src="getCellImageSrc(button, 'buff')" alt="Bonus"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 
-						</template>
-
+					</template>
 				</div>
 			</div>
 		</client-only>
@@ -188,8 +186,9 @@
 
 <script setup>
 // Settings
-const DEBUG = true;
+const DEBUG = false;
 const MAXCELLS = 63; // Available cells
+const globalDelay = 3500;
 
 // Utils
 const getLength = (proxy) => {
@@ -273,7 +272,6 @@ let hasPlayerAlreadyTriedDeath = ref(false);
 let notificationMessage = ref("You're now walking in the city (Undefined behaviour or undefined cell)");
 let notificationAltMessage = ref("You've hit a cell (Undefined behaviour or undefined cell)");
 let notificationVisible = ref(false);
-const notificationDelay = 3500;
 
 // Debug refs
 let showDebug = ref(true);
@@ -301,6 +299,7 @@ function handleRoll() {
 
 // Cell effect for consecutive cells
 async function cellEffect() {
+	await(delay(400));
 	do {
 		await applyCellEffect();
 
@@ -311,7 +310,7 @@ async function cellEffect() {
 		// cycle again
 	} while (!showQuest.value &&
 	!['empty', 'start', 'final'].includes(getEventType(position.value)) &&
-		hasPlayerAlreadyTakenBonus.value === false && hasPlayerAlreadyTriedDeath.value == false);
+	hasPlayerAlreadyTakenBonus.value === false && hasPlayerAlreadyTriedDeath.value == false);
 }
 
 function getEventType(pos) {
@@ -411,15 +410,20 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 	}
 	if (type === 'bonus') {
 		notificationMessage.value = "Hai trovato delle erbe curative per strada!";
-		notificationAltMessage.value = `Puoi evitare la morte per ${playerBonusCount.value} volte.`;
+		if (playerBonusCount.value === 1) {
+			notificationAltMessage.value = `Puoi evitare la morte per 1 volta.`;
+		}
+		else {
+			notificationAltMessage.value = `Puoi evitare la morte per ${playerBonusCount.value} volte.`;
+		}
 	}
 	if (type === 'cell') {
 		if (movement > 0) {
-			notificationMessage.value = "[Vai avanti]";
+			notificationMessage.value = "Hai trovato altri viaggiatori in fuga dalla peste! Ti offrono un passaggio sul loro carro!";
 			notificationAltMessage.value = (movement === 1 ? `Avanza di 1 casella` : `Avanza di ${movement} caselle`);
 		}
 		else {
-			notificationMessage.value = "[Turna ndre]";
+			notificationMessage.value = "Sei finito in un accampamento di mercenari! Ti costringono a tornare sui tuoi passi.";
 			notificationAltMessage.value = (movement === -1 ? `Retrocedi di 1 casella` : `Retrocedi di ${movement * -1} caselle`);
 		}
 	}
@@ -429,7 +433,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 	}
 
 	notificationVisible.value = true;
-	await delay(notificationDelay);
+	await delay(globalDelay);
 	notificationVisible.value = false;
 }
 
@@ -463,7 +467,7 @@ async function applyCellEffect() {
 		await (notifyCell(eventType));
 
 		showQuest.value = true;
-		questionsLength = getLength(effect);
+		questionsLength.value = getLength(effect);
 		const question = effect[currentQuestIndex.value];
 
 		DEBUG && console.log('Length:', getLength(effect));
@@ -544,9 +548,9 @@ async function nextQuestion() {
 		DEBUG && console.log(`Target movement:`, movement);
 		DEBUG && console.log(`Target cell:`, target);
 
-		await delay(3600);
+		await delay(globalDelay);
 
-		// Wait 5 seconds to show the result
+		// Wait 3.5 seconds to show the result
 		showQuest.value = false;
 		rolling.value = true;
 
@@ -639,7 +643,10 @@ const handleClick = (button) => {
 
 // Horizontal or Vertical or spanish
 const horizontalCells = [
-	3, 4, 7, 8, 9, 13, 14, 15, 16, 21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 36, 43, 44, 45, 46, 47, 48, 49, 57, 58, 59, 60, 61, 62
+	3, 4, 7, 8, 9, 13, 14, 15, 16, 21,
+	22, 23, 24, 25, 31, 32, 33, 34, 35,
+	36, 43, 44, 45, 46, 47, 48, 49, 57,
+	58, 59, 60, 61, 62
 ]
 
 const isHorizontal = (index) => horizontalCells.includes(index);
