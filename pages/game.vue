@@ -29,10 +29,10 @@
 	</div>
 
 
-	<!-- Static Info Cell (Dice result display) -->
-	<div class="staticInfoCellWrapper">
+	<!-- Dice result display -->
+	<div class="diceResultWrapper">
 		<img src="@/assets/images/diceBackground.png" alt="background">
-		<div class="staticInfoCell">
+		<div class="diceResult">
 			{{ resultText }}
 		</div>
 	</div>
