@@ -130,7 +130,7 @@
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 
 						<!-- Show Bonus Image if there are stars for bonus -->
-						<img v-if="effects[button].type === 'bonus'" :src="getCellImageSrc(button, 'buff')" alt="Bonus"
+						<img v-if="effects[button].type === 'bonus'" :src="getCellImageSrc(button, 'bonus')" alt="Bonus"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 
 						</template>
@@ -219,7 +219,7 @@ import debuffCellVertical from '@/assets/images/cells/debuffCellVertical.png';
 import deathCellHorizontal from '@/assets/images/cells/deathCellHorizontal.png';
 import deathCellVertical from '@/assets/images/cells/deathCellVertical.png';
 import bonusCellVertical from '@/assets/images/cells/bonusCellVertical.png';
-import bonusCellHorizontal from '@/assets/images/cells/buffCellHorizontal.png';
+import bonusCellHorizontal from '@/assets/images/cells/bonusCellHorizontal.png';
 import questionCellVertical from '@/assets/images/cells/questionCellVertical.png';
 import questionCellHorizontal from '@/assets/images/cells/questionCellHorizontal.png';
 
