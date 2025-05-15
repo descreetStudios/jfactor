@@ -33,10 +33,18 @@
 	<div class="sidebar">
 		<!-- Cell Info -->
 		<div class="cellInfoWrapper">
-			<img src="@/assets/images/diceBackground.png" alt="background">
-			<div class="cellInfo">
-				Cell Info
+			<img class="cellInfoWrapperImg" src="@/assets/images/diceBackground.png" alt="background">
+			<div class="cellInfo">Cell Info</div>
+			<label v-if="!isCellSelected" class="startInfoLabel">Click a cell to view its infos!</label>
+			<div class="cellInfos" v-if="isCellSelected">
+				<img class="cellImg" src="@/assets/images/cells/bonusCell.png">
+				<div class="cellInfoText">
+					<label class="infoLabel">Number: {{ currentButton }}</label><br>
+					<label class="infoLabel">Type: {{ currentButtonType }}</label><br>
+					<label class="infoLabel">{{ currentButtonDescription }}</label>
+				</div>
 			</div>
+
 		</div>
 
 		<!-- Dice Container -->
@@ -83,8 +91,8 @@
 				</div>
 			</div>
 			<div class="diceResult" v-if="resultText">{{ resultText }}</div>
-			<div class="diceResult" v-if="!resultText && roll">Roll the dice!</div>
-			<div class="diceResult" v-if="!resultText && !roll">Rolling...</div>
+			<div class="diceResult" v-if="!resultText && !rolling">Roll the dice!</div>
+			<div class="diceResult" v-if="!resultText && rolling">Rolling...</div>
 
 		</div>
 	</div>
@@ -200,6 +208,11 @@ const getLength = (proxy) => {
 	return Object.keys(proxy).length;
 };
 
+const capitalizeFirstLetter = (str) => {
+	if (!str) return '';
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 //#region Imports
 import { ref, computed, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import { rollDice, diceResults } from '@/scripts/dice.js';
@@ -246,6 +259,7 @@ const { proxy } = getCurrentInstance();
 const dice1Transform = ref('rotateX(0deg) rotateY(0deg)');
 const dice2Transform = ref('rotateX(0deg) rotateY(0deg)');
 const resultText = ref('');
+const resultTextBackup = ref('');
 const rolling = ref(false);
 const roll = ref(true);
 
@@ -253,7 +267,6 @@ const roll = ref(true);
 const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
 const gridWrapper = ref(null);
 const effects = ref(generateEffects(MAXCELLS));
-const showInfoCell = ref(false);
 
 // Movement refs
 const position = ref(0);
@@ -279,6 +292,12 @@ let notificationMessage = ref("You're now walking in the city (Undefined behavio
 let notificationAltMessage = ref("You've hit a cell (Undefined behaviour or undefined cell)");
 let notificationVisible = ref(false);
 
+// Info refs
+const isCellSelected = ref(false);
+const currentButton = ref(0);
+const currentButtonType = ref('Empty');
+const currentButtonDescription = ref("Description");
+
 // Debug refs
 let showDebug = ref(true);
 const clickCount = ref(0);
@@ -294,11 +313,12 @@ function setDiceTransforms({ dice1, dice2 }) {
 
 function setResultText(text) {
 	resultText.value = text;
+	resultTextBackup.value = text;
 }
 
 function handleRoll() {
-	if (roll.value) {
-		roll.value = false;
+	if (rolling.value) {
+		rolling.value = false;
 	}
 	rollDice(rolling, setResultText, setDiceTransforms);
 }
@@ -408,6 +428,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		notificationAltMessage.value = "Rispondi alle seguenti domande:";
 	}
 	if (type === 'death') {
+		resultText.value = false;
 		if (deathMessage === "" && altDeathMessage === "") {
 			notificationMessage.value = "La peste ha avuto la meglio!";
 			notificationAltMessage.value = "Sei morto, ricomincia da capo.";
@@ -418,6 +439,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		}
 	}
 	if (type === 'bonus') {
+		resultText.value = false;
 		notificationMessage.value = "Hai trovato delle erbe curative per strada!";
 		if (playerBonusCount.value === 1) {
 			notificationAltMessage.value = `Puoi evitare la morte per 1 volta.`;
@@ -427,6 +449,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		}
 	}
 	if (type === 'cell') {
+		resultText.value = resultTextBackup.value;
 		if (movement > 0) {
 			notificationMessage.value = "Hai trovato altri viaggiatori in fuga dalla peste! Ti offrono un passaggio sul loro carro!";
 			notificationAltMessage.value = (movement === 1 ? `Avanza di 1 casella` : `Avanza di ${movement} caselle`);
@@ -506,7 +529,6 @@ async function applyCellEffect() {
 	}
 
 	resultText.value = false;
-	roll.value = true;
 }
 
 function handleWin() {
@@ -567,6 +589,7 @@ async function nextQuestion() {
 		rolling.value = true;
 
 		// Reset state
+		resultText.value = resultTextBackup.value;
 		showResult.value = false;
 		selectedOption.value = null;
 		correctCount.value = 0;
@@ -647,8 +670,38 @@ async function tp() {
 
 // Debug cells number
 const handleClick = (button) => {
-	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
-	showInfoCell.value = true;
+	if (button !== null) {
+		currentButton.value = button;
+		const rawType = capitalizeFirstLetter(getEventType(button));
+		let type = '';
+		if (rawType !== undefined && rawType === 'Cell') {
+			if (getEffect(button) > 0) {
+				type = 'Buff';
+			}
+			else {
+				type = 'Debuff';
+			}
+		}
+		else {
+			type = rawType;
+		}
+		currentButtonType.value = type;
+		switch (currentButtonType.value) { // TODO: Add cell descs
+			case 'Empty':
+				currentButtonDescription.value = "";
+			case 'Buff':
+				currentButtonDescription.value = "";
+			case 'Debuff':
+				currentButtonDescription.value = "";
+			case 'Question':
+				currentButtonDescription.value = "";
+			case 'Bonus':
+				currentButtonDescription.value = "";
+			case 'Final':
+				currentButtonDescription.value = "";
+		}
+	}
+	isCellSelected.value = true;
 };
 //#endregion
 
