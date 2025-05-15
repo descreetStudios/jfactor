@@ -39,9 +39,9 @@
 			<div class="cellInfos" v-if="isCellSelected">
 				<img class="cellImg" :src="currentButtonImg" alt="infoCellImage">
 				<div class="cellInfoText">
-					<label class="infoLabel">Number: {{ currentButton }}</label><br>
-					<label class="infoLabel">Type: {{ currentButtonType }}</label><br>
-					<label class="infoLabel">{{ currentButtonDescription }}</label>
+					<label class="infoLabel"><span>Number:</span>&nbsp {{ currentButton }}</label><br>
+					<label class="infoLabel"><span>Type:</span>&nbsp {{ currentButtonType }}</label><br>
+					<label class="infoLabel"><span>Description:</span><br>{{ currentButtonDescription }}</label>
 				</div>
 			</div>
 		</div>
@@ -704,31 +704,31 @@ const handleClick = (button) => {
 		switch (currentButtonType.value) { // TODO: Add cell descs
 			case 'Empty':
 				currentButtonImg.value = normalImg;
-				currentButtonDescription.value = "Empty description Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet";
+				currentButtonDescription.value = "This is a normal cell!";
 				break;
 			case 'Buff':
 				currentButtonImg.value = buffImg;
-				currentButtonDescription.value = "";
+				currentButtonDescription.value = "Go forward!";
 				break;
 			case 'Debuff':
 				currentButtonImg.value = debuffImg;
-				currentButtonDescription.value = "";
+				currentButtonDescription.value = "Go back!";
 				break;
 			case 'Question':
 				currentButtonImg.value = questionImg;
-				currentButtonDescription.value = "";
+				currentButtonDescription.value = "Answer the questions to proceed!";
 				break;
 			case 'Bonus':
 				currentButtonImg.value = bonusImg;
-				currentButtonDescription.value = "";
+				currentButtonDescription.value = "Obtain a healing potion!";
 				break;
 			case 'Death':
 				currentButtonImg.value = deathImg;
-				currentButtonDescription.value = "";
+				currentButtonDescription.value = "You are dead, start over!";
 				break;
 			case 'Final':
 				currentButtonImg.value = finalImg;
-				currentButtonDescription.value = "";
+				currentButtonDescription.value = "This the final cell. You won!";
 				break;
 		}
 	}
