@@ -114,35 +114,42 @@
 					<!-- Effects -->
 					<template v-if="button && effects[button]">
 
+						
+						
 						<!-- Normal  -->
-						<img v-if="effects[button].type == 'empty'" :src="getCellImageSrc(button, 'empty')" alt="normal"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
-
+						<img v-if="effects[button].type == 'empty' && button != 1" :src="getCellImageSrc(button, 'empty')" alt="normal"
+						style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
+						
 						<!-- Final -->
 						<img v-if="effects[button].type == 'final'" :src="finalImg" alt="final"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
-
+						style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;">
+						
 						<!-- Show Buff Image if move is positive -->
 						<img v-if="effects[button].move > 0" :src="getCellImageSrc(button, 'buff')" alt="Buff"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+						style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 
 						<!-- Show Debuff Image if move is negative -->
 						<img v-if="effects[button].move < 0" :src="getCellImageSrc(button, 'debuff')" alt="Debuff"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+						style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 
 						<!-- Show Question Image if there's a question effect -->
 						<img v-if="effects[button].type === 'question'" :src="getCellImageSrc(button, 'question')"
-							alt="Question"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+						alt="Question"
+						style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
 
 						<!-- Show Death Image if there's a death effect -->
 						<img v-if="effects[button].type === 'death'" :src="getCellImageSrc(button, 'death')" alt="Death"
-							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-
-						<!-- Show Bonus Image if there are stars for bonus -->
+						style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+						
+						<!-- Show Bonus Image if there's a bonus effect -->
 						<img v-if="effects[button].type === 'bonus'" :src="getCellImageSrc(button, 'bonus')" alt="Bonus"
+						style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
+						
+						<!-- Cell One -->
+						<img v-if="button === 1"
+							src="@/assets/images/cells/cell2.png"
+							alt="Cell 1 Special"
 							style="visibility: visible; width: 100%; height: 100%; position: absolute; pointer-events: none;" />
-
 					</template>
 				</div>
 			</div>
