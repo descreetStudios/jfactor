@@ -34,7 +34,7 @@ html {
 
 .question-text {
   font-size: 1.5rem;
-  color: #fbb6ce;
+  color: #d2b48c;
   margin-bottom: 20px;
 }
 
@@ -45,8 +45,8 @@ html {
 
 .options button {
   background: transparent;
-  border: 2px solid #fbb6ce;
-  color: #fbb6ce;
+  border: 2px solid #d2b48c;
+  color: #d2b48c;
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 600;
@@ -56,8 +56,8 @@ html {
 }
 
 .options button:hover:not(:disabled) {
-  background: #fbb6ce;
-  color: #3e0d32;
+  background: #d2b48c;
+  color: #834b02;
 }
 
 .options button:disabled {
@@ -72,7 +72,7 @@ html {
 
 .result {
   font-size: 1.8rem;
-  color: #ffb8d1;
+  color: #d2b48c;
   margin-top: 30px;
   animation: flicker 2s infinite ease-in-out;
 }
@@ -95,9 +95,9 @@ html {
 
 .nav-buttons button {
   z-index: 2;
-  background: #fbb6ce;
+  background: #d2b48c;
   border: none;
-  color: #3e0d32;
+  color: #834b02;
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 600;
