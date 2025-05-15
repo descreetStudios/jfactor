@@ -33,10 +33,18 @@
 	<div class="sidebar">
 		<!-- Cell Info -->
 		<div class="cellInfoWrapper">
-			<img src="@/assets/images/diceBackground.png" alt="background">
-			<div class="cellInfo">
-				Cell Info
+			<img class="cellInfoWrapperImg" src="@/assets/images/diceBackground.png" alt="background">
+			<div class="cellInfo">Cell Info</div>
+			<label v-if="!isCellSelected" class="startInfoLabel">Click a cell to view its infos!</label>
+			<div class="cellInfos" v-if="isCellSelected">
+				<img class="cellImg" src="@/assets/images/cells/bonusCell.png">
+				<div class="cellInfoText">
+					<label class="infoLabel">Number: {{ currentButton }}</label><br>
+					<label class="infoLabel">Type: {{ currentButtonType }}</label><br>
+					<label class="infoLabel">{{ currentButtonDescription }}</label>
+				</div>
 			</div>
+
 		</div>
 
 		<!-- Dice Container -->
@@ -199,6 +207,11 @@ const getLength = (proxy) => {
 	return Object.keys(proxy).length;
 };
 
+const capitalizeFirstLetter = (str) => {
+	if (!str) return '';
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 //#region Imports
 import { ref, computed, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import { rollDice, diceResults } from '@/scripts/dice.js';
@@ -253,7 +266,6 @@ const roll = ref(true);
 const spiral = ref(generateSpiral(MAXCELLS - 1, 8));
 const gridWrapper = ref(null);
 const effects = ref(generateEffects(MAXCELLS));
-const showInfoCell = ref(false);
 
 // Movement refs
 const position = ref(0);
@@ -279,6 +291,12 @@ let hasPlayerAlreadyTriedDeath = ref(false);
 let notificationMessage = ref("You're now walking in the city (Undefined behaviour or undefined cell)");
 let notificationAltMessage = ref("You've hit a cell (Undefined behaviour or undefined cell)");
 let notificationVisible = ref(false);
+
+// Info refs
+const isCellSelected = ref(false);
+const currentButton = ref(0);
+const currentButtonType = ref('Empty');
+const currentButtonDescription = ref("Description");
 
 // Debug refs
 let showDebug = ref(true);
@@ -658,8 +676,38 @@ async function tp() {
 
 // Debug cells number
 const handleClick = (button) => {
-	if (button !== null) alert(`Hai cliccato sul numero ${button}`);
-	showInfoCell.value = true;
+	if (button !== null) {
+		currentButton.value = button;
+		const rawType = capitalizeFirstLetter(getEventType(button));
+		let type = '';
+		if (rawType !== undefined && rawType === 'Cell') {
+			if (getEffect(button) > 0) {
+				type = 'Buff';
+			}
+			else {
+				type = 'Debuff';
+			}
+		}
+		else {
+			type = rawType;
+		}
+		currentButtonType.value = type;
+		switch (currentButtonType.value) { // TODO: Add cell descs
+			case 'Empty':
+				currentButtonDescription.value = "";
+			case 'Buff':
+				currentButtonDescription.value = "";
+			case 'Debuff':
+				currentButtonDescription.value = "";
+			case 'Question':
+				currentButtonDescription.value = "";
+			case 'Bonus':
+				currentButtonDescription.value = "";
+			case 'Final':
+				currentButtonDescription.value = "";
+		}
+	}
+	isCellSelected.value = true;
 };
 //#endregion
 

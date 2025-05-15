@@ -8,10 +8,11 @@
 }
 
 .cellInfo {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: 100%;
-    margin-top: 20px;
+    height: fit-content;
+    top: 10px;
+    margin-bottom: 15px;
     font-family: 'Jersey 10', sans-serif;
     color: #d2b48c;
     text-shadow: 1px 1px 2px #000000;
@@ -21,12 +22,51 @@
     user-select: none;
 }
 
-.cellInfoWrapper img {
+.cellInfos {
+    position: relative;
+    margin-left: 30px;
+    display: flex;
+}
+.cellInfoText {
+    position: relative;
+    margin-left: 20px;
+}
+
+.cellImg {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    -webkit-user-drag: none;
+}
+
+.startInfoLabel {
+    position: relative;
+    font-family: 'Jersey 10', sans-serif;
+    color: #d2b48c;
+    text-shadow: 1px 1px 2px #000000;
+    text-shadow: rgba(0, 136, 255, 0.6);
+    font-size: calc(2px + 1.3vw);
+    user-select: none;
+    left: 15%;
+}
+
+.infoLabel {
+    position: relative;
+    font-family: 'Jersey 10', sans-serif;
+    color: #d2b48c;
+    text-shadow: 1px 1px 2px #000000;
+    text-shadow: rgba(0, 136, 255, 0.6);
+    font-size: calc(2px + 1.3vw);
+    user-select: none;
+}
+
+.cellInfoWrapperImg {
     visibility: visible;
     width: 100%;
     height: 100%;
     position: absolute;
-    object-fit:fill;  /* Ensure the image covers the area */
+    object-fit:fill;
+    -webkit-user-drag: none;
 }
 
 @font-face {
