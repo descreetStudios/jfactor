@@ -83,9 +83,8 @@
 				</div>
 			</div>
 			<div class="diceResult" v-if="resultText">{{ resultText }}</div>
-			<div class="diceResult" v-if="!resultText && !rolling">Roll the dice!</div>
-			<div class="diceResult" v-if="!resultText && rolling">Rolling...</div>
-
+			<div class="diceResult" v-if="!resultText && roll">Roll the dice!</div>
+			<div class="diceResult" v-if="!resultText && !roll">Rolling...</div>
 		</div>
 	</div>
 
@@ -260,6 +259,7 @@ const showInfoCell = ref(false);
 const position = ref(0);
 
 // Question refs
+const lastIsQuestion = ref(false);
 const questions = ref(effects);
 let questionsLength = ref(0);
 let showQuest = ref(false);
@@ -299,8 +299,8 @@ function setResultText(text) {
 }
 
 function handleRoll() {
-	if (rolling.value) {
-		rolling.value = false;
+	if (roll.value) {
+		roll.value = false;
 	}
 	rollDice(rolling, setResultText, setDiceTransforms);
 }
@@ -422,6 +422,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 	}
 	if (type === 'bonus') {
 		resultText.value = false;
+		roll.value=true;
 		notificationMessage.value = "Hai trovato delle erbe curative per strada!";
 		if (playerBonusCount.value === 1) {
 			notificationAltMessage.value = `Puoi evitare la morte per 1 volta.`;
@@ -463,6 +464,7 @@ async function applyCellEffect() {
 	DEBUG && console.log(`Effect @${position.value}:`, effect);
 
 	if (eventType === 'cell') {
+		lastIsQuestion.value = false;
 		const effectTarget = position.value + effect;
 		await (notifyCell(eventType, "", "", effectTarget - position.value));
 
@@ -477,7 +479,7 @@ async function applyCellEffect() {
 		}
 	}
 	else if (eventType === 'question') {
-
+		lastIsQuestion.value = true;
 		await (notifyCell(eventType));
 
 		showQuest.value = true;
@@ -489,6 +491,7 @@ async function applyCellEffect() {
 		DEBUG && console.log(`Correct questions:`, correctCount.value);
 	}
 	else if (eventType === 'death') {
+		lastIsQuestion.value = false;
 		if (playerBonusCount.value > 0) {
 			playerBonusCount.value -= 1;
 			if (playerBonusCount.value === 1) {
@@ -505,12 +508,14 @@ async function applyCellEffect() {
 		hasPlayerAlreadyTriedDeath.value = true;
 	}
 	else if (eventType === 'bonus') {
+		lastIsQuestion.value = false;
 		playerBonusCount.value += 1;
 		hasPlayerAlreadyTakenBonus.value = true;
 		await (notifyCell(eventType));
 	}
 
 	resultText.value = false;
+	roll.value = true;
 }
 
 function handleWin() {
@@ -571,7 +576,6 @@ async function nextQuestion() {
 		rolling.value = true;
 
 		// Reset state
-		resultText.value = resultTextBackup.value;
 		showResult.value = false;
 		selectedOption.value = null;
 		correctCount.value = 0;
@@ -579,6 +583,8 @@ async function nextQuestion() {
 
 		// Delay before starting movement
 		await delay(100);
+
+		resultText.value = resultTextBackup.value;
 
 		// Handle overshoot
 		if (target > MAXCELLS) {
