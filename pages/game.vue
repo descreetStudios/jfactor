@@ -37,14 +37,13 @@
 			<div class="cellInfo">Cell Info</div>
 			<label v-if="!isCellSelected" class="startInfoLabel">Click a cell to view its infos!</label>
 			<div class="cellInfos" v-if="isCellSelected">
-				<img class="cellImg" src="@/assets/images/cells/bonusCell.png">
+				<img class="cellImg" :src="currentButtonImg" alt="infoCellImage">
 				<div class="cellInfoText">
 					<label class="infoLabel">Number: {{ currentButton }}</label><br>
 					<label class="infoLabel">Type: {{ currentButtonType }}</label><br>
 					<label class="infoLabel">{{ currentButtonDescription }}</label>
 				</div>
 			</div>
-
 		</div>
 
 		<!-- Dice Container -->
@@ -219,6 +218,7 @@ import { generateEffects } from '@/scripts/game.js';
 import { generateSpiral } from '@/scripts/grid.js';
 
 import pieceImg from '@/assets/images/piece.png';
+
 import finalImg from '@/assets/images/cells/finalCell.png';
 import normalImg from '@/assets/images/cells/cell1.png';
 import buffImg from '@/assets/images/cells/buffCell.png';
@@ -297,6 +297,7 @@ const isCellSelected = ref(false);
 const currentButton = ref(0);
 const currentButtonType = ref('Empty');
 const currentButtonDescription = ref("Description");
+const currentButtonImg = ref(normalImg);
 
 // Debug refs
 let showDebug = ref(true);
@@ -676,7 +677,6 @@ async function tp() {
 	}
 }
 
-// Debug cells number
 const handleClick = (button) => {
 	if (button !== null) {
 		currentButton.value = button;
@@ -696,17 +696,33 @@ const handleClick = (button) => {
 		currentButtonType.value = type;
 		switch (currentButtonType.value) { // TODO: Add cell descs
 			case 'Empty':
-				currentButtonDescription.value = "";
+				currentButtonImg.value = normalImg;
+				currentButtonDescription.value = "Empty description Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet";
+				break;
 			case 'Buff':
+				currentButtonImg.value = buffImg;
 				currentButtonDescription.value = "";
+				break;
 			case 'Debuff':
+				currentButtonImg.value = debuffImg;
 				currentButtonDescription.value = "";
+				break;
 			case 'Question':
+				currentButtonImg.value = questionImg;
 				currentButtonDescription.value = "";
+				break;
 			case 'Bonus':
+				currentButtonImg.value = bonusImg;
 				currentButtonDescription.value = "";
+				break;
+			case 'Death':
+				currentButtonImg.value = deathImg;
+				currentButtonDescription.value = "";
+				break;
 			case 'Final':
+				currentButtonImg.value = finalImg;
 				currentButtonDescription.value = "";
+				break;
 		}
 	}
 	isCellSelected.value = true;
