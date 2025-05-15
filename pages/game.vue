@@ -83,8 +83,8 @@
 				</div>
 			</div>
 			<div class="diceResult" v-if="resultText">{{ resultText }}</div>
-			<div class="diceResult" v-if="!resultText && roll">Roll the dice!</div>
-			<div class="diceResult" v-if="!resultText && !roll">Rolling...</div>
+			<div class="diceResult" v-if="!resultText && !rolling">Roll the dice!</div>
+			<div class="diceResult" v-if="!resultText && rolling">Rolling...</div>
 
 		</div>
 	</div>
@@ -246,6 +246,7 @@ const { proxy } = getCurrentInstance();
 const dice1Transform = ref('rotateX(0deg) rotateY(0deg)');
 const dice2Transform = ref('rotateX(0deg) rotateY(0deg)');
 const resultText = ref('');
+const resultTextBackup = ref('');
 const rolling = ref(false);
 const roll = ref(true);
 
@@ -294,11 +295,12 @@ function setDiceTransforms({ dice1, dice2 }) {
 
 function setResultText(text) {
 	resultText.value = text;
+	resultTextBackup.value = text;
 }
 
 function handleRoll() {
-	if (roll.value) {
-		roll.value = false;
+	if (rolling.value) {
+		rolling.value = false;
 	}
 	rollDice(rolling, setResultText, setDiceTransforms);
 }
@@ -408,6 +410,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		notificationAltMessage.value = "Rispondi alle seguenti domande:";
 	}
 	if (type === 'death') {
+		resultText.value = false;
 		if (deathMessage === "" && altDeathMessage === "") {
 			notificationMessage.value = "La peste ha avuto la meglio!";
 			notificationAltMessage.value = "Sei morto, ricomincia da capo.";
@@ -418,6 +421,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		}
 	}
 	if (type === 'bonus') {
+		resultText.value = false;
 		notificationMessage.value = "Hai trovato delle erbe curative per strada!";
 		if (playerBonusCount.value === 1) {
 			notificationAltMessage.value = `Puoi evitare la morte per 1 volta.`;
@@ -427,6 +431,7 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		}
 	}
 	if (type === 'cell') {
+		resultText.value = resultTextBackup.value;
 		if (movement > 0) {
 			notificationMessage.value = "Hai trovato altri viaggiatori in fuga dalla peste! Ti offrono un passaggio sul loro carro!";
 			notificationAltMessage.value = (movement === 1 ? `Avanza di 1 casella` : `Avanza di ${movement} caselle`);
@@ -506,7 +511,6 @@ async function applyCellEffect() {
 	}
 
 	resultText.value = false;
-	roll.value = true;
 }
 
 function handleWin() {
@@ -567,6 +571,7 @@ async function nextQuestion() {
 		rolling.value = true;
 
 		// Reset state
+		resultText.value = resultTextBackup.value;
 		showResult.value = false;
 		selectedOption.value = null;
 		correctCount.value = 0;
