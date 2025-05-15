@@ -419,6 +419,7 @@ async function handleOvershoot(target) {
 }
 
 async function notifyCell(type, deathMessage = "", altDeathMessage = "", movement) {
+	await delay(500);
 	notificationMessage.value = "You're now walking in the city (Undefined behaviour or undefined cell)";
 	notificationAltMessage.value = "You've hit a cell (Undefined behaviour or undefined cell)";
 	if (type === undefined) return;
@@ -428,7 +429,6 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		notificationAltMessage.value = "Rispondi alle seguenti domande:";
 	}
 	if (type === 'death') {
-		resultText.value = false;
 		if (deathMessage === "" && altDeathMessage === "") {
 			notificationMessage.value = "La peste ha avuto la meglio!";
 			notificationAltMessage.value = "Sei morto, ricomincia da capo.";
@@ -439,8 +439,6 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		}
 	}
 	if (type === 'bonus') {
-		resultText.value = false;
-		roll.value=true;
 		notificationMessage.value = "Hai trovato delle erbe curative per strada!";
 		if (playerBonusCount.value === 1) {
 			notificationAltMessage.value = `Puoi evitare la morte per 1 volta.`;
@@ -450,7 +448,6 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 		}
 	}
 	if (type === 'cell') {
-		resultText.value = resultTextBackup.value;
 		if (movement > 0) {
 			notificationMessage.value = "Hai trovato altri viaggiatori in fuga dalla peste! Ti offrono un passaggio sul loro carro!";
 			notificationAltMessage.value = (movement === 1 ? `Avanza di 1 casella` : `Avanza di ${movement} caselle`);
@@ -482,7 +479,6 @@ async function applyCellEffect() {
 	DEBUG && console.log(`Effect @${position.value}:`, effect);
 
 	if (eventType === 'cell') {
-		lastIsQuestion.value = false;
 		const effectTarget = position.value + effect;
 		await (notifyCell(eventType, "", "", effectTarget - position.value));
 
@@ -495,9 +491,12 @@ async function applyCellEffect() {
 				position.value = 0;
 			}
 		}
+		if (getEventType(position.value) === 'empty') {
+			resultText.value = false;
+			roll.value = true;
+		}
 	}
 	else if (eventType === 'question') {
-		lastIsQuestion.value = true;
 		await (notifyCell(eventType));
 
 		showQuest.value = true;
@@ -509,7 +508,6 @@ async function applyCellEffect() {
 		DEBUG && console.log(`Correct questions:`, correctCount.value);
 	}
 	else if (eventType === 'death') {
-		lastIsQuestion.value = false;
 		if (playerBonusCount.value > 0) {
 			playerBonusCount.value -= 1;
 			if (playerBonusCount.value === 1) {
@@ -524,16 +522,20 @@ async function applyCellEffect() {
 			position.value = 0;
 		}
 		hasPlayerAlreadyTriedDeath.value = true;
+		resultText.value = false;
+		roll.value = true;
 	}
 	else if (eventType === 'bonus') {
-		lastIsQuestion.value = false;
 		playerBonusCount.value += 1;
 		hasPlayerAlreadyTakenBonus.value = true;
 		await (notifyCell(eventType));
+		resultText.value = false;
+		roll.value = true;
 	}
-
-	resultText.value = false;
-	roll.value = true;
+	else if (eventType === 'empty') {
+		resultText.value = false;
+		roll.value = true;
+	}
 }
 
 function handleWin() {
