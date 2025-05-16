@@ -195,6 +195,7 @@
 
 	<!-- Questions -->
 	<div class="question-wrapper" v-if="showQuest">
+
 		<div class="carousel" v-if="!showResult">
 			<div class="question-text">
 				{{ currentQuestion.question }}
@@ -207,13 +208,24 @@
 				</button>
 			</div>
 
-			<div class="feedback" v-if="selectedOption !== null">
+			<div class="feedback" v-if="(selectedOption !== null) && !italian">
+				<span v-if="isCorrect" class="rightAns">Correct!</span>
+				<span v-else class="wrongAns">Wrong. Correct answer: {{ currentQuestion.answer }}</span>
+			</div>
+
+			<div class="feedback" v-if="(selectedOption !== null) && italian">
 				<span v-if="isCorrect" class="rightAns">Corretto!</span>
 				<span v-else class="wrongAns">Sbagliato. Risposta corretta: {{ currentQuestion.answer }}</span>
 			</div>
 
 			<div class="nav-buttons-wrapper">
-				<div class="nav-buttons">
+				<div class="nav-buttons" v-if="!italian">
+					<button @click="nextQuestion" :disabled="selectedOption === null">
+						{{ currentQuestIndex === questionsLength - 1 ? 'Show Result' : 'Next' }}
+					</button>
+				</div>
+
+				<div class="nav-buttons" v-if="italian">
 					<button @click="nextQuestion" :disabled="selectedOption === null">
 						{{ currentQuestIndex === questionsLength - 1 ? 'Vedi Risultato' : 'Avanti' }}
 					</button>
@@ -225,9 +237,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="result" v-else>
-			Hai risposto correttamente a {{ correctCount }} su {{ questionsLength }} domande!
+		<div v-else>
+			<div class="result" v-if="italian">
+				Hai risposto correttamente a {{ correctCount }} su {{ questionsLength }} domande!
+			</div>
+			<div class="result" v-if="!italian">
+				You answered correctly {{ correctCount }} out of {{ questionsLength }} questions!
+			</div>
 		</div>
+
 	</div>
 
 	<!-- Notification Box -->
@@ -323,7 +341,13 @@ let currentQuestIndex = ref(0);
 const selectedOption = ref(null);
 const correctCount = ref(0);
 const showResult = ref(false);
-const currentQuestion = computed(() => questions.value[position.value].quests[[currentQuestIndex.value]])
+const currentQuestion = computed(() => {
+	if (italian.value) {
+		return questions.value[position.value].questsIta[[currentQuestIndex.value]];
+	} else {
+		return questions.value[position.value].questsEng[[currentQuestIndex.value]];
+	}
+});
 const isCorrect = computed(() => selectedOption.value === currentQuestion.value.answer)
 
 // Bonus refs
@@ -403,7 +427,12 @@ function getEffect(pos) {
 		return effects.value[pos].move || 0;
 	}
 	else if (getEventType(pos) === 'question') {
-		return effects.value[pos].quests || 0;
+		if (italian.value) {
+			return effects.value[pos].questsIta || 0;
+		}
+		else if (!italian.value) {
+			return effects.value[pos].questsEng || 0;
+		}
 	}
 	else {
 		return 0;
