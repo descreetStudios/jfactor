@@ -1,0 +1,24 @@
+.language-button {
+    background-color: transparent;
+    border: none;
+    width: 3vw;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.language-button:hover {
+    transform: scale(1.1);
+}
+
+.language-button img {
+    width: 3vw;
+    height: auto;
+}
+
+.languageButtonsGame {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    margin: 10px;
+}

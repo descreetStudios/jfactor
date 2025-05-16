@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 .page-wrapper {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   min-height: 100vh;
   background: #3e0d32;
   display: flex;
@@ -24,25 +24,6 @@
   padding-top: 40px;
   padding: 40px 20px;
 }
-
-.language-button {
-  background-color: transparent;
-  border: none;
-  width: 3vw;
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.language-button:hover {
-  transform: scale(1.1);
-}
-
-.language-button img {
-  width: 3vw;
-  height: auto;
-}
-
 
 .tutorial-title {
   font-size: 3rem;
@@ -93,26 +74,26 @@
 }
 
 .logo-img {
-	-webkit-user-drag: none;
-	-moz-user-drag: none;
-	-o-user-drag: none;
-	-ms-user-drag: none;
-    width: 400px;
-    height: auto;
-    justify-content: flex;
-    margin: 0 auto; 
-    text-indent: -9999px;
-    animation: shake 5.0s infinite;
-}  
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  -ms-user-drag: none;
+  width: 400px;
+  height: auto;
+  justify-content: flex;
+  margin: 0 auto;
+  text-indent: -9999px;
+  animation: shake 5s infinite;
+}
 
 /* Embedded Canva slides */
 .slidesContainer {
   position: relative;
   width: 100%;
   height: 0;
-  padding-top: 56.2500%;
+  padding-top: 56.25%;
   padding-bottom: 0;
-  box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+  box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16);
   margin-top: 1.6em;
   margin-bottom: 0.9em;
   overflow: hidden;
@@ -139,7 +120,6 @@ p {
 
 /* Animations */
 @keyframes flicker {
-
   0%,
   100% {
     opacity: 1;

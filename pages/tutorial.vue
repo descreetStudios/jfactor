@@ -16,6 +16,7 @@
         </button>
       </div>
 
+      <!-- Section Buttons -->
       <nav class="section-nav" v-if="!italian">
         <a href="#lore">Lore</a>
         <a href="#mechanics">Mechanics</a>
@@ -175,12 +176,12 @@ let italian = ref(false);
 const uk = ref(null);
 const italy = ref(null)
 
-onMounted(()=>{
-italy.value.style.opacity = 0.5;
+onMounted(() => {
+  italy.value.style.opacity = 0.5;
 })
 
-function changeLanguage(id) {
-  switch (id) {
+function changeLanguage(languageId) {
+  switch (languageId) {
     case 1:
       italian.value = false;
       italy.value.style.opacity = 0.5;
@@ -200,4 +201,5 @@ function changeLanguage(id) {
 
 <style lang="scss">
 @import url('../styles/tutorial.scss');
+@import url('../styles/translation.scss');
 </style>

@@ -29,19 +29,45 @@
 		<div class="bat"></div>
 	</div>
 
+	<!-- Language buttons -->
+	<div class="languageButtonsGame">
+		<button ref="uk" class="language-button" @click="changeLanguage(1)">
+			<img src="@/assets/images/UK.png" alt="UK">
+		</button>
+		<button ref="italy" class="language-button" @click="changeLanguage(2)">
+			<img src="@/assets/images/Italy.png" alt="Italy">
+		</button>
+	</div>
+
 	<!-- Sidebar -->
 	<div class="sidebar">
-		<!-- Cell Info -->
-		<div class="cellInfoWrapper">
+		<!-- Cell Info English -->
+		<div class="cellInfoWrapper" v-if="!italian">
 			<img class="cellInfoWrapperImg" src="@/assets/images/diceBackground.png" alt="background">
 			<div class="cellInfo">Cell Info</div>
-			<label v-if="!isCellSelected" class="startInfoLabel">Click a cell to view its infos!</label>
+			<p v-if="!isCellSelected" class="startInfoParagraph">Click a cell to view its infos!</p>
 			<div class="cellInfos" v-if="isCellSelected">
 				<img class="cellImg" :src="currentButtonImg" alt="infoCellImage">
 				<div class="cellInfoText">
 					<label class="infoLabel"><span>Number:</span>&nbsp {{ currentButton }}</label><br>
 					<label class="infoLabel"><span>Type:</span>&nbsp {{ currentButtonType }}</label><br>
 					<label class="infoLabel"><span>Description:</span><br>{{ currentButtonDescription }}</label>
+				</div>
+			</div>
+		</div>
+
+		<!-- Cell Info Italian -->
+		<div class="cellInfoWrapper" v-if="italian">
+			<img class="cellInfoWrapperImg" src="@/assets/images/diceBackground.png" alt="background">
+			<div class="cellInfo">Informazioni Cella</div>
+			<p v-if="!isCellSelected" class="startInfoParagraph">Clicca su una cella per vedere <br> le sue
+				informazioni!</p>
+			<div class="cellInfos" v-if="isCellSelected">
+				<img class="cellImg" :src="currentButtonImg" alt="infoCellImage">
+				<div class="cellInfoText">
+					<label class="infoLabel"><span>Numero:</span>&nbsp {{ currentButton }}</label><br>
+					<label class="infoLabel"><span>Tipo:</span>&nbsp {{ currentButtonType }}</label><br>
+					<label class="infoLabel"><span>Descrizione:</span><br>{{ currentButtonDescription }}</label>
 				</div>
 			</div>
 		</div>
@@ -89,9 +115,21 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Results -->
 			<div class="diceResult" v-if="resultText">{{ resultText }}</div>
-			<div class="diceResult" v-if="!resultText && roll">Roll the dice!</div>
-			<div class="diceResult" v-if="!resultText && !roll">Rolling...</div>
+
+			<!-- English Results -->
+			<div class="diceResult" v-if="!italian">
+				<div v-if="!resultText && roll">Roll the dice!</div>
+				<div v-if="!resultText && !roll">Rolling...</div>
+			</div>
+
+			<!-- Italian Results -->
+			<div class="diceResult" v-if="italian">
+				<div v-if="!resultText && roll">Tira i dadi!</div>
+				<div v-if="!resultText && !roll">Tirando...</div>
+			</div>
 		</div>
 	</div>
 
@@ -304,8 +342,13 @@ const currentButton = ref(0);
 const currentButtonType = ref('Empty');
 const currentButtonDescription = ref("Description");
 const currentButtonImg = ref(null);
+let isShowingInfos = ref(false);
 let imgName = ref(null);
 
+// Translation refs
+let italian = ref(false);
+const uk = ref(null);
+const italy = ref(null);
 
 // Debug refs
 let showDebug = ref(true);
@@ -433,46 +476,88 @@ async function notifyCell(type, deathMessage = "", altDeathMessage = "", movemen
 	notificationAltMessage.value = "You've hit a cell (Undefined behaviour or undefined cell)";
 	if (type === undefined) return;
 
-	if (type === 'question') {
-		notificationMessage.value = "Un viandante ti pone delle domande!";
-		notificationAltMessage.value = "Rispondi alle seguenti domande:";
+	if (!italian.value) {
+		if (type === 'question') {
+			notificationMessage.value = "A wanderer is asking you questions!";
+			notificationAltMessage.value = "Answer the following questions:";
+		}
+		if (type === 'death') {
+			if (deathMessage === "" && altDeathMessage === "") {
+				notificationMessage.value = "The plague has won!";
+				notificationAltMessage.value = "You have died, start over.";
+			}
+			else {
+				notificationMessage.value = deathMessage;
+				notificationAltMessage.value = altDeathMessage;
+			}
+		}
+		if (type === 'bonus') {
+			notificationMessage.value = "You have found healing herbs along the road!";
+			if (playerBonusCount.value === 1) {
+				notificationAltMessage.value = "You can avoid death once.";
+			}
+			else {
+				notificationAltMessage.value = `You can avoid death ${playerBonusCount.value} times.`;
+			}
+		}
+		if (type === 'cell') {
+			if (movement > 0) {
+				notificationMessage.value = "You have found other travelers fleeing from the plague! They offer you a ride on their cart!";
+				notificationAltMessage.value = (movement === 1 ? "Move forward 1 space" : `Move forward ${movement} spaces`);
+			}
+			else {
+				notificationMessage.value = "You have ended up in a mercenary camp! They force you to retrace your steps.";
+				notificationAltMessage.value = (movement === -1 ? "Move back 1 space" : `Move back ${movement * -1} spaces`);
+			}
+		}
+		if (type === 'win') {
+			notificationMessage.value = "You have escaped the lazaret!";
+			notificationAltMessage.value = "You have won!";
+		}
 	}
-	if (type === 'death') {
-		if (deathMessage === "" && altDeathMessage === "") {
-			notificationMessage.value = "La peste ha avuto la meglio!";
-			notificationAltMessage.value = "Sei morto, ricomincia da capo.";
+
+	else if (italian.value) {
+		if (type === 'question') {
+			notificationMessage.value = "Un viandante ti pone delle domande!";
+			notificationAltMessage.value = "Rispondi alle seguenti domande:";
 		}
-		else {
-			notificationMessage.value = deathMessage;
-			notificationAltMessage.value = altDeathMessage;
+		if (type === 'death') {
+			if (deathMessage === "" && altDeathMessage === "") {
+				notificationMessage.value = "La peste ha avuto la meglio!";
+				notificationAltMessage.value = "Sei morto, ricomincia da capo.";
+			}
+			else {
+				notificationMessage.value = deathMessage;
+				notificationAltMessage.value = altDeathMessage;
+			}
 		}
-	}
-	if (type === 'bonus') {
-		notificationMessage.value = "Hai trovato delle erbe curative per strada!";
-		if (playerBonusCount.value === 1) {
-			notificationAltMessage.value = `Puoi evitare la morte per 1 volta.`;
+		if (type === 'bonus') {
+			notificationMessage.value = "Hai trovato delle erbe curative per strada!";
+			if (playerBonusCount.value === 1) {
+				notificationAltMessage.value = `Puoi evitare la morte per 1 volta.`;
+			}
+			else {
+				notificationAltMessage.value = `Puoi evitare la morte per ${playerBonusCount.value} volte.`;
+			}
 		}
-		else {
-			notificationAltMessage.value = `Puoi evitare la morte per ${playerBonusCount.value} volte.`;
+		if (type === 'cell') {
+			if (movement > 0) {
+				notificationMessage.value = "Hai trovato altri viaggiatori in fuga dalla peste! Ti offrono un passaggio sul loro carro!";
+				notificationAltMessage.value = (movement === 1 ? `Avanza di 1 casella` : `Avanza di ${movement} caselle`);
+			}
+			else {
+				notificationMessage.value = "Sei finito in un accampamento di mercenari! Ti costringono a tornare sui tuoi passi.";
+				notificationAltMessage.value = (movement === -1 ? `Retrocedi di 1 casella` : `Retrocedi di ${movement * -1} caselle`);
+			}
 		}
-	}
-	if (type === 'cell') {
-		if (movement > 0) {
-			notificationMessage.value = "Hai trovato altri viaggiatori in fuga dalla peste! Ti offrono un passaggio sul loro carro!";
-			notificationAltMessage.value = (movement === 1 ? `Avanza di 1 casella` : `Avanza di ${movement} caselle`);
+		if (type === 'win') {
+			notificationMessage.value = "Sei uscito dal lazzaretto!";
+			notificationAltMessage.value = "Hai vinto!";
 		}
-		else {
-			notificationMessage.value = "Sei finito in un accampamento di mercenari! Ti costringono a tornare sui tuoi passi.";
-			notificationAltMessage.value = (movement === -1 ? `Retrocedi di 1 casella` : `Retrocedi di ${movement * -1} caselle`);
-		}
-	}
-	if (type === 'win') {
-		notificationMessage.value = "Sei uscito dal lazzaretto!";
-		notificationAltMessage.value = "Hai vinto!";
 	}
 
 	notificationVisible.value = true;
-	await delay(globalDelay);
+	await delay(globalDelay * 1.5);
 	notificationVisible.value = false;
 }
 
@@ -547,11 +632,11 @@ async function applyCellEffect() {
 	}
 }
 
-function handleWin() {
-	setTimeout(() => {
-		notifyCell('win');
-		resetGame();
-	}, 500);
+async function handleWin() {
+	await delay(500);
+	notifyCell('win');
+	await delay(globalDelay);
+	resetGame();
 }
 
 function delay(ms) {
@@ -686,6 +771,7 @@ async function tp() {
 }
 
 const handleClick = (button) => {
+	isShowingInfos.value = true;
 	if (button !== null) {
 		currentButton.value = button;
 		const rawType = capitalizeFirstLetter(getEventType(button));
@@ -702,48 +788,115 @@ const handleClick = (button) => {
 			type = rawType;
 		}
 		currentButtonType.value = type;
-		switch (currentButtonType.value) {
-			case 'Empty':
-				let buttonName = ".button-" + currentButton.value;
-				let buttonDiv = document.querySelector(buttonName);
-				let buttonImg = buttonDiv.querySelector("img");
-				let imgSrc = buttonImg ? buttonImg.src : null;
-				if (imgSrc) {
-					imgName = imgSrc.replace(/Horizontal|Vertical/, "");
-				}
-				currentButtonImg.value = imgName;
-				currentButtonDescription.value = "This is a normal cell!";
-				break;
-			case 'Buff':
-				currentButtonImg.value = buffImg;
-				currentButtonDescription.value = "Go forward!";
-				break;
-			case 'Debuff':
-				currentButtonImg.value = debuffImg;
-				currentButtonDescription.value = "Go back!";
-				break;
-			case 'Question':
-				currentButtonImg.value = questionImg;
-				currentButtonDescription.value = "Answer the questions to proceed!";
-				break;
-			case 'Bonus':
-				currentButtonImg.value = bonusImg;
-				currentButtonDescription.value = "Obtain a healing potion!";
-				break;
-			case 'Death':
-				currentButtonImg.value = deathImg;
-				currentButtonDescription.value = "You are dead, start over!";
-				break;
-			case 'Final':
-				currentButtonImg.value = finalImg;
-				currentButtonDescription.value = "This the final cell. You won!";
-				break;
+
+		if (italian.value) {
+			switch (currentButtonType.value) {
+				case 'Empty':
+					currentButtonType.value = "Vuoto";
+					let buttonName = ".button-" + currentButton.value;
+					let buttonDiv = document.querySelector(buttonName);
+					let buttonImg = buttonDiv.querySelector("img");
+					let imgSrc = buttonImg ? buttonImg.src : null;
+					if (imgSrc) {
+						imgName = imgSrc.replace(/Horizontal|Vertical/, "");
+					}
+					currentButtonImg.value = imgName;
+					currentButtonDescription.value = "Questa è una cella normale!";
+					break;
+				case 'Buff':
+					currentButtonImg.value = buffImg;
+					currentButtonDescription.value = "Vai avanti!";
+					break;
+				case 'Debuff':
+					currentButtonImg.value = debuffImg;
+					currentButtonDescription.value = "Vai indietro!";
+					break;
+				case 'Question':
+					currentButtonType.value = "Domanda";
+					currentButtonImg.value = questionImg;
+					currentButtonDescription.value = "Rispondi alle domande per continuare!";
+					break;
+				case 'Bonus':
+					currentButtonImg.value = bonusImg;
+					currentButtonDescription.value = "Ricevi una pozione curativa!";
+					break;
+				case 'Death':
+					currentButtonType.value = "Morte";
+					currentButtonImg.value = deathImg;
+					currentButtonDescription.value = "Sei morto, ricomincia da capo!";
+					break;
+				case 'Final':
+					currentButtonType.value = "Finale";
+					currentButtonImg.value = finalImg;
+					currentButtonDescription.value = "Questa è la cella finale. Hai vinto!";
+					break;
+			}
+		}
+		else if (!italian.value) {
+			switch (currentButtonType.value) {
+				case 'Empty':
+					let buttonName = ".button-" + currentButton.value;
+					let buttonDiv = document.querySelector(buttonName);
+					let buttonImg = buttonDiv.querySelector("img");
+					let imgSrc = buttonImg ? buttonImg.src : null;
+					if (imgSrc) {
+						imgName = imgSrc.replace(/Horizontal|Vertical/, "");
+					}
+					currentButtonImg.value = imgName;
+					currentButtonDescription.value = "This is a normal cell!";
+					break;
+				case 'Buff':
+					currentButtonImg.value = buffImg;
+					currentButtonDescription.value = "Go forward!";
+					break;
+				case 'Debuff':
+					currentButtonImg.value = debuffImg;
+					currentButtonDescription.value = "Go back!";
+					break;
+				case 'Question':
+					currentButtonImg.value = questionImg;
+					currentButtonDescription.value = "Answer the questions to proceed!";
+					break;
+				case 'Bonus':
+					currentButtonImg.value = bonusImg;
+					currentButtonDescription.value = "Obtain a healing potion!";
+					break;
+				case 'Death':
+					currentButtonImg.value = deathImg;
+					currentButtonDescription.value = "You are dead, start over!";
+					break;
+				case 'Final':
+					currentButtonImg.value = finalImg;
+					currentButtonDescription.value = "This the final cell. You won!";
+					break;
+			}
 		}
 	}
 	isCellSelected.value = true;
 };
 //#endregion
 
+//#region traslation
+const changeLanguage = (languageId) => {
+	switch (languageId) {
+		case 1:
+			italian.value = false;
+			italy.value.style.opacity = 0.5;
+			uk.value.style.opacity = 1;
+			break;
+		case 2:
+			italian.value = true;
+			italy.value.style.opacity = 1;
+			uk.value.style.opacity = 0.5;
+			break;
+		default:
+			break;
+	}
+	if (isShowingInfos.value) {
+		handleClick(currentButton.value);
+	}
+}
+//#endregion
 
 // Horizontal or Vertical or spanish
 const horizontalCells = [
@@ -800,6 +953,7 @@ const getCellImageSrc = (cellNumber, type) => {
 onMounted(() => {
 	updatePawnPosition(position.value);
 	window.addEventListener('resize', () => updatePawnPosition(position.value));
+	italy.value.style.opacity = 0.5;
 });
 </script>
 
@@ -810,6 +964,7 @@ onMounted(() => {
 @import url('@/styles/quest.scss');
 @import url('@/styles/bat.scss');
 @import url('@/styles/cellInfo.scss');
-@import url('@/styles/debugMenu.scss');
 @import url('@/styles/notification.scss');
+@import url('../styles/translation.scss');
+@import url('@/styles/debugMenu.scss');
 </style>

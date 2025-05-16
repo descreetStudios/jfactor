@@ -5,6 +5,7 @@
     color: #f5f1e9;
     user-select: none;
     margin-bottom: 75px;
+    padding-right: 20px;
 }
 
 .cellInfoWrapperImg {
@@ -24,11 +25,13 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 20px;
+    margin-bottom: 10px;
     font-family: 'Jersey 10', sans-serif;
     color: #d2b48c;
     text-shadow: 1px 1px 2px #000000;
     text-shadow: rgba(0, 136, 255, 0.6);
     font-size: calc(3px + 3vw);
+    line-height: calc(3px + 4vh);
     text-align: center;
     user-select: none;
 }
@@ -52,15 +55,15 @@
     -webkit-user-drag: none;
 }
 
-.startInfoLabel {
+.startInfoParagraph {
     position: relative;
     font-family: 'Jersey 10', sans-serif;
+    text-align: center;
     color: #d2b48c;
     text-shadow: 1px 1px 2px #000000;
     text-shadow: rgba(0, 136, 255, 0.6);
     font-size: calc(2px + 1.3vw);
     user-select: none;
-    left: 15%;
 }
 
 .infoLabel {
