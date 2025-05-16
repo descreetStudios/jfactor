@@ -797,8 +797,6 @@ const getCellImageSrc = (cellNumber, type) => {
 	}
 };
 
-
-
 onMounted(() => {
 	updatePawnPosition(position.value);
 	window.addEventListener('resize', () => updatePawnPosition(position.value));
@@ -814,8 +812,4 @@ onMounted(() => {
 @import url('@/styles/cellInfo.scss');
 @import url('@/styles/debugMenu.scss');
 @import url('@/styles/notification.scss');
-
-/* DEBUG
-@import url('@/styles/debug.scss');
-*/
 </style>

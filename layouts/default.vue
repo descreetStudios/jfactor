@@ -8,7 +8,7 @@
         <img src="@/assets/images/right.png">
     </div>
     
-    
+    <!-- Unsupported resolution error page -->
     <div v-if="error && !bypass">
         <!-- Particles -->
         <div>
@@ -34,10 +34,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Index page -->
     <div v-else>
-        
-        
-        
         <NuxtPage />
         <!-- Buttons and Title -->
         <div v-if="!navbarVisible && !error" class="title">
@@ -79,6 +78,7 @@
         </div>
     </div>
 </div>
+
 <!-- Background Music -->
 <bgMusic />
 </template>
@@ -290,12 +290,4 @@ onMounted(() => {
 
 /*Debug*/
 //@import url('@/styles/debug.scss');
-::-webkit-scrollbar {
-    width: 0px;
-}
-
-.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-}
 </style>

@@ -22,7 +22,6 @@
 </template>
 
 <script setup>
-
 import creditsTitle from '@/assets/images/creditsTitle.png';
 
 const people = [

@@ -3,9 +3,10 @@
   <div class="page-wrapper">
     <div class="content">
       <img src="@/assets/images/logo.png" alt="logo" class="logo-img" />
-      <!-- yap sesh -->
+
       <h1 class="tutorial-title">TUTORIAL</h1>
 
+      <!-- Language buttons -->
       <div>
         <button ref="uk" class="language-button" @click="changeLanguage(1)">
           <img src="@/assets/images/UK.png" alt="UK">
@@ -26,6 +27,7 @@
         <a href="#cellTypes">Tipologie di Caselle</a>
       </nav>
 
+      <!-- English Tutorial -->
       <section id="lore" class="section-block" v-if="!italian">
         <h2>Lore</h2>
         <p>
@@ -97,10 +99,9 @@
           forward.
           <br>
         </p>
-        <p>
-
-        </p>
       </section>
+
+      <!-- Italian Tutorial -->
       <section id="lore" class="section-block" v-if="italian">
         <h2>Storia</h2>
         <p> In questo gioco, il giocatore assume il ruolo di un contadino medievale che vive in una città vivace. </p>
@@ -156,13 +157,13 @@
         </p>
       </section>
 
+      <!-- Canva Slides -->
       <div class="slidesContainer">
         <iframe class="slides" loading="lazy"
           src="https://www.canva.com/design/DAGlSPe64ks/iE2VhdL-8mJ7dlPPUyGJIA/view?embed"
           allowfullscreen="allowfullscreen" allow="fullscreen" frameborder="0">
         </iframe>
       </div>
-
     </div>
   </div>
 </template>

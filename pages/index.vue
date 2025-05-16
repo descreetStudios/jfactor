@@ -10,10 +10,6 @@
 			<div v-for="(backDrop, index) in backDrops" :key="index" v-html="backDrop"></div>
 		</div>
 	</div>
-
-	<!--
-	<div class="bat"></div>
-	-->
 </template>
 
 <script>
@@ -58,11 +54,5 @@ export default {
 </script>
 
 <style lang="scss">
-// @import url('@/styles/title.scss');
-// @import url('@/styles/bg.scss');
-// @import url('@/styles/bat.scss');
 
-/* DEBUG
-@import url('@/styles/debug.scss');
-*/
 </style>
