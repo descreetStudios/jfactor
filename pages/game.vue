@@ -375,7 +375,7 @@ const uk = ref(null);
 const italy = ref(null);
 
 // Debug refs
-let showDebug = ref(true);
+let showDebug = ref(false);
 const clickCount = ref(0);
 let clickTimeout = null;
 const tpCell = ref(0);
@@ -677,6 +677,7 @@ function resetGame() {
 	resultText.value = '';
 	diceResults.r1 = null;
 	diceResults.r2 = null;
+	playerBonusCount.value = 0;
 	setDiceTransforms({ dice1: 'rotateX(0deg) rotateY(0deg)', dice2: 'rotateX(0deg) rotateY(0deg)' });
 	effects.value = generateEffects();
 	updatePawnPosition(position.value);

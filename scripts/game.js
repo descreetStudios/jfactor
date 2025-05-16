@@ -162,7 +162,7 @@ export const questionsIta = [
     question:
       "Quale animale venne erroneamente sterminato perché si pensava fosse responsabile della Peste Nera?",
     options: ["Il gatto", "Il cane", "La tigre", "Il cavallo"],
-    answer: "Il gatto",
+    answer: "Il gatto", 
   },
   //23 domanda
   {
