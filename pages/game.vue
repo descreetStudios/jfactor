@@ -127,8 +127,8 @@
 
 			<!-- Italian Results -->
 			<div class="diceResult" v-if="italian">
-				<div v-if="!resultText && roll">Tira i dadi!</div>
-				<div v-if="!resultText && !roll">Tirando...</div>
+				<div v-if="!resultText && roll">Lancia i dadi!</div>
+				<div v-if="!resultText && !roll">Lanciando...</div>
 			</div>
 		</div>
 	</div>
@@ -834,10 +834,12 @@ const handleClick = (button) => {
 					currentButtonDescription.value = "Questa è una cella normale!";
 					break;
 				case 'Buff':
+					currentButtonType.value = "Avanzamento";
 					currentButtonImg.value = buffImg;
 					currentButtonDescription.value = "Vai avanti!";
 					break;
 				case 'Debuff':
+					currentButtonType.value = "Retrocessione";
 					currentButtonImg.value = debuffImg;
 					currentButtonDescription.value = "Vai indietro!";
 					break;
