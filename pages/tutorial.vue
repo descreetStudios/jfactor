@@ -158,10 +158,17 @@
         </p>
       </section>
 
-      <!-- Canva Slides -->
-      <div class="slidesContainer">
+      <!-- Italian Canva Slides -->
+      <div class="slidesContainer" v-if="italian">
         <iframe class="slides" loading="lazy"
           src="https://www.canva.com/design/DAGlSPe64ks/iE2VhdL-8mJ7dlPPUyGJIA/view?embed"
+          allowfullscreen="allowfullscreen" allow="fullscreen" frameborder="0">
+        </iframe>
+      </div>
+      <!-- English Canva Slides -->
+      <div class="slidesContainer" v-if="!italian">
+        <iframe class="slides" loading="lazy"
+          src= "https://www.canva.com/design/DAGnniZVmQU/YsMm_4FVDsSjlTTzsBBxHg/view?embed"
           allowfullscreen="allowfullscreen" allow="fullscreen" frameborder="0">
         </iframe>
       </div>
