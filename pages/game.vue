@@ -634,10 +634,20 @@ async function applyCellEffect() {
 		if (playerBonusCount.value > 0) {
 			playerBonusCount.value -= 1;
 			if (playerBonusCount.value === 1) {
-				await (notifyCell(eventType, "Hai scampato la morte!", `Ti rimane 1 erba medicinale.`));
+				if (italian.value) {
+					await (notifyCell(eventType, "Hai scampato la morte!", `Ti rimane 1 erba medicinale.`));
+				}
+				else if (!italian.value) {
+					await (notifyCell(eventType, "You have escaped death!", 'You have 1 healing herb left.'));
+				}
 			}
 			else {
+				if (italian.value) {
 				await (notifyCell(eventType, "Hai scampato la morte!", `Ti rimangono ${playerBonusCount.value} erbe medicinali.`));
+				}
+				else if (!italian.value) {
+				await (notifyCell(eventType, "You have escaped death!", `You have ${playerBonusCount.value} healing herbs left.`));
+				}
 			}
 		}
 		else {
@@ -673,6 +683,7 @@ function delay(ms) {
 }
 
 function resetGame() {
+	roll.value = true;
 	position.value = 0;
 	resultText.value = '';
 	diceResults.r1 = null;
