@@ -843,7 +843,30 @@ const handleClick = (button) => {
 					let buttonImg = buttonDiv.querySelector("img");
 					let imgSrc = buttonImg ? buttonImg.src : null;
 					if (imgSrc) {
-						imgName = imgSrc.replace(/Horizontal|Vertical/, "");
+						imgName = imgSrc.replace(/Horizontal|Vertical/, "").split('/').pop().split('?')[0];
+						imgName = imgName.replace(/\.[^.]+(?=\.)/, "");
+					}
+					switch (imgName) {
+						case 'cell1.png':
+							imgName = cell1;
+							break;
+						case 'cell2.png':
+							imgName = cell2;
+							break;
+						case 'cell3.png':
+							imgName = cell3;
+							break;
+						case 'cell4.png':
+							imgName = cell4;
+							break;
+						case 'cell5.png':
+							imgName = cell5;
+							break;
+						case 'piece.png':
+							imgName = pieceImg;
+							break;
+						default:
+							break;
 					}
 					currentButtonImg.value = imgName;
 					currentButtonDescription.value = "Questa è una cella normale!";
