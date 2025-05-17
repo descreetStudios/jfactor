@@ -906,6 +906,9 @@ const handleClick = (button) => {
 						case 'cell5.png':
 							imgName = cell5;
 							break;
+						case 'piece.png':
+							imgName = pieceImg;
+							break;
 						default:
 							break;
 					}
