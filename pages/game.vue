@@ -282,12 +282,16 @@ import { generateSpiral } from '@/scripts/grid.js';
 import pieceImg from '@/assets/images/piece.png';
 
 import finalImg from '@/assets/images/cells/finalCell.png';
-import normalImg from '@/assets/images/cells/cell1.png';
 import buffImg from '@/assets/images/cells/buffCell.png';
 import debuffImg from '@/assets/images/cells/debuffCell.png';
 import questionImg from '@/assets/images/cells/questionCell.png';
 import deathImg from '@/assets/images/cells/deathCell.png';
 import bonusImg from '@/assets/images/cells/bonusCell.png';
+import cell1 from '@/assets/images/cells/cell1.png';
+import cell2 from '@/assets/images/cells/cell2.png';
+import cell3 from '@/assets/images/cells/cell3.png';
+import cell4 from '@/assets/images/cells/cell4.png';
+import cell5 from '@/assets/images/cells/cell5.png';
 
 // Import horizontal and vertical cells
 import buffCellHorizontal from '@/assets/images/cells/buffCellHorizontal.png';
@@ -643,10 +647,10 @@ async function applyCellEffect() {
 			}
 			else {
 				if (italian.value) {
-				await (notifyCell(eventType, "Hai scampato la morte!", `Ti rimangono ${playerBonusCount.value} erbe medicinali.`));
+					await (notifyCell(eventType, "Hai scampato la morte!", `Ti rimangono ${playerBonusCount.value} erbe medicinali.`));
 				}
 				else if (!italian.value) {
-				await (notifyCell(eventType, "You have escaped death!", `You have ${playerBonusCount.value} healing herbs left.`));
+					await (notifyCell(eventType, "You have escaped death!", `You have ${playerBonusCount.value} healing herbs left.`));
 				}
 			}
 		}
@@ -883,7 +887,27 @@ const handleClick = (button) => {
 					let buttonImg = buttonDiv.querySelector("img");
 					let imgSrc = buttonImg ? buttonImg.src : null;
 					if (imgSrc) {
-						imgName = imgSrc.replace(/Horizontal|Vertical/, "");
+						imgName = imgSrc.replace(/Horizontal|Vertical/, "").split('/').pop().split('?')[0];
+						imgName = imgName.replace(/\.[^.]+(?=\.)/, "");
+					}
+					switch (imgName) {
+						case 'cell1.png':
+							imgName = cell1;
+							break;
+						case 'cell2.png':
+							imgName = cell2;
+							break;
+						case 'cell3.png':
+							imgName = cell3;
+							break;
+						case 'cell4.png':
+							imgName = cell4;
+							break;
+						case 'cell5.png':
+							imgName = cell5;
+							break;
+						default:
+							break;
 					}
 					currentButtonImg.value = imgName;
 					currentButtonDescription.value = "This is a normal cell!";
