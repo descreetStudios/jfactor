@@ -745,19 +745,17 @@ async function nextQuestion() {
 
 		resultText.value = resultTextBackup.value;
 
-		// Handle overshoot
-		if (target > MAXCELLS) {
-			await handleOvershoot(target);
-		}
+		const maxReach = Math.min(target, MAXCELLS);
 
-		// Animate movement
 		for (let i = 0; i < Math.abs(movement); i++) {
 			await delay(500);
-			if (position.value > 0) {
-				position.value += (position.value < target) ? 1 : -1;
-			} else {
-				position.value = 0;
+			if (position.value < maxReach) {
+				position.value++;
 			}
+		}
+
+		if (target > MAXCELLS) {
+			await handleOvershoot(target);
 		}
 
 		await cellEffect();
