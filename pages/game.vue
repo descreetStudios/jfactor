@@ -749,8 +749,11 @@ async function nextQuestion() {
 
 		for (let i = 0; i < Math.abs(movement); i++) {
 			await delay(500);
-			if (position.value < maxReach) {
-				position.value++;
+			if (position.value > 0) {
+				position.value += (position.value < maxReach) ? 1 : -1;
+			}
+			else {
+				position.value = 0;
 			}
 		}
 
