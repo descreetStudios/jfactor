@@ -80,13 +80,13 @@ The application will start at `http://localhost:3000` (or another port if 3000 i
 If you want to build a production-ready version:
 
 ```bash
-npm run build
+npm run generate
 ```
 
-Then, to preview it locally:
+Then, to deploy it locally:
 
 ```bash
-npm run preview
+npx serve .output/public
 ```
 
 ---
