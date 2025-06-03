@@ -49,8 +49,8 @@
 			<div class="cellInfos" v-if="isCellSelected">
 				<img class="cellImg" :src="currentButtonImg" alt="infoCellImage">
 				<div class="cellInfoText">
-					<label class="infoLabel"><span>Number:</span>&nbsp {{ currentButton }}</label><br>
-					<label class="infoLabel"><span>Type:</span>&nbsp {{ currentButtonType }}</label><br>
+					<label class="infoLabel"><span>Number:</span>&nbsp; {{ currentButton }}</label><br>
+					<label class="infoLabel"><span>Type:</span>&nbsp; {{ currentButtonType }}</label><br>
 					<label class="infoLabel"><span>Description:</span><br>{{ currentButtonDescription }}</label>
 				</div>
 			</div>
@@ -65,8 +65,8 @@
 			<div class="cellInfos" v-if="isCellSelected">
 				<img class="cellImg" :src="currentButtonImg" alt="infoCellImage">
 				<div class="cellInfoText">
-					<label class="infoLabel"><span>Numero:</span>&nbsp {{ currentButton }}</label><br>
-					<label class="infoLabel"><span>Tipo:</span>&nbsp {{ currentButtonType }}</label><br>
+					<label class="infoLabel"><span>Numero:</span>&nbsp; {{ currentButton }}</label><br>
+					<label class="infoLabel"><span>Tipo:</span>&nbsp; {{ currentButtonType }}</label><br>
 					<label class="infoLabel"><span>Descrizione:</span><br>{{ currentButtonDescription }}</label>
 				</div>
 			</div>
@@ -305,16 +305,16 @@ import bonusCellHorizontal from '@/assets/images/cells/bonusCellHorizontal.png';
 import questionCellVertical from '@/assets/images/cells/questionCellVertical.png';
 import questionCellHorizontal from '@/assets/images/cells/questionCellHorizontal.png';
 
-import cell1Vertical from '@/assets/images/cells/Cell1Vertical.png';
-import cell1Horizontal from '@/assets/images/cells/Cell1Horizontal.png';
-import cell2Vertical from '@/assets/images/cells/Cell2Vertical.png';
-import cell2Horizontal from '@/assets/images/cells/Cell2Horizontal.png';
-import cell3Vertical from '@/assets/images/cells/Cell3Vertical.png';
-import cell3Horizontal from '@/assets/images/cells/Cell3Horizontal.png';
-import cell4Vertical from '@/assets/images/cells/Cell4Vertical.png';
-import cell4Horizontal from '@/assets/images/cells/Cell4Horizontal.png';
-import cell5Vertical from '@/assets/images/cells/Cell5Vertical.png';
-import cell5Horizontal from '@/assets/images/cells/Cell5Horizontal.png';
+import cell1Vertical from '@/assets/images/cells/cell1Vertical.png';
+import cell1Horizontal from '@/assets/images/cells/cell1Horizontal.png';
+import cell2Vertical from '@/assets/images/cells/cell2Vertical.png';
+import cell2Horizontal from '@/assets/images/cells/cell2Horizontal.png';
+import cell3Vertical from '@/assets/images/cells/cell3Vertical.png';
+import cell3Horizontal from '@/assets/images/cells/cell3Horizontal.png';
+import cell4Vertical from '@/assets/images/cells/cell4Vertical.png';
+import cell4Horizontal from '@/assets/images/cells/cell4Horizontal.png';
+import cell5Vertical from '@/assets/images/cells/cell5Vertical.png';
+import cell5Horizontal from '@/assets/images/cells/cell5Horizontal.png';
 
 const { proxy } = getCurrentInstance();
 //#endregion
